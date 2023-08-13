@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ADMS.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ADMS
 {
-    public class ApplicationDBContext : DbContext
+    public class AppDBContext : DbContext
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseNpgsql("Host=localhost;Port=8000;Database=ADMS;Username=API_ADMS;Password=1zx69uali");
         }
-        //public DbSet<TransactionModel> Transactions { get; set; }
-        //public DbSet<UserModel> Users { get; set; }
+        internal DbSet<Department> Departments { get; set; }
+        internal DbSet<Employee> Employee { get; set; }
+        internal DbSet<Faculty> Faculties { get; set; }
+        internal DbSet<Group> Group { get; set; }
+        internal DbSet<Position> Position { get; set; }
+        internal DbSet<Speciality> Specialities { get; set; }
+        internal DbSet<Student> Students { get; set; }
+        internal DbSet<Subject> Subjects { get; set; }
+
     }
 }

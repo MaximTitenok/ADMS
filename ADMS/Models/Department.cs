@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ADMS.Models
+{
+    internal class Department
+    {
+        [Key]
+        public ushort Id { get; set; }
+        public string Name { get; set; }
+        public string NameShort { get; set; }
+        public Faculty Faculty { get; set; }
+    }
+}

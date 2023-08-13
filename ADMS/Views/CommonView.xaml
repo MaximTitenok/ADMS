@@ -1,12 +1,12 @@
-﻿<Window x:Class="ADMS.MainWindow"
+﻿<Window x:Class="ADMS.Views.CommonView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ADMS"
+        xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="CommonView" Height="450" Width="800">
     <Grid>
-
+        <Button Height="40" Width="125" Margin="320,20,320,345" Click="Button_Click">Деканат</Button>
     </Grid>
 </Window>
