@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="CommonView" Height="450" Width="800">
+        Title="CommonView" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Button Height="40" Width="125" Margin="320,20,320,345" Click="Button_Click">Деканат</Button>
     </Grid>

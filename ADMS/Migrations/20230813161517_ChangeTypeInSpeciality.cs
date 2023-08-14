@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ADMS.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTables : Migration
+    public partial class ChangeTypeInSpeciality : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,7 @@ namespace ADMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Position",
+                name: "Positions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -36,20 +36,7 @@ namespace ADMS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Position", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Specialities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Specialities", x => x.Id);
+                    table.PrimaryKey("PK_Positions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +75,29 @@ namespace ADMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Specialities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ShortName = table.Column<string>(type: "text", nullable: false),
+                    NumberOfSpeciality = table.Column<int>(type: "integer", nullable: false),
+                    FacultyId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Specialities_Faculties_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -115,23 +124,23 @@ namespace ADMS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Employee_Employee_СorrectiveEmployeeId",
+                        name: "FK_Employees_Employees_СorrectiveEmployeeId",
                         column: x => x.СorrectiveEmployeeId,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Employee_Position_PositionId",
+                        name: "FK_Employees_Positions_PositionId",
                         column: x => x.PositionId,
-                        principalTable: "Position",
+                        principalTable: "Positions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Group",
+                name: "Groups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -144,15 +153,15 @@ namespace ADMS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Group", x => x.Id);
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Group_Departments_DepartmentId",
+                        name: "FK_Groups_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Group_Faculties_FacultyId",
+                        name: "FK_Groups_Faculties_FacultyId",
                         column: x => x.FacultyId,
                         principalTable: "Faculties",
                         principalColumn: "Id",
@@ -192,9 +201,9 @@ namespace ADMS.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Students_Group_GroupId",
+                        name: "FK_Students_Groups_GroupId",
                         column: x => x.GroupId,
-                        principalTable: "Group",
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -211,23 +220,28 @@ namespace ADMS.Migrations
                 column: "FacultyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employee_СorrectiveEmployeeId",
-                table: "Employee",
+                name: "IX_Employees_СorrectiveEmployeeId",
+                table: "Employees",
                 column: "СorrectiveEmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employee_PositionId",
-                table: "Employee",
+                name: "IX_Employees_PositionId",
+                table: "Employees",
                 column: "PositionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Group_DepartmentId",
-                table: "Group",
+                name: "IX_Groups_DepartmentId",
+                table: "Groups",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Group_FacultyId",
-                table: "Group",
+                name: "IX_Groups_FacultyId",
+                table: "Groups",
+                column: "FacultyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Specialities_FacultyId",
+                table: "Specialities",
                 column: "FacultyId");
 
             migrationBuilder.CreateIndex(
@@ -250,7 +264,7 @@ namespace ADMS.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Students");
@@ -259,10 +273,10 @@ namespace ADMS.Migrations
                 name: "Subjects");
 
             migrationBuilder.DropTable(
-                name: "Position");
+                name: "Positions");
 
             migrationBuilder.DropTable(
-                name: "Group");
+                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Specialities");

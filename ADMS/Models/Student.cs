@@ -9,6 +9,7 @@ namespace ADMS.Models
 {
     internal class Student
     {
+        private DateTime _birthday;
         [Key]
         public int Id { get; set; }
         public string Surname { get; set; }

@@ -128,7 +128,7 @@ namespace ADMS.Migrations
 
                     b.HasIndex("СorrectiveEmployeeId");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("ADMS.Models.Faculty", b =>
@@ -182,7 +182,7 @@ namespace ADMS.Migrations
 
                     b.HasIndex("FacultyId");
 
-                    b.ToTable("Group");
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("ADMS.Models.Position", b =>
@@ -199,7 +199,7 @@ namespace ADMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Position");
+                    b.ToTable("Positions");
                 });
 
             modelBuilder.Entity("ADMS.Models.Speciality", b =>
@@ -210,11 +210,23 @@ namespace ADMS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("NumberOfSpeciality")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
 
                     b.ToTable("Specialities");
                 });
@@ -359,6 +371,17 @@ namespace ADMS.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
+
+                    b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("ADMS.Models.Speciality", b =>
+                {
+                    b.HasOne("ADMS.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Faculty");
                 });
