@@ -1,0 +1,109 @@
+﻿<Window x:Class="ADMS.Views.StudentInfoChangeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:ADMS.Views.Converters"
+        xmlns:local="clr-namespace:ADMS.Views"
+        mc:Ignorable="d"
+        Title="StudentInfo" Height="360" Width="700">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <converters:GetSpecialityNameConverter x:Key="GetSpecialityNameConverter"/>
+        <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
+        <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
+        <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="ID:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Student.Id}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Surname:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Surname}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Name:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Name}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Secondname:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Secondname}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="TIN:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Tin}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Birthday:" VerticalAlignment="Center" />
+            <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                     Text="{Binding Student.Birthday, StringFormat=\{0:dd-MM-yyyy\}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Gender:" VerticalAlignment="Center" />
+            <ComboBox x:Name="GenderComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+          Text="{Binding StudentGender, Mode=TwoWay}">
+                <ComboBoxItem Content="Male"/>
+                <ComboBoxItem Content="Female"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Passport:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.PassportId}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Phone:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Phone}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Email:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Email}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Office Email:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.OfficeEmail}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,290,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Office Email:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.OfficeEmail}" />
+        </StackPanel>
+
+
+        <StackPanel  Height="25" Width="300" Margin="320,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Faculty:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Student.Faculty.Name}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="320,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Speciality:" VerticalAlignment="Center" />
+            <ComboBox x:Name="SpecialitiesComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+           ItemsSource="{Binding SpecialitiesArray}"  SelectedValue="{Binding Speciality}"/>
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="320,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Group:" VerticalAlignment="Center" />
+            <ComboBox x:Name="GroupsComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ItemsSource="{Binding GroupsArray}"  SelectedValue="{Binding Group}"/>
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="320,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Study Level:" VerticalAlignment="Center" />
+            <ComboBox x:Name="StudyLevelComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ItemsSource="{Binding StudyLevelArray}"  SelectedValue="{Binding StudyLevel}"/>
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="320,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Study Form:" VerticalAlignment="Center" />
+            <ComboBox x:Name="StudyFormComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ItemsSource="{Binding StudyFormArray}"  SelectedValue="{Binding StudyForm}"/>
+        </StackPanel>
+
+
+
+
+        <Button x:Name="ChangeStudentInfoButton" Content="Save"  Height="40" Width="305" Margin="336,151,0,0" HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" Command="{Binding SaveStudentInfoButtonCommand}" />
+
+    </Grid>
+</Window>

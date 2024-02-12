@@ -11,9 +11,9 @@ namespace ADMS.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ShortName { get; set; }
-        public int NumberOfSpeciality { get; set; }
-        public Faculty Faculty { get; set; }
+        public string? Name { get; set; }
+        public string? ShortName { get; set; }
+        public int? NumberOfSpeciality { get; set; }
+        public Faculty? Faculty { get; set; }
     }
 }

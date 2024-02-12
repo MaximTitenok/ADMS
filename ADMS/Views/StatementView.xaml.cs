@@ -1,6 +1,4 @@
-﻿using ADMS.Models;
-using ADMS.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,34 +11,33 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ADMS.Models;
+using ADMS.ViewModels;
 
 namespace ADMS.Views
 {
     /// <summary>
-    /// Interaction logic for DeansOfficeView.xaml
+    /// Interaction logic for StudentInfo.xaml
     /// </summary>
-    public partial class DeansOfficeView : Window
+    public partial class StatementView : Window
     {
-        public static int _facultyId = 1;//FIT
-        DeansOfficeVM deansOfficeVM = new(_facultyId);
-
-        public DeansOfficeView()
+        internal StatementView(Statement statement)
         {
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
-            DataContext = deansOfficeVM;
-        }
-        
+            StatementVM statementVM = new(statement);
+            DataContext = statementVM;
 
-        private void FindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        }
+        private void StudentRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                Student selectedItem = StudentsGrid.SelectedItem as Student;
+                Statement selectedItem = StatementsGrid.SelectedItem as Statement;
                 if (selectedItem != null)
                 {
-                    StudentInfoView studentInfo = new(selectedItem);
-                    studentInfo.Show();
+                    StatementView statementView = new(selectedItem);
+                    statementView.Show();
                 }
                 else
                 {
@@ -48,8 +45,5 @@ namespace ADMS.Views
                 }
             }
         }
-
-
-
     }
 }

@@ -61,12 +61,12 @@
                     <Label Content="Study Level" Height="25" Width="80" Margin="190,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" RenderTransformOrigin="0.56,0.539" />
                     <ComboBox x:Name="StudyLevelComboBox" Height="20" Width="80" Margin="190,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                               ItemsSource="{Binding StudyLevels}" Text="{Binding StudyLevel, Mode=TwoWay}"/>
+                               ItemsSource="{Binding StudyLevels}" Text="{Binding FindConditionStudyLevel, Mode=TwoWay}"/>
 
                     <Label Content="Study Form" Height="25" Width="80" Margin="280,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" RenderTransformOrigin="0.56,0.539" />
                     <ComboBox x:Name="StudyFormComboBox" Height="20" Width="80" Margin="280,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                               ItemsSource="{Binding StudyForms}" Text="{Binding StudyForm, Mode=TwoWay}"/>
+                               ItemsSource="{Binding StudyForms}" Text="{Binding FindConditionStudyForm, Mode=TwoWay}"/>
 
 
                     <Label Content="Student ID" Height="25" Width="80" Margin="370,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -74,13 +74,13 @@
                     <TextBox x:Name="StudentIdTextBox" Height="20" Width="80" Margin="370,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              Text="{Binding FindConditionStudentId, Mode=TwoWay}"/>
 
-                    <Button x:Name="FindButton" Content="Find"  Height="20" Width="80" Margin="640,25,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="FindButton" Content="Find"  Height="20" Width="80" Margin="460,75,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding FindButtonCommand}" />
-                    <Button x:Name="ClearButton" Content="Clear"  Height="20" Width="40" Margin="730,25,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="ClearButton" Content="Clear"  Height="20" Width="40" Margin="550,75,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding ClearButtonCommand}" />
 
                     <DataGrid x:Name="StudentsGrid" Height="270" Width="770" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                              AutoGenerateColumns="False" ItemsSource="{Binding Students}">
+                              AutoGenerateColumns="False" ItemsSource="{Binding Students}" IsReadOnly="True" MouseDoubleClick="FindRowDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="80" />
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="80"/>
@@ -94,12 +94,9 @@
                                                 Width="50" />
                             <DataGridTextColumn Header="Study Form" Binding="{Binding StudyForm,Converter={StaticResource GetStudyFormNameConverter}}" 
                                                 Width="50"/>
-                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
-                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                            <DataGridTextColumn Header="Office Email" Binding="{Binding OfficeEmail}" />
-                            <DataGridTextColumn Header="Inn" Binding="{Binding Inn}" />
-                            <DataGridTextColumn Header="Passport Id" Binding="{Binding PassportId}" />
-                            <DataGridTextColumn Header="Student Id" Binding="{Binding StudentId}" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="71" />
+                            <DataGridTextColumn Header="Passport Id" Binding="{Binding PassportId}"  Width="60"/>
+                            <DataGridTextColumn Header="Student Id" Binding="{Binding StudentId}"  Width="60"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

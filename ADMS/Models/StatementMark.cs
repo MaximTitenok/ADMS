@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ADMS.Models
 {
-    /// <summary>
-    /// Посада
-    /// </summary>
-    internal class Position
+    internal class StatementMark
     {
         [Key]
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public Statement? Statement { get; set; }
+        public Student? Student { get; set; }
+        public int? Mark { get; set; }
+        public DateTime? AddedTime { get; set; }
     }
 }

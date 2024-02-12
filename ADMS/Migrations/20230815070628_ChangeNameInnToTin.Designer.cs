@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ADMS.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20230813161517_ChangeTypeInSpeciality")]
-    partial class ChangeTypeInSpeciality
+    [Migration("20230815070628_ChangeNameInnToTin")]
+    partial class ChangeNameInnToTin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,9 +72,6 @@ namespace ADMS.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Tin")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -118,6 +115,9 @@ namespace ADMS.Migrations
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Tin")
+                        .HasColumnType("integer");
 
                     b.Property<float>("WorkRate")
                         .HasColumnType("real");
@@ -258,9 +258,6 @@ namespace ADMS.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Tin")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -296,6 +293,9 @@ namespace ADMS.Migrations
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Tin")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

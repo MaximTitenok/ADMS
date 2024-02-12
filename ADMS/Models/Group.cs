@@ -11,10 +11,10 @@ namespace ADMS.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Faculty Faculty { get; set; }
-        public Department Department { get; set; }
-        public DateTime StartEducation { get; set; }
-        public DateTime AddedTime { get; set; }
+        public string? Name { get; set; }
+        public Faculty? Faculty { get; set; }
+        public Department? Department { get; set; }
+        public DateTime? StartEducation { get; set; }
+        public DateTime? AddedTime { get; set; }
     }
 }

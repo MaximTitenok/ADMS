@@ -30,15 +30,13 @@ namespace ADMS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FacultyId")
+                    b.Property<int?>("FacultyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("NameShort")
-                        .IsRequired()
+                    b.Property<string>("ShortName")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -56,70 +54,61 @@ namespace ADMS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("FinishedWork")
+                    b.Property<DateTime?>("FinishedWork")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Inn")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("OfficeEmail")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("OfficePhone")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("PannedFinishWork")
+                    b.Property<DateTime?>("PannedFinishWork")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PassportId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PositionId")
+                    b.Property<int?>("PositionId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Secondname")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("StaffingId")
+                    b.Property<short?>("StaffingId")
                         .HasColumnType("smallint");
 
-                    b.Property<DateTime>("StartWork")
+                    b.Property<DateTime?>("StartWork")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<float>("WorkRate")
+                    b.Property<int?>("Tin")
+                        .HasColumnType("integer");
+
+                    b.Property<float?>("WorkRate")
                         .HasColumnType("real");
 
-                    b.Property<int>("СorrectiveEmployeeId")
+                    b.Property<int?>("СorrectiveEmployeeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -140,11 +129,9 @@ namespace ADMS.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ShortName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -160,20 +147,19 @@ namespace ADMS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("AddedTime")
+                    b.Property<DateTime?>("AddedTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("FacultyId")
+                    b.Property<int?>("FacultyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("StartEducation")
+                    b.Property<DateTime?>("StartEducation")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -185,6 +171,57 @@ namespace ADMS.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("ADMS.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AddedEmplyoeeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("AddedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<byte[]>("File")
+                        .HasColumnType("bytea");
+
+                    b.Property<int[]>("Groups")
+                        .HasColumnType("integer[]");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int[]>("Students")
+                        .HasColumnType("integer[]");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddedEmplyoeeId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("ADMS.Models.Position", b =>
                 {
                     b.Property<int>("Id")
@@ -194,7 +231,6 @@ namespace ADMS.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -210,18 +246,16 @@ namespace ADMS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FacultyId")
+                    b.Property<int?>("FacultyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("NumberOfSpeciality")
+                    b.Property<int?>("NumberOfSpeciality")
                         .HasColumnType("integer");
 
                     b.Property<string>("ShortName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -229,6 +263,69 @@ namespace ADMS.Migrations
                     b.HasIndex("FacultyId");
 
                     b.ToTable("Specialities");
+                });
+
+            modelBuilder.Entity("ADMS.Models.Statement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("AddedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("FacultyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StatementNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Statements");
+                });
+
+            modelBuilder.Entity("ADMS.Models.StatementMark", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("AddedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("Mark")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StatementId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatementId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StatementMarks");
                 });
 
             modelBuilder.Entity("ADMS.Models.Student", b =>
@@ -239,60 +336,53 @@ namespace ADMS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("FacultyId")
+                    b.Property<int?>("FacultyId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Inn")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("OfficeEmail")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PassportId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Secondname")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SpecialityId")
+                    b.Property<int?>("SpecialityId")
                         .HasColumnType("integer");
 
-                    b.Property<long>("StudentId")
+                    b.Property<long?>("StudentId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("StudyForm")
+                    b.Property<int?>("StudyForm")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StudyLevel")
+                    b.Property<int?>("StudyLevel")
                         .HasColumnType("integer");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int?>("Tin")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -314,11 +404,9 @@ namespace ADMS.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ShortName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -330,9 +418,7 @@ namespace ADMS.Migrations
                 {
                     b.HasOne("ADMS.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacultyId");
 
                     b.Navigation("Faculty");
                 });
@@ -341,15 +427,11 @@ namespace ADMS.Migrations
                 {
                     b.HasOne("ADMS.Models.Position", "Position")
                         .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
 
                     b.HasOne("ADMS.Models.Employee", "СorrectiveEmployee")
                         .WithMany()
-                        .HasForeignKey("СorrectiveEmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("СorrectiveEmployeeId");
 
                     b.Navigation("Position");
 
@@ -360,51 +442,84 @@ namespace ADMS.Migrations
                 {
                     b.HasOne("ADMS.Models.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("ADMS.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacultyId");
 
                     b.Navigation("Department");
 
                     b.Navigation("Faculty");
                 });
 
+            modelBuilder.Entity("ADMS.Models.Order", b =>
+                {
+                    b.HasOne("ADMS.Models.Employee", "AddedEmplyoee")
+                        .WithMany()
+                        .HasForeignKey("AddedEmplyoeeId");
+
+                    b.Navigation("AddedEmplyoee");
+                });
+
             modelBuilder.Entity("ADMS.Models.Speciality", b =>
                 {
                     b.HasOne("ADMS.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacultyId");
 
                     b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("ADMS.Models.Statement", b =>
+                {
+                    b.HasOne("ADMS.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId");
+
+                    b.HasOne("ADMS.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("ADMS.Models.Employee", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Faculty");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("ADMS.Models.StatementMark", b =>
+                {
+                    b.HasOne("ADMS.Models.Statement", "Statement")
+                        .WithMany()
+                        .HasForeignKey("StatementId");
+
+                    b.HasOne("ADMS.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Statement");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("ADMS.Models.Student", b =>
                 {
                     b.HasOne("ADMS.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacultyId");
 
                     b.HasOne("ADMS.Models.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("ADMS.Models.Speciality", "Speciality")
                         .WithMany()
-                        .HasForeignKey("SpecialityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SpecialityId");
 
                     b.Navigation("Faculty");
 

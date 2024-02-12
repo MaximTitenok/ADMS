@@ -17,7 +17,6 @@ namespace ADMS.ViewModels
 {
     internal class DeansOfficeVM : INotifyPropertyChanged
     {
-        private readonly AppDBContext _dbContext = new AppDBContext();
         public List<Group> Groups { get; set; }
         public List<Speciality> Specialities { get; set; }
         public List<Student> Students { get; set; }
@@ -30,8 +29,8 @@ namespace ADMS.ViewModels
         public string FindConditionSpeciality { get; set; }
         public string FindConditionGender { get; set; }
         public string FindConditionStudentId { get; set; }
-        public string StudyLevel { get; set; }
-        public string StudyForm { get; set; }
+        public string FindConditionStudyLevel { get; set; }
+        public string FindConditionStudyForm { get; set; }
 
         public string[] StudyLevels { get; set; }
         public string[] StudyForms { get; set; }
@@ -41,13 +40,13 @@ namespace ADMS.ViewModels
 
         public DeansOfficeVM(int facultyId) 
         {
-            Groups = _dbContext.Groups.Where(x => x.Faculty.Id == facultyId).ToList();
+            Groups = StructureStore.GetGroups().Where(x => x?.Faculty?.Id == facultyId).ToList();
             Groups.Insert(0,new Group { Name = "" });
-            Specialities = _dbContext.Specialities.Where(x => x.Faculty.Id == facultyId).ToList();
+            Specialities = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == facultyId).ToList();
             Specialities.Insert(0,new Speciality { ShortName = "" });
 
-            StudyLevels = GetStudyFormAndLevelNames.StudLevels;
-            StudyForms = GetStudyFormAndLevelNames.StudForms;
+            StudyLevels = StructureStore.GetStudyLevels();
+            StudyForms = StructureStore.GetStudyForms();
 
             FindButtonCommand = new RelayCommand(FindStudentsByConditions);
             ClearButtonCommand = new RelayCommand(ClearConditionFields);
@@ -60,83 +59,85 @@ namespace ADMS.ViewModels
                 && String.IsNullOrEmpty(FindConditionSecondname) && String.IsNullOrEmpty(FindConditionGroup) 
                 && String.IsNullOrEmpty(FindConditionSpeciality) && String.IsNullOrEmpty(FindConditionGender)
                 && String.IsNullOrEmpty(FindConditionStudentId) && String.IsNullOrEmpty(FindConditionPassport)
-                && String.IsNullOrEmpty(StudyLevel) && String.IsNullOrEmpty(StudyForm))
+                && String.IsNullOrEmpty(FindConditionStudyLevel) && String.IsNullOrEmpty(FindConditionStudyForm))
             {
                 MessageBox.Show("All the fields is empty!","Error");
                 return;
             }
+            using (AppDBContext _dbContext = new AppDBContext())
+            { 
+                var query = _dbContext.Students.AsQueryable();
 
-            var query = _dbContext.Students.AsQueryable();
-
-            if (!string.IsNullOrEmpty(FindConditionSurname))
-            {
-                query = query.Where(student => student.Surname.Contains(FindConditionSurname));
-            }
-
-            if (!string.IsNullOrEmpty(FindConditionName))
-            {
-                query = query.Where(student => student.Name.Contains(FindConditionName));
-            }
-
-            if (!string.IsNullOrEmpty(FindConditionSecondname))
-            {
-                query = query.Where(student => student.Secondname.Contains(FindConditionSecondname));
-            }
-            if (!string.IsNullOrEmpty(FindConditionPassport))
-            {
-                query = query.Where(student => student.PassportId.Contains(FindConditionPassport));
-            }
-            if (!string.IsNullOrEmpty(FindConditionGroup))
-            {
-                query = query.Where(student => student.Group.Name.Contains(FindConditionGroup));
-            }
-            if (!string.IsNullOrEmpty(FindConditionSpeciality))
-            {
-                query = query.Where(student => student.Speciality.Name.Contains(FindConditionSpeciality));
-            }
-            if (!string.IsNullOrEmpty(FindConditionGender))
-            {
-                bool gender = false;
-                if(FindConditionGender == "Male")
+                if (!string.IsNullOrEmpty(FindConditionSurname))
                 {
-                    gender = false;
+                    query = query.Where(student => student.Surname.Contains(FindConditionSurname));
                 }
-                else if(FindConditionGender == "Female")
-                {
-                    gender = true;
-                }
-                query = query.Where(student => student.Gender == gender);
-            }
 
-            if (!string.IsNullOrEmpty(FindConditionStudentId))
-            {
-                if(FindConditionStudentId.All(char.IsDigit))
+                if (!string.IsNullOrEmpty(FindConditionName))
                 {
-                    query = query.Where(student => student.StudentId.ToString() == FindConditionStudentId);
+                    query = query.Where(student => student.Name.Contains(FindConditionName));
                 }
-                else
-                {
-                    MessageBox.Show("Student ID contains letter!", "Error");
-                } 
-            }
-            if (!string.IsNullOrEmpty(FindConditionSpeciality))
-            {
-                query = query.Where(student => student.Speciality.Name.Contains(FindConditionSpeciality));
-            }
-            if (!string.IsNullOrEmpty(StudyLevel))
-            {
-                query = query.Where(student => student.StudyLevel == Array.IndexOf(StudyLevels, StudyLevel));
-            }
-            if (!string.IsNullOrEmpty(StudyForm))
-            {
-                query = query.Where(student => student.StudyForm == Array.IndexOf(StudyForms, StudyForm));
-            }
 
-            Students = query
-                .Include(x => x.Faculty)
-                .Include(x => x.Group)
-                .Include(x => x.Speciality)
-                .ToList();
+                if (!string.IsNullOrEmpty(FindConditionSecondname))
+                {
+                    query = query.Where(student => student.Secondname.Contains(FindConditionSecondname));
+                }
+                if (!string.IsNullOrEmpty(FindConditionPassport))
+                {
+                    query = query.Where(student => student.PassportId.Contains(FindConditionPassport));
+                }
+                if (!string.IsNullOrEmpty(FindConditionGroup))
+                {
+                    query = query.Where(student => student.Group.Name.Contains(FindConditionGroup));
+                }
+                if (!string.IsNullOrEmpty(FindConditionSpeciality))
+                {
+                    query = query.Where(student => student.Speciality.Name.Contains(FindConditionSpeciality));
+                }
+                if (!string.IsNullOrEmpty(FindConditionGender))
+                {
+                    bool gender = false;
+                    if (FindConditionGender == "Male")
+                    {
+                        gender = false;
+                    }
+                    else if (FindConditionGender == "Female")
+                    {
+                        gender = true;
+                    }
+                    query = query.Where(student => student.Gender == gender);
+                }
+
+                if (!string.IsNullOrEmpty(FindConditionStudentId))
+                {
+                    if (FindConditionStudentId.All(char.IsDigit))
+                    {
+                        query = query.Where(student => student.StudentId.ToString() == FindConditionStudentId);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Student ID contains letter!", "Error");
+                    }
+                }
+                if (!string.IsNullOrEmpty(FindConditionSpeciality))
+                {
+                    query = query.Where(student => student.Speciality.Name.Contains(FindConditionSpeciality));
+                }
+                if (!string.IsNullOrEmpty(FindConditionStudyLevel))
+                {
+                    query = query.Where(student => student.StudyLevel == Array.IndexOf(StudyLevels, FindConditionStudyLevel));
+                }
+                if (!string.IsNullOrEmpty(FindConditionStudyForm))
+                {
+                    query = query.Where(student => student.StudyForm == Array.IndexOf(StudyForms, FindConditionStudyForm));
+                }
+
+                Students = query
+                    .Include(x => x.Faculty)
+                    .Include(x => x.Group)
+                    .Include(x => x.Speciality)
+                    .ToList();
+            }
             OnPropertyChanged("Students");
         }
 
@@ -156,6 +157,12 @@ namespace ADMS.ViewModels
             OnPropertyChanged("FindConditionGender");
             FindConditionStudentId = "";
             OnPropertyChanged("FindConditionStudentId");
+            FindConditionPassport = "";
+            OnPropertyChanged("FindConditionPassport");
+            FindConditionStudyLevel = "";
+            OnPropertyChanged("FindConditionStudyLevel");
+            FindConditionStudyForm = "";
+            OnPropertyChanged("FindConditionStudyForm");
         }
 
 

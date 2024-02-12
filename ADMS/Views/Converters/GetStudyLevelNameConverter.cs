@@ -15,7 +15,7 @@ namespace ADMS.Views.Converters
         {
             if (int.TryParse(value.ToString(),out int type))
             {
-                return GetStudyFormAndLevelNames.GetStudyLevelName(type);
+                return StructureStore.GetStudyLevelName(type);
             }
             return string.Empty;
         }
