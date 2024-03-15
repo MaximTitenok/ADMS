@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ADMS.Views
 {
@@ -32,7 +33,7 @@ namespace ADMS.Views
         }
         
 
-        private void FindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        private void StudentFindRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -41,6 +42,22 @@ namespace ADMS.Views
                 {
                     StudentInfoView studentInfo = new(selectedItem);
                     studentInfo.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid row", "Error");
+                }
+            }
+        }
+        private void GroupFindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Group selectedItem = GroupsGrid.SelectedItem as Group;
+                if (selectedItem != null)
+                {
+                    GroupInfoView groupInfo = new(selectedItem);
+                    groupInfo.Show();
                 }
                 else
                 {

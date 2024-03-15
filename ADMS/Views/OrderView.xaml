@@ -1,0 +1,93 @@
+﻿<Window x:Class="ADMS.Views.OrderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:ADMS.Views.Converters"
+        xmlns:local="clr-namespace:ADMS.Views"
+        mc:Ignorable="d"
+        Title="OrderInfo" Height="500" Width="670"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="ID:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Id}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Number:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Number}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Type:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Type}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Status:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Status}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Added Emplyoee:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.AddedEmplyoee.Surname}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Start Date:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                     Text="{Binding Order.StartDate}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="End Date:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                     Text="{Binding Order.EndDate}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Added Time:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.AddedTime}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Description:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="68" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Description}" />
+        </StackPanel>
+        <DataGrid x:Name="GroupsGrid" Height="130" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                       AutoGenerateColumns="False" ItemsSource="{Binding GroupList}" IsReadOnly="True" MouseDoubleClick="GroupRowDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Group" Binding="{Binding Name}" Width="120" />
+                <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty.ShortName}" Width="120" />
+                <DataGridTextColumn Header="Department" Binding="{Binding Department.ShortName}" Width="80" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button x:Name="ChangeStudentInfoButton" Content="Change"  Height="20" Width="80" Margin="125,298,0,0" HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" Command="{Binding ChangeOrderButtonCommand}" />
+        <DataGrid x:Name="StudentsGrid" Height="170" Width="330" Margin="320,153,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            AutoGenerateColumns="False" ItemsSource="{Binding StudentList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="120" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
+                <DataGridTextColumn Header="Group" Binding="{Binding Group.Name}" Width="80" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="FilesGrid" Height="146" Width="635" Margin="15,328,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            AutoGenerateColumns="False" ItemsSource="{Binding DocFileList}" IsReadOnly="True" MouseDoubleClick="FileRowDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="120" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="180" />
+                <DataGridTextColumn Header="AddedEmployee" Binding="{Binding AddedEmployee.Surname}" Width="80" />
+                <DataGridTextColumn Header="Added Time" Binding="{Binding AddedTime}" Width="80" />
+                <DataGridTextColumn Header="File" Binding="{Binding File}" Width="80" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

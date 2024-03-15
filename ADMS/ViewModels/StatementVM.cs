@@ -39,7 +39,7 @@ namespace ADMS.ViewModels
                     .StatementMarks.Where(x => x.Student!= null)
                     .Include(x => x.Student)
                     .Include(x => x.Statement)
-                    .Select(x => new StatementMark { Student = new Student {  Surname = x.Student.Surname, Name = x.Student.Name }, Mark = x.Mark })
+                    .Select(x => new StatementMark { Student = new Student { Id = x.Student.Id, Surname = x.Student.Surname, Name = x.Student.Name }, Mark = x.Mark })
                     .ToList();
                 MarksList = new ObservableCollection<StatementMark>(marksList) ?? new ObservableCollection<StatementMark>();
             }

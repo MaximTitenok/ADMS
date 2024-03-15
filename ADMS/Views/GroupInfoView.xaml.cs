@@ -20,24 +20,24 @@ namespace ADMS.Views
     /// <summary>
     /// Interaction logic for StudentInfo.xaml
     /// </summary>
-    public partial class StatementView : Window
+    public partial class GroupInfoView : Window
     {
-        internal StatementView(Statement statement)
+        internal GroupInfoView(Group group)
         {
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
-            StatementVM statementVM = new(statement);
-            DataContext = statementVM;
+            GroupInfoVM groupVM = new(group);
+            DataContext = groupVM;
 
         }
         private void StudentRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                StatementMark selectedItem = StatementsGrid.SelectedItem as StatementMark;
+                Student selectedItem = StudentsGrid.SelectedItem as Student;
                 if (selectedItem != null)
                 {
-                    StudentInfoView studentInfoView = new(selectedItem.Student);
+                    StudentInfoView studentInfoView = new(selectedItem);
                     studentInfoView.Show();
                 }
                 else

@@ -6,7 +6,8 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="StudentInfo" Height="450" Width="800">
+        Title="StudentInfo" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="IsReadOnly" Value="True" />
@@ -106,7 +107,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="OrdersGrid" Height="90" Width="300" Margin="15,315,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                              AutoGenerateColumns="False" ItemsSource="{Binding StudentOrders}" IsReadOnly="True">
+                              AutoGenerateColumns="False" ItemsSource="{Binding StudentOrders}" IsReadOnly="True" MouseDoubleClick="OrderRowDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="80" />
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="80"/>

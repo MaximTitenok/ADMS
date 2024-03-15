@@ -12,54 +12,77 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ADMS.ViewModels
 {
     internal class DeansOfficeVM : INotifyPropertyChanged
     {
-        public List<Group> Groups { get; set; }
-        public List<Speciality> Specialities { get; set; }
+        public List<Group> StudentGroups { get; set; }
+        public List<Speciality> StudentSpecialities { get; set; }
         public List<Student> Students { get; set; }
 
-        public string FindConditionSurname { get; set; }
-        public string FindConditionName { get; set; }
-        public string FindConditionSecondname { get; set; }
-        public string FindConditionPassport { get; set; }
-        public string FindConditionGroup { get; set; }
-        public string FindConditionSpeciality { get; set; }
-        public string FindConditionGender { get; set; }
-        public string FindConditionStudentId { get; set; }
-        public string FindConditionStudyLevel { get; set; }
-        public string FindConditionStudyForm { get; set; }
+        public string StudentFindConditionSurname { get; set; }
+        public string StudentFindConditionName { get; set; }
+        public string StudentFindConditionSecondname { get; set; }
+        public string StudentFindConditionPassport { get; set; }
+        public string StudentFindConditionGroup { get; set; }
+        public string StudentFindConditionSpeciality { get; set; }
+        public string StudentFindConditionGender { get; set; }
+        public string StudentFindConditionStudentId { get; set; }
+        public string StudentFindConditionStudyLevel { get; set; }
+        public string StudentFindConditionStudyForm { get; set; }
 
-        public string[] StudyLevels { get; set; }
-        public string[] StudyForms { get; set; }
+        public string[] StudentStudyLevels { get; set; }
+        public string[] StudentStudyForms { get; set; }
 
-        public ICommand FindButtonCommand { get; set; }
-        public ICommand ClearButtonCommand { get; set; }
+        public ICommand StudentFindButtonCommand { get; set; }
+        public ICommand StudentClearButtonCommand { get; set; }
+
+
+
+        public List<Group> Groups { get; set; }
+        public string[] GroupDepartments { get; set; }
+
+        public string GroupFindConditionName { get; set; }
+        public string GroupFindConditionDepartment { get; set; }
+        public DateTime GroupStartEducation { get; set; }
+        public string GroupFindConditionStudentSurname { get; set; }
+        public string GroupFindConditionStudentName { get; set; }
+
+        public ICommand GroupFindButtonCommand { get; set; }
+        public ICommand GroupClearButtonCommand { get; set; }
+
 
         public DeansOfficeVM(int facultyId) 
         {
-            Groups = StructureStore.GetGroups().Where(x => x?.Faculty?.Id == facultyId).ToList();
-            Groups.Insert(0,new Group { Name = "" });
-            Specialities = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == facultyId).ToList();
-            Specialities.Insert(0,new Speciality { ShortName = "" });
+            StudentGroups = StructureStore.GetGroups().Where(x => x?.Faculty?.Id == facultyId).ToList();
+            StudentGroups.Insert(0,new Group { Name = "" });
+            StudentSpecialities = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == facultyId).ToList();
+            StudentSpecialities.Insert(0,new Speciality { ShortName = "" });
 
-            StudyLevels = StructureStore.GetStudyLevels();
-            StudyForms = StructureStore.GetStudyForms();
+            StudentStudyLevels = StructureStore.GetStudyLevels();
+            StudentStudyForms = StructureStore.GetStudyForms();
 
-            FindButtonCommand = new RelayCommand(FindStudentsByConditions);
-            ClearButtonCommand = new RelayCommand(ClearConditionFields);
+            StudentFindButtonCommand = new RelayCommand(FindStudentsByConditions);
+            StudentClearButtonCommand = new RelayCommand(StudentClearConditionFields);
 
+
+            var departments = StructureStore.GetDepartments().Where(x => x.Faculty.Id == facultyId).ToList();
+            departments.Insert(0, new Department { ShortName = "" });
+            GroupDepartments = departments.Select(x => x.ShortName).ToArray();
+
+            GroupFindButtonCommand = new RelayCommand(FindGroupsByConditions);
+            GroupClearButtonCommand = new RelayCommand(GroupClearConditionFields);
         }
 
         private void FindStudentsByConditions(object obj)
         {
-            if (String.IsNullOrEmpty(FindConditionSurname) && String.IsNullOrEmpty(FindConditionName) 
-                && String.IsNullOrEmpty(FindConditionSecondname) && String.IsNullOrEmpty(FindConditionGroup) 
-                && String.IsNullOrEmpty(FindConditionSpeciality) && String.IsNullOrEmpty(FindConditionGender)
-                && String.IsNullOrEmpty(FindConditionStudentId) && String.IsNullOrEmpty(FindConditionPassport)
-                && String.IsNullOrEmpty(FindConditionStudyLevel) && String.IsNullOrEmpty(FindConditionStudyForm))
+            if (String.IsNullOrEmpty(StudentFindConditionSurname) && String.IsNullOrEmpty(StudentFindConditionName) 
+                && String.IsNullOrEmpty(StudentFindConditionSecondname) && String.IsNullOrEmpty(StudentFindConditionGroup) 
+                && String.IsNullOrEmpty(StudentFindConditionSpeciality) && String.IsNullOrEmpty(StudentFindConditionGender)
+                && String.IsNullOrEmpty(StudentFindConditionStudentId) && String.IsNullOrEmpty(StudentFindConditionPassport)
+                && String.IsNullOrEmpty(StudentFindConditionStudyLevel) && String.IsNullOrEmpty(StudentFindConditionStudyForm))
             {
                 MessageBox.Show("All the fields is empty!","Error");
                 return;
@@ -68,68 +91,68 @@ namespace ADMS.ViewModels
             { 
                 var query = _dbContext.Students.AsQueryable();
 
-                if (!string.IsNullOrEmpty(FindConditionSurname))
+                if (!string.IsNullOrEmpty(StudentFindConditionSurname))
                 {
-                    query = query.Where(student => student.Surname.Contains(FindConditionSurname));
+                    query = query.Where(student => student.Surname.Contains(StudentFindConditionSurname));
                 }
 
-                if (!string.IsNullOrEmpty(FindConditionName))
+                if (!string.IsNullOrEmpty(StudentFindConditionName))
                 {
-                    query = query.Where(student => student.Name.Contains(FindConditionName));
+                    query = query.Where(student => student.Name.Contains(StudentFindConditionName));
                 }
 
-                if (!string.IsNullOrEmpty(FindConditionSecondname))
+                if (!string.IsNullOrEmpty(StudentFindConditionSecondname))
                 {
-                    query = query.Where(student => student.Secondname.Contains(FindConditionSecondname));
+                    query = query.Where(student => student.Secondname.Contains(StudentFindConditionSecondname));
                 }
-                if (!string.IsNullOrEmpty(FindConditionPassport))
+                if (!string.IsNullOrEmpty(StudentFindConditionPassport))
                 {
-                    query = query.Where(student => student.PassportId.Contains(FindConditionPassport));
+                    query = query.Where(student => student.PassportId.Contains(StudentFindConditionPassport));
                 }
-                if (!string.IsNullOrEmpty(FindConditionGroup))
+                if (!string.IsNullOrEmpty(StudentFindConditionGroup))
                 {
-                    query = query.Where(student => student.Group.Name.Contains(FindConditionGroup));
+                    query = query.Where(student => student.Group.Name.Contains(StudentFindConditionGroup));
                 }
-                if (!string.IsNullOrEmpty(FindConditionSpeciality))
+                if (!string.IsNullOrEmpty(StudentFindConditionSpeciality))
                 {
-                    query = query.Where(student => student.Speciality.Name.Contains(FindConditionSpeciality));
+                    query = query.Where(student => student.Speciality.Name.Contains(StudentFindConditionSpeciality));
                 }
-                if (!string.IsNullOrEmpty(FindConditionGender))
+                if (!string.IsNullOrEmpty(StudentFindConditionGender))
                 {
                     bool gender = false;
-                    if (FindConditionGender == "Male")
+                    if (StudentFindConditionGender == "Male")
                     {
                         gender = false;
                     }
-                    else if (FindConditionGender == "Female")
+                    else if (StudentFindConditionGender == "Female")
                     {
                         gender = true;
                     }
                     query = query.Where(student => student.Gender == gender);
                 }
 
-                if (!string.IsNullOrEmpty(FindConditionStudentId))
+                if (!string.IsNullOrEmpty(StudentFindConditionStudentId))
                 {
-                    if (FindConditionStudentId.All(char.IsDigit))
+                    if (StudentFindConditionStudentId.All(char.IsDigit))
                     {
-                        query = query.Where(student => student.StudentId.ToString() == FindConditionStudentId);
+                        query = query.Where(student => student.StudentId.ToString() == StudentFindConditionStudentId);
                     }
                     else
                     {
                         MessageBox.Show("Student ID contains letter!", "Error");
                     }
                 }
-                if (!string.IsNullOrEmpty(FindConditionSpeciality))
+                if (!string.IsNullOrEmpty(StudentFindConditionSpeciality))
                 {
-                    query = query.Where(student => student.Speciality.Name.Contains(FindConditionSpeciality));
+                    query = query.Where(student => student.Speciality.Name.Contains(StudentFindConditionSpeciality));
                 }
-                if (!string.IsNullOrEmpty(FindConditionStudyLevel))
+                if (!string.IsNullOrEmpty(StudentFindConditionStudyLevel))
                 {
-                    query = query.Where(student => student.StudyLevel == Array.IndexOf(StudyLevels, FindConditionStudyLevel));
+                    query = query.Where(student => student.StudyLevel == Array.IndexOf(StudentStudyLevels, StudentFindConditionStudyLevel));
                 }
-                if (!string.IsNullOrEmpty(FindConditionStudyForm))
+                if (!string.IsNullOrEmpty(StudentFindConditionStudyForm))
                 {
-                    query = query.Where(student => student.StudyForm == Array.IndexOf(StudyForms, FindConditionStudyForm));
+                    query = query.Where(student => student.StudyForm == Array.IndexOf(StudentStudyForms, StudentFindConditionStudyForm));
                 }
 
                 Students = query
@@ -141,31 +164,105 @@ namespace ADMS.ViewModels
             OnPropertyChanged("Students");
         }
 
-        private void ClearConditionFields(object obj)
+        private void StudentClearConditionFields(object obj)
         {
-            FindConditionSurname = "";
-            OnPropertyChanged("FindConditionSurname");
-            FindConditionName = "";
-            OnPropertyChanged("FindConditionName");
-            FindConditionSecondname = "";
-            OnPropertyChanged("FindConditionSecondname");
-            FindConditionGroup = "";
-            OnPropertyChanged("FindConditionGroup");
-            FindConditionSpeciality = "";
-            OnPropertyChanged("FindConditionSpeciality");
-            FindConditionGender = "";
-            OnPropertyChanged("FindConditionGender");
-            FindConditionStudentId = "";
-            OnPropertyChanged("FindConditionStudentId");
-            FindConditionPassport = "";
-            OnPropertyChanged("FindConditionPassport");
-            FindConditionStudyLevel = "";
-            OnPropertyChanged("FindConditionStudyLevel");
-            FindConditionStudyForm = "";
-            OnPropertyChanged("FindConditionStudyForm");
+            StudentFindConditionSurname = "";
+            OnPropertyChanged("StudentFindConditionSurname");
+            StudentFindConditionName = "";
+            OnPropertyChanged("StudentFindConditionName");
+            StudentFindConditionSecondname = "";
+            OnPropertyChanged("StudentFindConditionSecondname");
+            StudentFindConditionGroup = "";
+            OnPropertyChanged("StudentFindConditionGroup");
+            StudentFindConditionSpeciality = "";
+            OnPropertyChanged("StudentFindConditionSpeciality");
+            StudentFindConditionGender = "";
+            OnPropertyChanged("StudentFindConditionGender");
+            StudentFindConditionStudentId = "";
+            OnPropertyChanged("StudentFindConditionStudentId");
+            StudentFindConditionPassport = "";
+            OnPropertyChanged("StudentFindConditionPassport");
+            StudentFindConditionStudyLevel = "";
+            OnPropertyChanged("StudentFindConditionStudyLevel");
+            StudentFindConditionStudyForm = "";
+            OnPropertyChanged("StudentFindConditionStudyForm");
         }
 
 
+ /*       GroupFindConditionName = "";
+            OnPropertyChanged("GroupFindConditionName");
+        GroupFindConditionDepartments = new string[] {""};
+    OnPropertyChanged("GroupFindConditionDepartments");
+    GroupStartEducation = DateTime.MinValue;
+            OnPropertyChanged("GroupStartEducation");
+    GroupFindConditionStudentSurname = "";
+            OnPropertyChanged("GroupFindConditionStudentSurname");
+    GroupFindConditionStudentName = "";
+            OnPropertyChanged("GroupFindConditionStudentName");*/
+
+    private void FindGroupsByConditions(object obj)
+        {
+            if (String.IsNullOrEmpty(GroupFindConditionName) && GroupFindConditionDepartment == null
+                && GroupStartEducation == DateTime.MinValue && String.IsNullOrEmpty(GroupFindConditionStudentSurname)
+                && String.IsNullOrEmpty(GroupFindConditionStudentName))
+            {
+                MessageBox.Show("All the fields is empty!", "Error");
+                return;
+            }
+            using (AppDBContext _dbContext = new AppDBContext())
+            {
+                var query = _dbContext.Groups.AsQueryable();
+
+                if (!string.IsNullOrEmpty(GroupFindConditionName))
+                {
+                    query = query.Where(group => group.Name.Contains(GroupFindConditionName));
+                }
+
+                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))//TODO: Add the space check
+                {
+                    query = query.Where(group => group.Department.ShortName == GroupFindConditionDepartment);
+                }
+
+                if (GroupStartEducation != DateTime.MinValue)
+                {
+                    query = query.Where(group => group.StartEducation == GroupStartEducation);
+                }
+                if (!string.IsNullOrEmpty(GroupFindConditionStudentSurname))
+                {
+                    query = _dbContext.Students
+                        .Where(x => x.Surname.Contains(GroupFindConditionStudentSurname))
+                        .Select(x => x.Group)
+                        .Intersect(query).AsQueryable();
+                }
+                if (!string.IsNullOrEmpty(GroupFindConditionStudentName))
+                {
+                    query = _dbContext.Students
+                        .Where(x => x.Name.Contains(GroupFindConditionStudentName))
+                        .Select(x => x.Group)
+                        .Intersect(query).AsQueryable();
+                }
+
+                Groups = query
+                    .Include(x => x.Faculty)
+                    .Include(x => x.Department)
+                    .ToList();
+            }
+            OnPropertyChanged("Groups");
+        }
+
+        private void GroupClearConditionFields(object obj)
+        {
+            GroupFindConditionName = "";
+            OnPropertyChanged("GroupFindConditionName");
+            GroupFindConditionDepartment = "";
+            OnPropertyChanged("GroupFindConditionDepartments");
+            GroupStartEducation = DateTime.MinValue;
+            OnPropertyChanged("GroupStartEducation");
+            GroupFindConditionStudentSurname = "";
+            OnPropertyChanged("GroupFindConditionStudentSurname");
+            GroupFindConditionStudentName = "";
+            OnPropertyChanged("GroupFindConditionStudentName");
+        }
 
 
 

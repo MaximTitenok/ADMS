@@ -6,7 +6,8 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="StudentInfo" Height="450" Width="800">
+        Title="StatementInfo" Height="315" Width="670"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="IsReadOnly" Value="True" />
@@ -14,9 +15,6 @@
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
-        <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
-        <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
-        <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -54,18 +52,18 @@
             <TextBlock Text="Teacher:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.Teacher.Surname}" />
         </StackPanel>
-        <DataGrid x:Name="StatementsGrid" Height="265" Width="430" Margin="320,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+        <DataGrid x:Name="StatementsGrid" Height="265" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                        AutoGenerateColumns="False" ItemsSource="{Binding MarksList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Student.Surname}" Width="80" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Student.Name}" Width="80" />
+                <DataGridTextColumn Header="Surname" Binding="{Binding Student.Surname}" Width="120" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Student.Name}" Width="120" />
                 <DataGridTextColumn Header="Mark" Binding="{Binding Mark}" Width="80" />
 
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="ChangeStudentInfoButton" Content="Change"  Height="20" Width="80" Margin="620,15,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="ChangeStudentInfoButton" Content="Change"  Height="20" Width="80" Margin="112,221,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding ChangeStatementButtonCommand}" />
-        
+
     </Grid>
 </Window>

@@ -6,7 +6,8 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="StudentInfo" Height="360" Width="700">
+        Title="StudentInfoChange" Height="360" Width="700"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
 

@@ -26,12 +26,17 @@ namespace ADMS.ViewModels
 
         public StudentInfoVM(Student student) 
         {
-            Student = student;
             using (AppDBContext _dbContext = new AppDBContext())
             {
-                StudentStatements = new ObservableCollection<Statement>(_dbContext.Statements.Include(x => x.Teacher)) ?? new ObservableCollection<Statement>();
-                var orders = _dbContext.Orders.Where(x => x.Groups != null || x.Students != null).ToList();
-                StudentOrders = new ObservableCollection<Order>(orders.Where(order => order.Students.Contains(student.Id) || order.Groups.Contains(student.Group.Id)));
+                Student = _dbContext.Students
+                    .Where(x => x.Id == student.Id)
+                    .Include(x => x.Faculty)
+                    .Include(x => x.Speciality)
+                    .Include(x => x.Group)
+                    .FirstOrDefault() ?? new Student();
+                StudentStatements = new ObservableCollection<Statement>(_dbContext.Statements.Include(x => x.Teacher).Where(x => x.Group == Student.Group)) ?? new ObservableCollection<Statement>();
+                StudentOrders = new ObservableCollection<Order>(_dbContext.Orders.Where(x => x.Students.ToArray().Contains(Student.Id) || x.Groups.ToArray().Contains(Student.Group.Id)).ToList());
+                //StudentOrders = orders.Where(order => order.Students.ToArray().Contains(student.Id) || order.Groups.ToArray().Contains(student.Group.Id)));
             }
             ChangeStudentInfoButtonCommand = new RelayCommand(ChangeStudentInfo);
         }

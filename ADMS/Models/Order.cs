@@ -21,7 +21,8 @@ namespace ADMS.Models
         public int[] Groups { get; set; }
         [Column("Students", TypeName = "integer[]")]
         public int[] Students { get; set; }
-        public byte[]? File { get; set; }
+        [Column("File", TypeName = "integer[]")]
+        public ushort[]? File { get; set; }
         public Employee? AddedEmplyoee { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }

@@ -13,6 +13,8 @@ namespace ADMS.Services
     {
         private static List<Speciality> Specialities {  get; set; }
         private static List<Group> Groups { get; set; }
+        private static List<Department> Departments { get; set; }
+        
         private readonly static string[] StudyForms = {
             "FT OC (Full-time on-campuse)",
             "FT E (Full-time evening)",
@@ -60,7 +62,21 @@ namespace ADMS.Services
             GroupsList = Groups ?? new List<Group>();
             return GroupsList;
         }
-
+        internal static List<Department> GetDepartments()
+        {
+            if (Departments == null || Departments.Count == 0)
+            {
+                using (AppDBContext _dbContext = new AppDBContext())
+                {
+                    Departments = _dbContext
+                        .Departments
+                        .Include(t => t.Faculty)
+                        .AsNoTracking()
+                        .ToList();
+                }
+            }
+            return Departments ?? new List<Department>();
+        }
         internal static string GetStudyFormName(int type)
         {
             switch (type)

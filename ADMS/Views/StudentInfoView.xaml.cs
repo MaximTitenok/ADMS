@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ADMS.Models;
 using ADMS.ViewModels;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ADMS.Views
 {
@@ -44,6 +45,21 @@ namespace ADMS.Views
                 }
             }
         }
-
+        private void OrderRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Order selectedItem = OrdersGrid.SelectedItem as Order;
+                if (selectedItem != null)
+                {
+                    OrderView orderView = new(selectedItem);
+                    orderView.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid row", "Error");
+                }
+            }
+        }
     }
 }
