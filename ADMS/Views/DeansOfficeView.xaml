@@ -78,7 +78,8 @@
                             VerticalAlignment="Top" Command="{Binding StudentFindButtonCommand}" />
                     <Button x:Name="StudentDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,75,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding StudentClearButtonCommand}" />
-                    
+                    <Button x:Name="StudentAddButton" Content="Add student"  Height="40" Width="80" Margin="700,25,0,0" HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" Command="{Binding StudentAddButtonCommand}" />
 
                     <DataGrid x:Name="StudentsGrid" Height="270" Width="770" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
                               AutoGenerateColumns="False" ItemsSource="{Binding Students}" IsReadOnly="True" MouseDoubleClick="StudentFindRowDoubleClick">
@@ -131,7 +132,8 @@
                         VerticalAlignment="Top" Command="{Binding GroupFindButtonCommand}" />
                     <Button x:Name="GroupDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,25,0,0" HorizontalAlignment="Left" 
                         VerticalAlignment="Top" Command="{Binding GroupClearButtonCommand}" />
-
+                    <Button x:Name="GroupAddButton" Content="Add group"  Height="40" Width="80" Margin="702,5,0,0" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Command="{Binding GroupAddButtonCommand}" />
                     <DataGrid x:Name="GroupsGrid" Height="320" Width="770" Margin="0,60,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
                             AutoGenerateColumns="False" ItemsSource="{Binding Groups}" IsReadOnly="True" MouseDoubleClick="GroupFindRowDoubleClick">
                         <DataGrid.Columns>

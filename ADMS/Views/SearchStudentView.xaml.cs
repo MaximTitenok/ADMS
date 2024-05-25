@@ -1,5 +1,4 @@
 ﻿using ADMS.Models;
-using ADMS.Services;
 using ADMS.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,25 +13,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using MessageBox = System.Windows.MessageBox;
 
 namespace ADMS.Views
 {
     /// <summary>
-    /// Interaction logic for DeansOfficeView.xaml
+    /// Interaction logic for SearchStudentView.xaml
     /// </summary>
-    public partial class DeansOfficeView : Window
+    public partial class SearchStudentView : Window
     {
-        DeansOfficeVM deansOfficeVM = new(StructureStore.GetFaculty().Id);
-
-        public DeansOfficeView()
+        internal SearchStudentVM SearchStudentVM { get; set; }
+        internal SearchStudentView(GroupInfoChangeVM groupInfoChangeVM)
         {
-            this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
-            DataContext = deansOfficeVM;
+            SearchStudentVM VM = new(groupInfoChangeVM);
+            SearchStudentVM = VM;
+            DataContext = VM;
         }
-        
-
         private void StudentFindRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -49,24 +45,26 @@ namespace ADMS.Views
                 }
             }
         }
-        private void GroupFindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        private void StudentSelectedClick(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            Student selectedItem = StudentsGrid.SelectedItem as Student;
+            if (selectedItem != null)
             {
-                Group selectedItem = GroupsGrid.SelectedItem as Group;
-                if (selectedItem != null)
-                {
-                    GroupInfoView groupInfo = new(selectedItem);
-                    groupInfo.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Invalid row", "Error");
-                }
+                SearchStudentVM.Student = selectedItem;
+            }
+            else
+            {
+                MessageBox.Show("Invalid row", "Error");
             }
         }
-
-
+        private void SelectButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if(SearchStudentVM.Student.Surname != null)
+            {
+                this.Hide();
+            }
+        }
+        
 
     }
 }

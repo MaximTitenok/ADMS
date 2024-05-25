@@ -17,12 +17,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\GroupInfoChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\StudentInfoChangeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StatementView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\GroupInfoChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

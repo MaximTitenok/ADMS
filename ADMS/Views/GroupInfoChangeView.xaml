@@ -1,0 +1,69 @@
+﻿<Window x:Class="ADMS.Views.GroupInfoChangeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:ADMS.Views.Converters"
+        xmlns:local="clr-namespace:ADMS.Views"
+        mc:Ignorable="d"
+        Title="GroupInfoChange" Height="240" Width="718"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <converters:GetSpecialityNameConverter x:Key="GetSpecialityNameConverter"/>
+        <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
+        <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
+        <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="ID:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Group.Id}" />
+        </StackPanel>
+        
+        <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Name:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Name}" />
+        </StackPanel>
+        
+        <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Faculty:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Group.Faculty.Name}" />
+        </StackPanel>
+        
+        <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Department:" VerticalAlignment="Center" />
+            <ComboBox x:Name="DepartmentsComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+   ItemsSource="{Binding DepartmentsArray}"  SelectedValue="{Binding Department}"/>
+        </StackPanel>
+        
+        <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Start Educ:" VerticalAlignment="Center" />
+            <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                SelectedDate="{Binding Group.StartEducation}"/>
+        </StackPanel>
+
+        <DataGrid x:Name="StudentsGrid" Height="113" Width="330" Margin="360,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            AutoGenerateColumns="False" ItemsSource="{Binding StudentsList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick"
+                  SelectedCellsChanged="StudentSelectedClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="120" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="SaveGroupInfoButton" Content="Save"  Height="40" Width="305" Margin="15,147,0,0" HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" Command="{Binding SaveGroupInfoButtonCommand}" />
+
+        <Button x:Name="AddStudentToGroupButton" Content="Add Student"  Height="40" Width="140" Margin="370,147,0,0" HorizontalAlignment="Left" 
+            VerticalAlignment="Top" Command="{Binding AddStudentToGroupButtonCommand}" />
+        <Button x:Name="RemoveStudentFromGroupButton" Content="Remove Student"  Height="40" Width="140" Margin="540,147,0,0" HorizontalAlignment="Left" 
+            VerticalAlignment="Top" Command="{Binding RemoveStudentFromGroupButtonCommand}" />
+
+
+    </Grid>
+</Window>

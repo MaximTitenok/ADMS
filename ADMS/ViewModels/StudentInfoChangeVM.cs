@@ -26,28 +26,26 @@ namespace ADMS.ViewModels
         public Student Student { get; set; }
         public List<Group> Groups { get; set; }
         public List<Speciality> Specialities { get; set; }
-        public string[] SpecialitiesArray { get; set; }
-        public string[] GroupsArray { get; set; }
-        public string[] StudyFormArray { get; set; } = StructureStore.GetStudyForms();
-        public string[] StudyLevelArray { get; set; } = StructureStore.GetStudyLevels();
+        public string?[] SpecialitiesArray { get; set; }
+        public string?[] GroupsArray { get; set; }
+        public string?[] StudyFormArray { get; set; } = StructureStore.GetStudyForms();
+        public string?[] StudyLevelArray { get; set; } = StructureStore.GetStudyLevels();
         public string Group {  get; set; }
         public string Speciality { get; set; }
         public string StudyForm { get; set; }
         public string StudyLevel { get; set; }
         public string StudentGender { get; set; }
         public ICommand SaveStudentInfoButtonCommand { get; set; }
+        bool IsStudentNew { get; set; }
 
         public StudentInfoChangeVM(Student student)
         {
+            IsStudentNew = false;
             Student = new Student(student);
-            using (AppDBContext _dbContext = new AppDBContext())
-            { 
-                Groups = _dbContext.Groups.Where(x => x.Faculty.Id == Student.Faculty.Id).AsNoTracking().ToList();
-                Specialities = _dbContext.Specialities.Where(x => x.Faculty.Id == Student.Faculty.Id).AsNoTracking().ToList();
-
-            }
-            SpecialitiesArray = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == Student.Faculty.Id).Select(x => x.ShortName).ToArray();
-            GroupsArray = StructureStore.GetGroups().Where(x => x.Faculty.Id == Student.Faculty.Id).Select(x => x.Name).ToArray();
+            Groups = StructureStore.GetGroups().Where(x => x.Faculty.Id == Student.Faculty.Id).ToList();
+            Specialities = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == Student.Faculty.Id).ToList();
+            SpecialitiesArray = StructureStore.GetSpecialities().Where(x => x.Faculty?.Id == Student?.Faculty?.Id).Select(x => x.ShortName).ToArray();
+            GroupsArray = StructureStore.GetGroups().Where(x => x.Faculty?.Id == Student?.Faculty?.Id).Select(x => x.Name).ToArray();
             Group = Student.Group.Name;
             Speciality = Student.Speciality.ShortName;
             StudyForm = StructureStore.GetStudyFormName((int)Student.StudyForm);
@@ -62,6 +60,22 @@ namespace ADMS.ViewModels
             }
             SaveStudentInfoButtonCommand = new RelayCommand(SaveStudentInfo);
         }
+        public StudentInfoChangeVM()
+        {
+
+            IsStudentNew = true;
+            Student = new Student();
+            Student.Faculty = StructureStore.GetFaculty();
+            SpecialitiesArray = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == Student.Faculty.Id).Select(x => x.ShortName).ToArray();
+            GroupsArray = StructureStore.GetGroups().Where(x => x.Faculty.Id == Student.Faculty.Id).Select(x => x.Name).ToArray();
+            SaveStudentInfoButtonCommand = new RelayCommand(SaveStudentInfo);
+            using (AppDBContext _dbContext = new AppDBContext())
+            {
+                Groups = _dbContext.Groups.Where(x => x.Faculty.Id == Student.Faculty.Id).AsNoTracking().ToList();
+                Specialities = _dbContext.Specialities.Where(x => x.Faculty.Id == Student.Faculty.Id).AsNoTracking().ToList();
+
+            }
+        }
         private void SaveStudentInfo(object obj)
         {
             if(StudentGender == "Male")
@@ -75,11 +89,22 @@ namespace ADMS.ViewModels
             Student.StudyForm = StructureStore.GetStudyFormIndex(StudyForm);
             Student.StudyLevel = StructureStore.GetStudyLevelIndex(StudyLevel);
             Student.Group = Groups.Where(x =>  x.Name == Group).FirstOrDefault();
-            Student.Speciality = Specialities.Where(x => x.Name == Speciality).FirstOrDefault();
+            Student.Speciality = Specialities.Where(x => x.ShortName == Speciality).FirstOrDefault();
             using (AppDBContext _dbContext = new AppDBContext())
             {
-                _dbContext.Students.Update(Student);
-                 _dbContext.SaveChanges();
+                if(IsStudentNew)
+                {
+                    _dbContext.Entry(Student.Faculty).State = EntityState.Unchanged;
+                    _dbContext.Entry(Student.Group).State = EntityState.Unchanged;
+                    _dbContext.Entry(Student.Speciality).State = EntityState.Unchanged;
+                    _dbContext.Students.Add(Student);
+                }
+                else
+                {
+                    _dbContext.Students.Update(Student);
+                }
+                _dbContext.SaveChanges();
+
             }
 
         }

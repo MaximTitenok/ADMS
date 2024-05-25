@@ -14,7 +14,8 @@ namespace ADMS.Services
         private static List<Speciality> Specialities {  get; set; }
         private static List<Group> Groups { get; set; }
         private static List<Department> Departments { get; set; }
-        
+        private static Faculty Faculty { get; set; }
+
         private readonly static string[] StudyForms = {
             "FT OC (Full-time on-campuse)",
             "FT E (Full-time evening)",
@@ -27,6 +28,22 @@ namespace ADMS.Services
             "Master",
             "PhD"
         };
+        internal static Faculty GetFaculty()
+        {
+            if (Faculty == null)
+            {
+                using (AppDBContext _dbContext = new AppDBContext())
+                {
+                    Faculty = _dbContext
+                        .Faculties
+                        .Where(x => x.Id == 1)//FIT
+                        .AsNoTracking()
+                        .FirstOrDefault();
+                        
+                }
+            }
+            return Faculty ?? new Faculty();
+        }
         internal static List<Speciality> GetSpecialities()
         {
             if (Specialities == null || Specialities.Count == 0)

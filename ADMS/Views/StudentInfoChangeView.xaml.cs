@@ -28,6 +28,13 @@ namespace ADMS.Views
             StudentInfoChangeVM studentInfoChangeVM = new(student);
             DataContext = studentInfoChangeVM;
         }
+        internal StudentInfoChangeView()
+        {
+            this.ResizeMode = ResizeMode.NoResize;
+            InitializeComponent();
+            StudentInfoChangeVM studentInfoChangeVM = new();
+            DataContext = studentInfoChangeVM;
+        }
 
     }
 }

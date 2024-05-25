@@ -43,7 +43,7 @@
         <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Birthday:" VerticalAlignment="Center" />
             <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
-                     Text="{Binding Student.Birthday, StringFormat=\{0:dd-MM-yyyy\}}" />
+            SelectedDate="{Binding Student.Birthday}"/>
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Gender:" VerticalAlignment="Center" />

@@ -1,5 +1,6 @@
 ﻿using ADMS.Models;
 using ADMS.Services;
+using ADMS.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ namespace ADMS.ViewModels
 
         public ICommand StudentFindButtonCommand { get; set; }
         public ICommand StudentClearButtonCommand { get; set; }
+        public ICommand StudentAddButtonCommand { get; set; }
+       
+
 
 
 
@@ -52,6 +56,7 @@ namespace ADMS.ViewModels
 
         public ICommand GroupFindButtonCommand { get; set; }
         public ICommand GroupClearButtonCommand { get; set; }
+        public ICommand GroupAddButtonCommand { get; set; }
 
 
         public DeansOfficeVM(int facultyId) 
@@ -66,6 +71,8 @@ namespace ADMS.ViewModels
 
             StudentFindButtonCommand = new RelayCommand(FindStudentsByConditions);
             StudentClearButtonCommand = new RelayCommand(StudentClearConditionFields);
+            StudentAddButtonCommand = new RelayCommand(AddNewStudent);
+            
 
 
             var departments = StructureStore.GetDepartments().Where(x => x.Faculty.Id == facultyId).ToList();
@@ -74,6 +81,7 @@ namespace ADMS.ViewModels
 
             GroupFindButtonCommand = new RelayCommand(FindGroupsByConditions);
             GroupClearButtonCommand = new RelayCommand(GroupClearConditionFields);
+            GroupAddButtonCommand = new RelayCommand(AddNewGroup);
         }
 
         private void FindStudentsByConditions(object obj)
@@ -188,19 +196,13 @@ namespace ADMS.ViewModels
             OnPropertyChanged("StudentFindConditionStudyForm");
         }
 
+        private void AddNewStudent(object obj)
+        {
+            StudentInfoChangeView changeView = new();
+            changeView.Show();
+        }
 
- /*       GroupFindConditionName = "";
-            OnPropertyChanged("GroupFindConditionName");
-        GroupFindConditionDepartments = new string[] {""};
-    OnPropertyChanged("GroupFindConditionDepartments");
-    GroupStartEducation = DateTime.MinValue;
-            OnPropertyChanged("GroupStartEducation");
-    GroupFindConditionStudentSurname = "";
-            OnPropertyChanged("GroupFindConditionStudentSurname");
-    GroupFindConditionStudentName = "";
-            OnPropertyChanged("GroupFindConditionStudentName");*/
-
-    private void FindGroupsByConditions(object obj)
+        private void FindGroupsByConditions(object obj)
         {
             if (String.IsNullOrEmpty(GroupFindConditionName) && GroupFindConditionDepartment == null
                 && GroupStartEducation == DateTime.MinValue && String.IsNullOrEmpty(GroupFindConditionStudentSurname)
@@ -263,7 +265,11 @@ namespace ADMS.ViewModels
             GroupFindConditionStudentName = "";
             OnPropertyChanged("GroupFindConditionStudentName");
         }
-
+        private void AddNewGroup(object obj)
+        {
+            GroupInfoChangeView changeView = new();
+            changeView.Show();
+        }
 
 
 

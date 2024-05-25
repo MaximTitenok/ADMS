@@ -42,9 +42,8 @@ namespace ADMS.ViewModels
         }
         private void ChangeGroup(object obj)
         {
-            //TODO: Create changegroupview
-           /* StatementChangeView changeView = new (Statement);
-            changeView.Show();*/
+            GroupInfoChangeView changeView = new(Group);
+            changeView.Show();
 
         }
 
