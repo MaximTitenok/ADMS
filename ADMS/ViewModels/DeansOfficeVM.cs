@@ -59,6 +59,37 @@ namespace ADMS.ViewModels
         public ICommand GroupAddButtonCommand { get; set; }
 
 
+
+
+        public List<Statement> Statements { get; set; }
+        public List<Subject> Subjects { get; set; }
+        public string[] StatementDepartments { get; set; }
+        public string[] StatementSubjects { get; set; }
+
+        public string StatementFindConditionSemester { get; set; }
+        private string statementFindConditionDepartment;
+        public string StatementFindConditionDepartment 
+        { 
+            get { return statementFindConditionDepartment; } 
+            set 
+            { 
+                statementFindConditionDepartment = value;
+                StatementUpdateSubjects();
+            }
+        }
+        public string StatementFindConditionSubject { get; set; }
+        public string StatementFindConditionECTS { get; set; }
+        public string StatementFindConditionExam { get; set; }
+        public string StatementFindConditionCredit { get; set; }
+        public string StatementFindConditionCP { get; set; }
+        public string StatementFindConditionCGW { get; set; }
+        public string StatementFindConditionDiploma { get; set; }
+
+        public ICommand StatementFindButtonCommand { get; set; }
+        public ICommand StatementClearButtonCommand { get; set; }
+        public ICommand StatementAddButtonCommand { get; set; }
+
+
         public DeansOfficeVM(int facultyId) 
         {
             StudentGroups = StructureStore.GetGroups().Where(x => x?.Faculty?.Id == facultyId).ToList();
@@ -82,6 +113,12 @@ namespace ADMS.ViewModels
             GroupFindButtonCommand = new RelayCommand(FindGroupsByConditions);
             GroupClearButtonCommand = new RelayCommand(GroupClearConditionFields);
             GroupAddButtonCommand = new RelayCommand(AddNewGroup);
+
+            StatementDepartments = departments.Select(x => x.ShortName).ToArray();
+
+            StatementFindButtonCommand = new RelayCommand(FindStatementsByConditions);
+            StatementClearButtonCommand = new RelayCommand(StatementClearConditionFields);
+            StatementAddButtonCommand = new RelayCommand(AddNewStatement);
         }
 
         private void FindStudentsByConditions(object obj)
@@ -271,6 +308,155 @@ namespace ADMS.ViewModels
             changeView.Show();
         }
 
+
+        private void FindStatementsByConditions(object obj)
+        {
+            if (String.IsNullOrEmpty(StatementFindConditionSemester) && StatementFindConditionDepartment == null
+                && String.IsNullOrEmpty(StatementFindConditionSubject) && String.IsNullOrEmpty(StatementFindConditionECTS)
+                && String.IsNullOrEmpty(StatementFindConditionExam) && String.IsNullOrEmpty(StatementFindConditionCredit)
+                && String.IsNullOrEmpty(StatementFindConditionCP) && String.IsNullOrEmpty(StatementFindConditionCGW)
+                && String.IsNullOrEmpty(StatementFindConditionDiploma))
+            {
+                MessageBox.Show("All the fields is empty!", "Error");
+                return;
+            }
+            using (AppDBContext _dbContext = new AppDBContext())
+            {
+                var query = _dbContext.Statements.AsQueryable();
+
+                if (!string.IsNullOrEmpty(StatementFindConditionSemester))
+                {
+                    if (StatementFindConditionSemester.All(char.IsDigit))
+                    {
+                        query = query.Where(statements => statements.Semester.ToString() == StatementFindConditionSemester);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Semester contains letter!", "Error");
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))//TODO: Add the space check
+                {
+                    query = query.Where(statements => statements.SubjectId.Department.ShortName == StatementFindConditionDepartment);
+                }
+
+                if (!string.IsNullOrEmpty(StatementFindConditionSubject))
+                {
+                    query = query.Where(statements => statements.SubjectId.SubjectBankId.ShortName == StatementFindConditionSubject);
+                }
+                if (!string.IsNullOrEmpty(StatementFindConditionECTS))
+                { 
+                    int.TryParse(StatementFindConditionECTS, out int ECTS);
+                    query = query.Where(statements => statements.SubjectId.ECTS == ECTS);
+                }
+                if (!string.IsNullOrEmpty(StatementFindConditionExam))
+                {
+                    bool exam = false;
+                    if (StatementFindConditionExam == "Yes")
+                    {
+                        exam = true;
+                    }
+                    else if (StatementFindConditionExam == "No")
+                    {
+                        exam = false;
+                    }
+                    query = query.Where(statements => statements.SubjectId.Exam == exam);
+                }
+                if (!string.IsNullOrEmpty(StatementFindConditionCredit))
+                {
+                    bool credit = false;
+                    if (StatementFindConditionCredit == "Yes")
+                    {
+                        credit = true;
+                    }
+                    else if (StatementFindConditionCredit == "No")
+                    {
+                        credit = false;
+                    }
+                    query = query.Where(statements => statements.SubjectId.Credit == credit);
+                }
+                if (!string.IsNullOrEmpty(StatementFindConditionCP))
+                {
+                    bool cp = false;
+                    if (StatementFindConditionCP == "Yes")
+                    {
+                        cp = true;
+                    }
+                    else if (StatementFindConditionCP == "No")
+                    {
+                        cp = false;
+                    }
+                    query = query.Where(statements => statements.SubjectId.CourseProject == cp);
+                }
+                if (!string.IsNullOrEmpty(StatementFindConditionCGW))
+                {
+                    bool cgw = false;
+                    if (StatementFindConditionCGW == "Yes")
+                    {
+                        cgw = true;
+                    }
+                    else if (StatementFindConditionCGW == "No")
+                    {
+                        cgw = false;
+                    }
+                    query = query.Where(statements => statements.SubjectId.ComputationalGraphicWork == cgw);
+                }
+                if (!string.IsNullOrEmpty(StatementFindConditionDiploma))
+                {
+                    bool diploma = false;
+                    if (StatementFindConditionDiploma == "Yes")
+                    {
+                        diploma = true;
+                    }
+                    else if (StatementFindConditionDiploma == "No")
+                    {
+                        diploma = false;
+                    }
+                    query = query.Where(statements => statements.SubjectId.Diploma == diploma);
+                }
+
+                Statements = query
+                    .Include(x => x.Faculty)
+                    .Include(x => x.SubjectId)
+                    .Include(x => x.SubjectId.Department)
+                    .ToList();
+            }
+            OnPropertyChanged("Statements");
+        }
+
+        private void StatementClearConditionFields(object obj)
+        {
+            StatementFindConditionSemester = "";
+            OnPropertyChanged("StatementFindConditionSemester");
+            StatementFindConditionDepartment = "";
+            OnPropertyChanged("StatementFindConditionDepartment");
+            StatementFindConditionSubject = "";
+            OnPropertyChanged("StatementFindConditionSubject");
+            StatementFindConditionExam = "";
+            OnPropertyChanged("StatementFindConditionExam");
+            StatementFindConditionCredit = "";
+            OnPropertyChanged("StatementFindConditionCredit");
+            StatementFindConditionCP = "";
+            OnPropertyChanged("StatementFindConditionCP");
+            StatementFindConditionCGW = "";
+            OnPropertyChanged("StatementFindConditionCGW");
+            StatementFindConditionDiploma = "";
+            OnPropertyChanged("StatementFindConditionDiploma");
+        }
+        private void AddNewStatement(object obj)
+        {
+           /* GroupInfoChangeView changeView = new();
+            changeView.Show();*/
+        }
+
+        private void StatementUpdateSubjects()
+        {
+            if (StatementFindConditionDepartment == null || StatementFindConditionDepartment == "") return;
+            Department department = StructureStore.GetDepartments().Where(x => x.ShortName == StatementFindConditionDepartment).FirstOrDefault();
+            StatementSubjects = StructureStore.GetSubjects().Where(x => x.Department.Id == department.Id).Select(x => x.SubjectBankId.ShortName).ToArray();
+            OnPropertyChanged("StatementSubjects");
+        }
 
 
 

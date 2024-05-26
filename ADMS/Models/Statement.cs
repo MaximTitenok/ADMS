@@ -13,6 +13,8 @@ namespace ADMS.Models
         public int Id { get; set; }
         //первая, вторая, третья ведомость
         public int? StatementNumber { get; set; }
+        public Subject SubjectId { get; set; }
+        public int? Semester {  get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime ClosedDate { get; set; }

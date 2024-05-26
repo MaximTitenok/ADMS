@@ -78,7 +78,7 @@
                             VerticalAlignment="Top" Command="{Binding StudentFindButtonCommand}" />
                     <Button x:Name="StudentDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,75,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding StudentClearButtonCommand}" />
-                    <Button x:Name="StudentAddButton" Content="Add student"  Height="40" Width="80" Margin="700,25,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="StudentAddButton" Content="Add student"  Height="40" Width="80" Margin="680,25,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding StudentAddButtonCommand}" />
 
                     <DataGrid x:Name="StudentsGrid" Height="270" Width="770" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
@@ -132,7 +132,7 @@
                         VerticalAlignment="Top" Command="{Binding GroupFindButtonCommand}" />
                     <Button x:Name="GroupDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,25,0,0" HorizontalAlignment="Left" 
                         VerticalAlignment="Top" Command="{Binding GroupClearButtonCommand}" />
-                    <Button x:Name="GroupAddButton" Content="Add group"  Height="40" Width="80" Margin="702,5,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="GroupAddButton" Content="Add group"  Height="40" Width="80" Margin="680,5,0,0" HorizontalAlignment="Left" 
                         VerticalAlignment="Top" Command="{Binding GroupAddButtonCommand}" />
                     <DataGrid x:Name="GroupsGrid" Height="320" Width="770" Margin="0,60,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
                             AutoGenerateColumns="False" ItemsSource="{Binding Groups}" IsReadOnly="True" MouseDoubleClick="GroupFindRowDoubleClick">
@@ -141,6 +141,95 @@
                             <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty.Name}" Width="80"/>
                             <DataGridTextColumn Header="Department" Binding="{Binding Department.ShortName}" Width="80"/>
                             <DataGridTextColumn Header="StartEducation" Binding="{Binding StartEducation, StringFormat=\{0:dd-MM-yyyy\}}" Width="70"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Statements" Width="100">
+                <Grid>
+                    <Label Content="Semester" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            HorizontalContentAlignment="Center" />
+                    <TextBox x:Name="StatementSemesterTextBox" Height="20" Width="80" Margin="10,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+              Text="{Binding StatementFindConditionSemester, Mode=TwoWay}"/>
+                    <Label Content="Department" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+             HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementDepartmentComboBox" Height="20" Width="80" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+             ItemsSource="{Binding StatementDepartments}" Text="{Binding StatementFindConditionDepartment, Mode=TwoWay}"/>
+                    <Label Content="Subject" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+             HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementSubjectComboBox" Height="20" Width="80" Margin="190,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            ItemsSource="{Binding StatementSubjects}" Text="{Binding StatementFindConditionSubject, Mode=TwoWay}"/>
+                    <Label Content="ECTS" Height="25" Width="80" Margin="280,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            HorizontalContentAlignment="Center" />
+                    <TextBox x:Name="StatementECTSTextBox" Height="20" Width="80" Margin="280,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            Text="{Binding StatementFindConditionECTS, Mode=TwoWay}"/>
+
+
+                    <Label Content="Exam" Height="25" Width="80" Margin="10,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementExamComboBox" Height="20" Width="80" Margin="10,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionExam, Mode=TwoWay}">
+                        <ComboBoxItem Height="18"></ComboBoxItem>
+                        <ComboBoxItem>Yes</ComboBoxItem>
+                        <ComboBoxItem>No</ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="Credit" Height="25" Width="80" Margin="100,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+             HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementCreditComboBox" Height="20" Width="80" Margin="100,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionCredit, Mode=TwoWay}">
+                        <ComboBoxItem Height="18"></ComboBoxItem>
+                        <ComboBoxItem>Yes</ComboBoxItem>
+                        <ComboBoxItem>No</ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="Course Work" Height="25" Width="80" Margin="190,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementCPComboBox" Height="20" Width="80" Margin="190,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionCP, Mode=TwoWay}">
+                        <ComboBoxItem Height="18"></ComboBoxItem>
+                        <ComboBoxItem>Yes</ComboBoxItem>
+                        <ComboBoxItem>No</ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="CGW" Height="25" Width="80" Margin="280,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementCGWComboBox" Height="20" Width="80" Margin="280,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionCGW, Mode=TwoWay}">
+                        <ComboBoxItem Height="18"></ComboBoxItem>
+                        <ComboBoxItem>Yes</ComboBoxItem>
+                        <ComboBoxItem>No</ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="Diploma" Height="25" Width="80" Margin="370,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="StatementDiplomaComboBox" Height="20" Width="80" Margin="370,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionSubject, Mode=TwoWay}">
+                        <ComboBoxItem Height="18"></ComboBoxItem>
+                        <ComboBoxItem>Yes</ComboBoxItem>
+                        <ComboBoxItem>No</ComboBoxItem>
+                    </ComboBox>
+
+
+
+
+                    <Button x:Name="StatementFindButton" Content="Find"  Height="20" Width="80" Margin="460,75,0,0" HorizontalAlignment="Left" 
+            VerticalAlignment="Top" Command="{Binding StatementFindButtonCommand}" />
+                    <Button x:Name="StatementDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,75,0,0" HorizontalAlignment="Left" 
+            VerticalAlignment="Top" Command="{Binding StatementClearButtonCommand}" />
+                    <Button x:Name="StatementAddButton" Content="Add Statement"  Height="40" Width="80" Margin="680,5,0,0" HorizontalAlignment="Left" 
+             VerticalAlignment="Top" Command="{Binding StatementAddButtonCommand}" />
+                    <DataGrid x:Name="StatementGrid" Height="270" Width="770" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                 AutoGenerateColumns="False" ItemsSource="{Binding Statements}" IsReadOnly="True" MouseDoubleClick="StatementFindRowDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Sem" Binding="{Binding Semester}" Width="40" />
+                            <DataGridTextColumn Header="Department" Binding="{Binding SubjectId.Department.ShortName}" Width="80"/>
+                            <DataGridTextColumn Header="Subject" Binding="{Binding SubjectId.SubjectBankId.ShortName}" Width="60"/>
+                            <DataGridTextColumn Header="ECTS" Binding="{Binding SubjectId.ECTS}" Width="40"/>
+                            <DataGridTextColumn Header="AllH" Binding="{Binding SubjectId.AllHours}" Width="40"/>
+                            <DataGridTextColumn Header="LecH" Binding="{Binding SubjectId.LectureHours}" Width="40"/>
+                            <DataGridTextColumn Header="PracH" Binding="{Binding SubjectId.PracticeHours}" Width="40"/>
+                            <DataGridTextColumn Header="SemH" Binding="{Binding SubjectId.SeminarHours}" Width="40"/>
+                            <DataGridTextColumn Header="LabH" Binding="{Binding SubjectId.LabourHours}" Width="40"/>
+                            <DataGridTextColumn Header="ConH" Binding="{Binding SubjectId.ConsultationHours}" Width="40"/>
+                            <DataGridTextColumn Header="Exam" Binding="{Binding SubjectId.Exam}" Width="40"/>
+                            <DataGridTextColumn Header="Credit" Binding="{Binding SubjectId.Credit}" Width="40"/>
+                            <DataGridTextColumn Header="CP" Binding="{Binding SubjectId.CourseProject}" Width="40"/>
+                            <DataGridTextColumn Header="CGW" Binding="{Binding SubjectId.ComputationalGraphicWork}" Width="40"/>
+                            <DataGridTextColumn Header="Diploma" Binding="{Binding SubjectId.Diploma}" Width="40"/>
+                            <DataGridTextColumn Header="Note" Binding="{Binding SubjectId.Note}" Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

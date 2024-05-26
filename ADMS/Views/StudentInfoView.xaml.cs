@@ -36,7 +36,7 @@ namespace ADMS.Views
                 Statement selectedItem = StatementsGrid.SelectedItem as Statement;
                 if (selectedItem != null)
                 {
-                    StatementView statementView = new(selectedItem);
+                    StatementInfoView statementView = new(selectedItem);
                     statementView.Show();
                 }
                 else

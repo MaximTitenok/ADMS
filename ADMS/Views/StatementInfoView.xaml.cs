@@ -20,13 +20,13 @@ namespace ADMS.Views
     /// <summary>
     /// Interaction logic for StudentInfo.xaml
     /// </summary>
-    public partial class StatementView : Window
+    public partial class StatementInfoView : Window
     {
-        internal StatementView(Statement statement)
+        internal StatementInfoView(Statement statement)
         {
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
-            StatementVM statementVM = new(statement);
+            StatementInfoVM statementVM = new(statement);
             DataContext = statementVM;
 
         }

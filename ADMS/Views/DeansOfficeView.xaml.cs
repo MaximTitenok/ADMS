@@ -65,8 +65,23 @@ namespace ADMS.Views
                 }
             }
         }
+        private void StatementFindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Statement selectedItem = StatementGrid.SelectedItem as Statement;
+                if (selectedItem != null)
+                {
+                    /*GroupInfoView groupInfo = new(selectedItem);
+                    groupInfo.Show();*/
+                }
+                else
+                {
+                    MessageBox.Show("Invalid row", "Error");
+                }
+            }
+        }
 
-
-
+        
     }
 }

@@ -23,7 +23,7 @@
     <Compile Update="Views\StudentInfoChangeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\StatementView.xaml.cs">
+    <Compile Update="Views\StatementInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace ADMS.ViewModels
 {
-    internal class StatementVM : INotifyPropertyChanged
+    internal class StatementInfoVM : INotifyPropertyChanged
     {
         //TODO: Add information in orders and statements grids
         public Statement Statement { get; set; }
@@ -24,7 +24,7 @@ namespace ADMS.ViewModels
         public ObservableCollection<StatementMark> MarksList { get; set; }
         public ICommand ChangeStatementButtonCommand { get; set; }
 
-        public StatementVM(Statement statement) 
+        public StatementInfoVM(Statement statement) 
         {
             Statement = statement;
             using (AppDBContext _dbContext = new AppDBContext())

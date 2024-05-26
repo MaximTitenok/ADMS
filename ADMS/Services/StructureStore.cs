@@ -14,6 +14,7 @@ namespace ADMS.Services
         private static List<Speciality> Specialities {  get; set; }
         private static List<Group> Groups { get; set; }
         private static List<Department> Departments { get; set; }
+        private static List<Subject> Subjects { get; set; }
         private static Faculty Faculty { get; set; }
 
         private readonly static string[] StudyForms = {
@@ -93,6 +94,22 @@ namespace ADMS.Services
                 }
             }
             return Departments ?? new List<Department>();
+        }
+        internal static List<Subject> GetSubjects()
+        {
+            if (Subjects == null || Subjects.Count == 0)
+            {
+                using (AppDBContext _dbContext = new AppDBContext())
+                {
+                    Subjects = _dbContext
+                        .Subjects
+                        .Include(x => x.Department)
+                        .Include(x => x.SubjectBankId)
+                        .AsNoTracking()
+                        .ToList();
+                }
+            }
+            return Subjects ?? new List<Subject>();
         }
         internal static string GetStudyFormName(int type)
         {

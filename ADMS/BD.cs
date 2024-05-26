@@ -15,7 +15,7 @@ namespace ADMS
 
         public AppDBContext()
         {
-            /*  Database.EnsureDeleted();
+              /*Database.EnsureDeleted();
               Database.EnsureCreated();
               if (Faculties?.Any() == false)
               {
@@ -59,14 +59,19 @@ namespace ADMS
                   Students.Add(student);
                   SaveChanges();
               }
-              if (Subjects?.Any() == false)
+              if (SubjectsBank?.Any() == false)
               {
-                  Subjects.Add(new Subject() { Name = "Subject", ShortName = "Subj" });
+                  SubjectsBank.Add(new SubjectBank() { Name = "Subject", ShortName = "Subj" });
                   SaveChanges();
               }
-              if (Statements?.Any() == false)
+            if (Subjects?.Any() == false)
+            {
+                Subjects.Add(new Subject() { SubjectBankId = SubjectsBank.FirstOrDefault(), Semester = 3, ECTS = 4, AllHours = 150, LectureHours = 120, PracticeHours = 10, SeminarHours = 5, LabourHours = 7, ConsultationHours = 8,Exam = true, Credit = false, CourseProject = true, ComputationalGraphicWork = false, Diploma = false, Department = Departments.FirstOrDefault(), Note = "Po zapisu"});
+                SaveChanges();
+            }
+            if (Statements?.Any() == false)
               {
-                  var statement = new Statement() { Faculty = Faculties.FirstOrDefault(), Group = Groups.FirstOrDefault(), StatementNumber = 1, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow, ClosedDate = DateTime.UtcNow, Teacher = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
+                  var statement = new Statement() { Faculty = Faculties.FirstOrDefault(),Group = Groups.FirstOrDefault(), Semester = 3, SubjectId = Subjects.FirstOrDefault(), StatementNumber = 1, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow, ClosedDate = DateTime.UtcNow, Teacher = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
                   Statements.Add(statement);
                   SaveChanges();
               }
@@ -84,33 +89,33 @@ namespace ADMS
                   SaveChanges();
               }
 
-              if (Orders?.Any() == false)
-              {
-                  var files = DocFiles.Take(2).Select(x => x.Id).ToArray();
-                  var groups = new int[] { Groups.FirstOrDefault().Id };
-                  var students = new int[] { Students.FirstOrDefault().Id };
-                  var employeee = Employees.FirstOrDefault();
-                  var oreder =
-                      new Order()
-                      {
-                          Id = 0,
-                          Number = "number01",
-                          Name = "Name",
-                          Type = 1,
-                          Description = "Description",
-                          Status = 1,
-                          Groups = groups,
-                          Students = students,
-                          File = files,
-                          AddedEmplyoee = employeee,
-                          StartDate = DateTime.UtcNow,
-                          EndDate = DateTime.UtcNow,
-                          AddedTime = DateTime.UtcNow
-                      };
+            if (Orders?.Any() == false)
+            {
+                var files = DocFiles.Take(2).Select(x => x.Id).ToArray();
+                var groups = new int[] { Groups.FirstOrDefault().Id };
+                var students = new int[] { Students.FirstOrDefault().Id };
+                var employeee = Employees.FirstOrDefault();
+                var oreder =
+                    new Order()
+                    {
+                        Id = 0,
+                        Number = "number01",
+                        Name = "Name",
+                        Type = 1,
+                        Description = "Description",
+                        Status = 1,
+                        Groups = groups,
+                        Students = students,
+                        File = files,
+                        AddedEmplyoee = employeee,
+                        StartDate = DateTime.UtcNow,
+                        EndDate = DateTime.UtcNow,
+                        AddedTime = DateTime.UtcNow
+                    };
 
-              Orders.Add(oreder);
-              SaveChanges();
-        */
+                Orders.Add(oreder);
+                SaveChanges();
+            }*/
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -126,6 +131,7 @@ namespace ADMS
         internal DbSet<Position> Positions { get; set; }
         internal DbSet<Speciality> Specialities { get; set; }
         internal DbSet<Student> Students { get; set; }
+        internal DbSet<SubjectBank> SubjectsBank { get; set; }
         internal DbSet<Subject> Subjects { get; set; }
         internal DbSet<Statement> Statements { get; set; }
         internal DbSet<StatementMark> StatementMarks { get; set; }
