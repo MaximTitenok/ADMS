@@ -15,6 +15,7 @@ namespace ADMS.Services
         private static List<Group> Groups { get; set; }
         private static List<Department> Departments { get; set; }
         private static List<Subject> Subjects { get; set; }
+        private static List<Employee> Employees { get; set; }
         private static Faculty Faculty { get; set; }
 
         private readonly static string[] StudyForms = {
@@ -111,6 +112,25 @@ namespace ADMS.Services
             }
             return Subjects ?? new List<Subject>();
         }
+
+        internal static List<Employee> GetEmployees()
+        {
+            if (Employees == null || Employees.Count == 0)
+            {
+                using (AppDBContext _dbContext = new AppDBContext())
+                {
+                    Employees = _dbContext
+                        .Employees
+                        .Include(x => x.Department)
+                        .Include(x => x.Position)
+                        .Include(x => x.СorrectiveEmployee)
+                        .AsNoTracking()
+                        .ToList();
+                }
+            }
+            return Employees ?? new List<Employee>();
+        }
+        
         internal static string GetStudyFormName(int type)
         {
             switch (type)

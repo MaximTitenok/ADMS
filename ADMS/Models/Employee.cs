@@ -23,6 +23,7 @@ namespace ADMS.Models
         public string? OfficeEmail { get; set; }
         public int? Tin { get; set; }
         public string? PassportId { get; set; }
+        public Department? Department { get; set; }
         public Position? Position { get; set; }
         /// <value>Ставка працівника</value>
         public float? WorkRate { get; set; }

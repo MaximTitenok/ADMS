@@ -72,8 +72,8 @@ namespace ADMS.Views
                 Statement selectedItem = StatementGrid.SelectedItem as Statement;
                 if (selectedItem != null)
                 {
-                    /*GroupInfoView groupInfo = new(selectedItem);
-                    groupInfo.Show();*/
+                    StatementInfoView statementInfo = new(selectedItem);
+                    statementInfo.Show();
                 }
                 else
                 {

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ADMS.Models
 {
@@ -17,10 +18,31 @@ namespace ADMS.Models
         public int? Semester {  get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        /// <value> true - open, false - closed </value>>
+        public bool Status { get; set; }
         public DateTime ClosedDate { get; set; }
         public Group? Group { get; set; }
         public Faculty? Faculty { get; set; }
         public Employee? Teacher { get; set; }
         public DateTime? AddedTime { get; set; }
+
+        internal Statement() { }
+
+        internal Statement(Statement statement)
+        {
+            Id = statement.Id;
+            StatementNumber = statement.StatementNumber;
+            SubjectId = statement.SubjectId;
+            Semester = statement.Semester;
+            StartDate = statement.StartDate;
+            EndDate = statement.EndDate;
+            ClosedDate = statement.ClosedDate;  
+            Group = statement.Group;
+            Faculty = statement.Faculty;
+            Teacher = statement.Teacher;
+            AddedTime = statement.AddedTime;
+            
+
+        }
     }
 }

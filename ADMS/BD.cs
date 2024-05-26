@@ -15,79 +15,79 @@ namespace ADMS
 
         public AppDBContext()
         {
-              /*Database.EnsureDeleted();
-              Database.EnsureCreated();
-              if (Faculties?.Any() == false)
-              {
-                  var faculty = new Faculty() { Name = "Faculty", ShortName = "Fclt" };
-                  Faculties.Add(faculty);
-                  SaveChanges();
-              }
-              if (Departments?.Any() == false)
-              {
-                  var depart = new Department() { Name = "Departament", ShortName = "Depart", Faculty = Faculties.FirstOrDefault() };
-                  Departments.Add(depart);
-                  SaveChanges();
-              }
-              if (Specialities?.Any() == false)
-              {
-                  var spec = new Speciality() { Name = "Speciality", ShortName = "Spec", NumberOfSpeciality = 0, Faculty = Faculties.FirstOrDefault() };
-                  Specialities.Add(spec);
-                  SaveChanges();
-              }
-              if (Positions?.Any() == false)
-              {
-                  var position = new Position() { Name = "Position" };
-                  Positions.Add(position);
-                  SaveChanges();
-              }
-              if (Employees?.Any() == false)
-              {
-                  var employee = new Employee() { Id = 1, Surname = "Surname1", Name = "Name1", Secondname = "Secondname", Birthday = DateTime.UtcNow, Gender = true, Phone = "06773", OfficePhone = "06795", Email = "maxim@gmail.com", OfficeEmail = "maxim2@gmail.com", Tin = 23, PassportId = "456123", Position = Positions.FirstOrDefault(), WorkRate = 0.95f, StaffingId = 1, StartWork = DateTime.UtcNow, PannedFinishWork = DateTime.UtcNow, FinishedWork = DateTime.UtcNow, Note = "test", СorrectiveEmployee = null };
-                  Employees.Add(employee);
-                  SaveChanges();
-              }
-              if (Groups?.Any() == false)
-              {
-                  var group = new Group() { Name = "Group", Faculty = Faculties.FirstOrDefault(), Department = Departments.FirstOrDefault(), StartEducation = DateTime.UtcNow, AddedTime = DateTime.UtcNow };
-                  Groups.Add(group);
-                  SaveChanges();
-              }
-              if (Students?.Any() == false)
-              {
-                  var student = new Student() { Surname = "Surname", Name = "Name", Secondname = "Secondname", Birthday = DateTime.UtcNow, Gender = true, Phone = "06773", Email = "maxim@gmail.com", OfficeEmail = "maxim2@gmail.com", Tin = 456123, PassportId = "AE456231", StudyLevel = 1, StudyForm = 1, Speciality = Specialities.FirstOrDefault(), Faculty = Faculties.FirstOrDefault(), Group = Groups.FirstOrDefault(), StudentId = 0 };
-                  Students.Add(student);
-                  SaveChanges();
-              }
-              if (SubjectsBank?.Any() == false)
-              {
-                  SubjectsBank.Add(new SubjectBank() { Name = "Subject", ShortName = "Subj" });
-                  SaveChanges();
-              }
+            /*Database.EnsureDeleted();
+            Database.EnsureCreated();
+            if (Faculties?.Any() == false)
+            {
+                var faculty = new Faculty() { Name = "Faculty", ShortName = "Fclt" };
+                Faculties.Add(faculty);
+                SaveChanges();
+            }
+            if (Departments?.Any() == false)
+            {
+                var depart = new Department() { Name = "Departament", ShortName = "Depart", Faculty = Faculties.FirstOrDefault() };
+                Departments.Add(depart);
+                SaveChanges();
+            }
+            if (Specialities?.Any() == false)
+            {
+                var spec = new Speciality() { Name = "Speciality", ShortName = "Spec", NumberOfSpeciality = 0, Faculty = Faculties.FirstOrDefault() };
+                Specialities.Add(spec);
+                SaveChanges();
+            }
+            if (Positions?.Any() == false)
+            {
+                var position = new Position() { Name = "Position" };
+                Positions.Add(position);
+                SaveChanges();
+            }
+            if (Employees?.Any() == false)
+            {
+                var employee = new Employee() { Id = 1, Surname = "Surname1", Name = "Name1", Secondname = "Secondname", Birthday = DateTime.UtcNow, Gender = true, Phone = "06773", OfficePhone = "06795", Email = "maxim@gmail.com", OfficeEmail = "maxim2@gmail.com", Tin = 23, PassportId = "456123", Position = Positions.FirstOrDefault(), Department = Departments.FirstOrDefault(), WorkRate = 0.95f, StaffingId = 1, StartWork = DateTime.UtcNow, PannedFinishWork = DateTime.UtcNow, FinishedWork = DateTime.UtcNow, Note = "test", СorrectiveEmployee = null };
+                Employees.Add(employee);
+                SaveChanges();
+            }
+            if (Groups?.Any() == false)
+            {
+                var group = new Group() { Name = "Group", Faculty = Faculties.FirstOrDefault(), Department = Departments.FirstOrDefault(), StartEducation = DateTime.UtcNow, AddedTime = DateTime.UtcNow };
+                Groups.Add(group);
+                SaveChanges();
+            }
+            if (Students?.Any() == false)
+            {
+                var student = new Student() { Surname = "Surname", Name = "Name", Secondname = "Secondname", Birthday = DateTime.UtcNow, Gender = true, Phone = "06773", Email = "maxim@gmail.com", OfficeEmail = "maxim2@gmail.com", Tin = 456123, PassportId = "AE456231", StudyLevel = 1, StudyForm = 1, Speciality = Specialities.FirstOrDefault(), Faculty = Faculties.FirstOrDefault(), Group = Groups.FirstOrDefault(), StudentId = 0 };
+                Students.Add(student);
+                SaveChanges();
+            }
+            if (SubjectsBank?.Any() == false)
+            {
+                SubjectsBank.Add(new SubjectBank() { Name = "Subject", ShortName = "Subj" });
+                SaveChanges();
+            }
             if (Subjects?.Any() == false)
             {
-                Subjects.Add(new Subject() { SubjectBankId = SubjectsBank.FirstOrDefault(), Semester = 3, ECTS = 4, AllHours = 150, LectureHours = 120, PracticeHours = 10, SeminarHours = 5, LabourHours = 7, ConsultationHours = 8,Exam = true, Credit = false, CourseProject = true, ComputationalGraphicWork = false, Diploma = false, Department = Departments.FirstOrDefault(), Note = "Po zapisu"});
+                Subjects.Add(new Subject() { SubjectBankId = SubjectsBank.FirstOrDefault(), Semester = 3, ECTS = 4, AllHours = 150, LectureHours = 120, PracticeHours = 10, SeminarHours = 5, LabourHours = 7, ConsultationHours = 8, Exam = true, Credit = false, CourseProject = true, ComputationalGraphicWork = false, Diploma = false, Department = Departments.FirstOrDefault(), Note = "Po zapisu" });
                 SaveChanges();
             }
             if (Statements?.Any() == false)
-              {
-                  var statement = new Statement() { Faculty = Faculties.FirstOrDefault(),Group = Groups.FirstOrDefault(), Semester = 3, SubjectId = Subjects.FirstOrDefault(), StatementNumber = 1, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow, ClosedDate = DateTime.UtcNow, Teacher = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
-                  Statements.Add(statement);
-                  SaveChanges();
-              }
-              if (StatementMarks?.Any() == false)
-              {
-                  StatementMarks.Add(new StatementMark() { Mark = 85, Statement = Statements.FirstOrDefault(), Student = Students.FirstOrDefault(), AddedTime = DateTime.UtcNow });
-                  SaveChanges();
-              }
-              if (DocFiles?.Any() == false)
-              {
-                  var doc1 = new DocFile() { Name = "DocName1", Description = "Descr1", File = new byte[] { 0x20, 0x20, 0x20 }, AddedEmployee = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
-                  var doc2 = new DocFile() { Name = "DocName2", Description = "Descr2", File = new byte[] { 0x20, 0x20, 0x20 }, AddedEmployee = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
-                  DocFiles.Add(doc1);
-                  DocFiles.Add(doc2);
-                  SaveChanges();
-              }
+            {
+                var statement = new Statement() { Faculty = Faculties.FirstOrDefault(), Group = Groups.FirstOrDefault(), Semester = 3, SubjectId = Subjects.FirstOrDefault(), StatementNumber = 1, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow, ClosedDate = DateTime.UtcNow,Status=false, Teacher = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
+                Statements.Add(statement);
+                SaveChanges();
+            }
+            if (StatementMarks?.Any() == false)
+            {
+                StatementMarks.Add(new StatementMark() { Mark = 85, Statement = Statements.FirstOrDefault(), Student = Students.FirstOrDefault(), AddedTime = DateTime.UtcNow });
+                SaveChanges();
+            }
+            if (DocFiles?.Any() == false)
+            {
+                var doc1 = new DocFile() { Name = "DocName1", Description = "Descr1", File = new byte[] { 0x20, 0x20, 0x20 }, AddedEmployee = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
+                var doc2 = new DocFile() { Name = "DocName2", Description = "Descr2", File = new byte[] { 0x20, 0x20, 0x20 }, AddedEmployee = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
+                DocFiles.Add(doc1);
+                DocFiles.Add(doc2);
+                SaveChanges();
+            }
 
             if (Orders?.Any() == false)
             {

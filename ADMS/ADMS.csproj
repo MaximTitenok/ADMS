@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\StatementInfoChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\GroupInfoChangeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +27,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StatementInfoView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SubjectInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

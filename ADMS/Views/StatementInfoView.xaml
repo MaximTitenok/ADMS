@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="StatementInfo" Height="315" Width="670"
+        Title="StatementInfoView" Height="315" Width="670"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">

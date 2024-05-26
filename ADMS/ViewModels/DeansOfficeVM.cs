@@ -420,6 +420,7 @@ namespace ADMS.ViewModels
                     .Include(x => x.Faculty)
                     .Include(x => x.SubjectId)
                     .Include(x => x.SubjectId.Department)
+                    .Include(x => x.SubjectId.SubjectBankId)
                     .ToList();
             }
             OnPropertyChanged("Statements");

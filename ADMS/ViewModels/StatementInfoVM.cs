@@ -34,6 +34,9 @@ namespace ADMS.ViewModels
                     .Include(x => x.Faculty)
                     .Include(x => x.Group)
                     .Include(x => x.Teacher)
+                    .Include(x => x.SubjectId)
+                    .Include(x => x.SubjectId.Department)
+                    .Include(x => x.SubjectId.SubjectBankId)
                     .FirstOrDefault() ?? new Statement();
                 var marksList = _dbContext
                     .StatementMarks.Where(x => x.Student!= null)
@@ -47,9 +50,8 @@ namespace ADMS.ViewModels
         }
         private void ChangeStatement(object obj)
         {
-            //TODO: Create changestatementview
-           /* StatementChangeView changeView = new (Statement);
-            changeView.Show();*/
+            StatementInfoChangeView changeView = new (Statement);
+            changeView.Show();
 
         }
 
