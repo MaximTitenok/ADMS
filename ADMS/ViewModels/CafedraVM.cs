@@ -17,35 +17,26 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace ADMS.ViewModels
 {
-    internal class DeansOfficeVM : INotifyPropertyChanged
+    internal class CafedraVM : INotifyPropertyChanged
     {
-        public List<Group> StudentGroups { get; set; }
-        public List<Speciality> StudentSpecialities { get; set; }
-        public List<Student> Students { get; set; }
+        public List<Employee> Employees { get; set; }
 
-        public string StudentFindConditionSurname { get; set; }
-        public string StudentFindConditionName { get; set; }
-        public string StudentFindConditionSecondname { get; set; }
-        public string StudentFindConditionPassport { get; set; }
-        public string StudentFindConditionGroup { get; set; }
-        public string StudentFindConditionSpeciality { get; set; }
-        public string StudentFindConditionGender { get; set; }
-        public string StudentFindConditionStudentId { get; set; }
-        public string StudentFindConditionStudyLevel { get; set; }
-        public string StudentFindConditionStudyForm { get; set; }
+        public string EmployeeFindConditionSurname { get; set; }
+        public string EmployeeFindConditionName { get; set; }
+        public string EmployeeFindConditionSecondname { get; set; }
+        public string EmployeeFindConditionPhone { get; set; }
+        public string EmployeeFindConditionGender { get; set; }
 
-        public string[] StudentStudyLevels { get; set; }
-        public string[] StudentStudyForms { get; set; }
 
-        public ICommand StudentFindButtonCommand { get; set; }
-        public ICommand StudentClearButtonCommand { get; set; }
-        public ICommand StudentAddButtonCommand { get; set; }
+
+        public ICommand EmployeeFindButtonCommand { get; set; }
+        public ICommand EmployeeClearButtonCommand { get; set; }
        
 
 
 
 
-        public List<Group> Groups { get; set; }
+        public List<EmployeeRate> EmployeeRates { get; set; }
         public string[] GroupDepartments { get; set; }
 
         public string GroupFindConditionName { get; set; }
@@ -90,21 +81,10 @@ namespace ADMS.ViewModels
         public ICommand StatementAddButtonCommand { get; set; }
 
 
-        public DeansOfficeVM(int facultyId) 
+        public CafedraVM(int facultyId) 
         {
-            StudentGroups = StructureStore.GetGroups().Where(x => x?.Faculty?.Id == facultyId).ToList();
-            StudentGroups.Insert(0,new Group { Name = "" });
-            StudentSpecialities = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == facultyId).ToList();
-            StudentSpecialities.Insert(0,new Speciality { ShortName = "" });
-
-            StudentStudyLevels = StructureStore.GetStudyLevels();
-            StudentStudyForms = StructureStore.GetStudyForms();
-
-            StudentFindButtonCommand = new RelayCommand(FindStudentsByConditions);
-            StudentClearButtonCommand = new RelayCommand(StudentClearConditionFields);
-            StudentAddButtonCommand = new RelayCommand(AddNewStudent);
-            
-
+            EmployeeFindButtonCommand = new RelayCommand(FindEmployeesByConditions);
+            EmployeeClearButtonCommand = new RelayCommand(EmployeeClearConditionFields);
 
             var departments = StructureStore.GetDepartments().Where(x => x.Faculty.Id == facultyId).ToList();
             departments.Insert(0, new Department { ShortName = "" });
@@ -121,122 +101,68 @@ namespace ADMS.ViewModels
             StatementAddButtonCommand = new RelayCommand(AddNewStatement);
         }
 
-        private void FindStudentsByConditions(object obj)
+        private void FindEmployeesByConditions(object obj)
         {
-            if (String.IsNullOrEmpty(StudentFindConditionSurname) && String.IsNullOrEmpty(StudentFindConditionName) 
-                && String.IsNullOrEmpty(StudentFindConditionSecondname) && String.IsNullOrEmpty(StudentFindConditionGroup) 
-                && String.IsNullOrEmpty(StudentFindConditionSpeciality) && String.IsNullOrEmpty(StudentFindConditionGender)
-                && String.IsNullOrEmpty(StudentFindConditionStudentId) && String.IsNullOrEmpty(StudentFindConditionPassport)
-                && String.IsNullOrEmpty(StudentFindConditionStudyLevel) && String.IsNullOrEmpty(StudentFindConditionStudyForm))
+            if (String.IsNullOrEmpty(EmployeeFindConditionSurname) && String.IsNullOrEmpty(EmployeeFindConditionName) 
+                && String.IsNullOrEmpty(EmployeeFindConditionSecondname) && String.IsNullOrEmpty(EmployeeFindConditionPhone) 
+                && String.IsNullOrEmpty(EmployeeFindConditionGender))
             {
                 MessageBox.Show("All the fields is empty!","Error");
                 return;
             }
             using (AppDBContext _dbContext = new AppDBContext())
             { 
-                var query = _dbContext.Students.AsQueryable();
+                var query = _dbContext.Employees.AsQueryable();
 
-                if (!string.IsNullOrEmpty(StudentFindConditionSurname))
+                if (!string.IsNullOrEmpty(EmployeeFindConditionSurname))
                 {
-                    query = query.Where(student => student.Surname.Contains(StudentFindConditionSurname));
-                }
-
-                if (!string.IsNullOrEmpty(StudentFindConditionName))
-                {
-                    query = query.Where(student => student.Name.Contains(StudentFindConditionName));
+                    query = query.Where(employee => employee.Surname.Contains(EmployeeFindConditionSurname));
                 }
 
-                if (!string.IsNullOrEmpty(StudentFindConditionSecondname))
+                if (!string.IsNullOrEmpty(EmployeeFindConditionName))
                 {
-                    query = query.Where(student => student.Secondname.Contains(StudentFindConditionSecondname));
+                    query = query.Where(employee => employee.Name.Contains(EmployeeFindConditionName));
                 }
-                if (!string.IsNullOrEmpty(StudentFindConditionPassport))
+
+                if (!string.IsNullOrEmpty(EmployeeFindConditionSecondname))
                 {
-                    query = query.Where(student => student.PassportId.Contains(StudentFindConditionPassport));
+                    query = query.Where(employee => employee.Secondname.Contains(EmployeeFindConditionSecondname));
                 }
-                if (!string.IsNullOrEmpty(StudentFindConditionGroup))
+                if (!string.IsNullOrEmpty(EmployeeFindConditionPhone))
                 {
-                    query = query.Where(student => student.Group.Name.Contains(StudentFindConditionGroup));
+                    query = query.Where(employee => employee.PassportId.Contains(EmployeeFindConditionPhone));
                 }
-                if (!string.IsNullOrEmpty(StudentFindConditionSpeciality))
-                {
-                    query = query.Where(student => student.Speciality.Name.Contains(StudentFindConditionSpeciality));
-                }
-                if (!string.IsNullOrEmpty(StudentFindConditionGender))
+                if (!string.IsNullOrEmpty(EmployeeFindConditionGender))
                 {
                     bool gender = false;
-                    if (StudentFindConditionGender == "Male")
+                    if (EmployeeFindConditionGender == "Male")
                     {
                         gender = false;
                     }
-                    else if (StudentFindConditionGender == "Female")
+                    else if (EmployeeFindConditionGender == "Female")
                     {
                         gender = true;
                     }
                     query = query.Where(student => student.Gender == gender);
                 }
 
-                if (!string.IsNullOrEmpty(StudentFindConditionStudentId))
-                {
-                    if (StudentFindConditionStudentId.All(char.IsDigit))
-                    {
-                        query = query.Where(student => student.StudentId.ToString() == StudentFindConditionStudentId);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Student ID contains letter!", "Error");
-                    }
-                }
-                if (!string.IsNullOrEmpty(StudentFindConditionSpeciality))
-                {
-                    query = query.Where(student => student.Speciality.Name.Contains(StudentFindConditionSpeciality));
-                }
-                if (!string.IsNullOrEmpty(StudentFindConditionStudyLevel))
-                {
-                    query = query.Where(student => student.StudyLevel == Array.IndexOf(StudentStudyLevels, StudentFindConditionStudyLevel));
-                }
-                if (!string.IsNullOrEmpty(StudentFindConditionStudyForm))
-                {
-                    query = query.Where(student => student.StudyForm == Array.IndexOf(StudentStudyForms, StudentFindConditionStudyForm));
-                }
-
-                Students = query
-                    .Include(x => x.Faculty)
-                    .Include(x => x.Group)
-                    .Include(x => x.Speciality)
-                    .ToList();
+                Employees = query.ToList();
             }
-            OnPropertyChanged("Students");
+            OnPropertyChanged("Employees");
         }
 
-        private void StudentClearConditionFields(object obj)
+        private void EmployeeClearConditionFields(object obj)
         {
-            StudentFindConditionSurname = "";
-            OnPropertyChanged("StudentFindConditionSurname");
-            StudentFindConditionName = "";
-            OnPropertyChanged("StudentFindConditionName");
-            StudentFindConditionSecondname = "";
-            OnPropertyChanged("StudentFindConditionSecondname");
-            StudentFindConditionGroup = "";
-            OnPropertyChanged("StudentFindConditionGroup");
-            StudentFindConditionSpeciality = "";
-            OnPropertyChanged("StudentFindConditionSpeciality");
-            StudentFindConditionGender = "";
-            OnPropertyChanged("StudentFindConditionGender");
-            StudentFindConditionStudentId = "";
-            OnPropertyChanged("StudentFindConditionStudentId");
-            StudentFindConditionPassport = "";
-            OnPropertyChanged("StudentFindConditionPassport");
-            StudentFindConditionStudyLevel = "";
-            OnPropertyChanged("StudentFindConditionStudyLevel");
-            StudentFindConditionStudyForm = "";
-            OnPropertyChanged("StudentFindConditionStudyForm");
-        }
-
-        private void AddNewStudent(object obj)
-        {
-            StudentInfoChangeView changeView = new();
-            changeView.Show();
+            EmployeeFindConditionSurname = "";
+            OnPropertyChanged("EmployeeFindConditionSurname");
+            EmployeeFindConditionName = "";
+            OnPropertyChanged("EmployeeFindConditionName");
+            EmployeeFindConditionSecondname = "";
+            OnPropertyChanged("EmployeeFindConditionSecondname");
+            EmployeeFindConditionPhone = "";
+            OnPropertyChanged("EmployeeFindConditionPhone");
+            EmployeeFindConditionGender = "";
+            OnPropertyChanged("EmployeeFindConditionGender");
         }
 
         private void FindGroupsByConditions(object obj)
@@ -281,10 +207,10 @@ namespace ADMS.ViewModels
                         .Intersect(query).AsQueryable();
                 }
 
-                Groups = query
+               /* Groups = query
                     .Include(x => x.Faculty)
                     .Include(x => x.Department)
-                    .ToList();
+                    .ToList();*/
             }
             OnPropertyChanged("Groups");
         }

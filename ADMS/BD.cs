@@ -43,8 +43,14 @@ namespace ADMS
             }
             if (Employees?.Any() == false)
             {
-                var employee = new Employee() { Id = 1, Surname = "Surname1", Name = "Name1", Secondname = "Secondname", Birthday = DateTime.UtcNow, Gender = true, Phone = "06773", OfficePhone = "06795", Email = "maxim@gmail.com", OfficeEmail = "maxim2@gmail.com", Tin = 23, PassportId = "456123", Position = Positions.FirstOrDefault(), Department = Departments.FirstOrDefault(), WorkRate = 0.95f, StaffingId = 1, StartWork = DateTime.UtcNow, PannedFinishWork = DateTime.UtcNow, FinishedWork = DateTime.UtcNow, Note = "test", СorrectiveEmployee = null };
+                var employee = new Employee() { Id = 1, Surname = "Surname1", Name = "Name1", Secondname = "Secondname", Birthday = DateTime.UtcNow, Gender = true, Phone = "06773", OfficePhone = "06795", Email = "maxim@gmail.com", OfficeEmail = "maxim2@gmail.com", Tin = 23, PassportId = "456123", Note = "test", СorrectiveEmployee = null };
                 Employees.Add(employee);
+                SaveChanges();
+            }
+            if (EmployeeRates?.Any() == false)
+            {
+                var employeeRate = new EmployeeRate() { Id = 1, Employee = Employees.FirstOrDefault(),Position = Positions.FirstOrDefault(), Department = Departments.FirstOrDefault(), Rate = 0.95f, StaffingId = 1, StartWork = DateTime.UtcNow, PlannedFinishWork = DateTime.UtcNow, FinishedWork = DateTime.UtcNow, AddedTime = DateTime.UtcNow };
+                EmployeeRates.Add(employeeRate);
                 SaveChanges();
             }
             if (Groups?.Any() == false)
@@ -71,7 +77,7 @@ namespace ADMS
             }
             if (Statements?.Any() == false)
             {
-                var statement = new Statement() { Faculty = Faculties.FirstOrDefault(), Group = Groups.FirstOrDefault(), Semester = 3, SubjectId = Subjects.FirstOrDefault(), StatementNumber = 1, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow, ClosedDate = DateTime.UtcNow,Status=false, Teacher = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
+                var statement = new Statement() { Faculty = Faculties.FirstOrDefault(), Group = Groups.FirstOrDefault(), Semester = 3, SubjectId = Subjects.FirstOrDefault(), StatementNumber = 1, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow, ClosedDate = DateTime.UtcNow, Status = false, MainTeacher = Employees.FirstOrDefault(), PracticeTeacher = Employees.FirstOrDefault(), AddedTime = DateTime.UtcNow };
                 Statements.Add(statement);
                 SaveChanges();
             }
@@ -126,6 +132,7 @@ namespace ADMS
         }
         internal DbSet<Department> Departments { get; set; }
         internal DbSet<Employee> Employees { get; set; }
+        internal DbSet<EmployeeRate> EmployeeRates { get; set; }
         internal DbSet<Faculty> Faculties { get; set; }
         internal DbSet<Group> Groups { get; set; }
         internal DbSet<Position> Positions { get; set; }

@@ -56,23 +56,23 @@
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.PassportId}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Tin:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Tin}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Phone:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Phone}" />
         </StackPanel>
-        <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Email:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Email}" />
-        </StackPanel>
-        <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Office Email:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.OfficeEmail}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,290,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Office Email:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.OfficeEmail}" />
         </StackPanel>
 
-        
+
         <StackPanel  Height="25" Width="300" Margin="320,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Faculty:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Student.Faculty.Name}" />
@@ -101,7 +101,7 @@
         <DataGrid x:Name="StatementsGrid" Height="265" Width="430" Margin="320,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                               AutoGenerateColumns="False" ItemsSource="{Binding StudentStatements}" IsReadOnly="True" MouseDoubleClick="StatementsdRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Teacher" Binding="{Binding Teacher.Surname}" Width="80" />
+                <DataGridTextColumn Header="Teacher" Binding="{Binding MainTeacher.Surname}" Width="80" />
                 <DataGridTextColumn Header="StatementNumber" Binding="{Binding StatementNumber}" Width="80" />
 
             </DataGrid.Columns>

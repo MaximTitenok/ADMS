@@ -25,7 +25,8 @@ namespace ADMS.ViewModels
         public Statement Statement { get; set; }
         public ObservableCollection<StatementMark> MarksList { get; set; }
         public string[] TeachersList { get; set; }
-        public string Teacher { get; set; }
+        public string MainTeacher { get; set; }
+        public string PracticeTeacher { get; set; }
         public string StatementStatus { get; set; }
         
         public ICommand SaveStatementInfoButtonCommand { get; set; }
@@ -35,8 +36,10 @@ namespace ADMS.ViewModels
         {
             IsStatementNew = false;
             Statement = new Statement(statement);
-            Teacher = Statement.Teacher.Surname;
-            if(Statement.Status == false)
+            MainTeacher = Statement.MainTeacher.Surname;
+            PracticeTeacher = Statement.PracticeTeacher.Surname;
+
+            if (Statement.Status == false)
             {
                 StatementStatus = "Closed";
             }
@@ -52,16 +55,21 @@ namespace ADMS.ViewModels
                    .Include(x => x.Student)
                    .ToArray());
             }
-            TeachersList = StructureStore.GetEmployees().Where(x => x.Department.Id == Statement.Teacher.Department.Id).Select(x => x.Surname).ToArray();
+            var TeachersList = StructureStore.GetEmployees()
+                .Where(employee => employee.EmployeeRates
+                .Any(rate => rate.Department.Id == Statement.SubjectId.Department.Id))
+                .Select(employee => employee.Surname)
+                .ToArray();
+            //TeachersList = StructureStore.GetEmployees().Where(x => x.TeacherRates.Where(x => x.Department.Id) == Statement.MainTeacher.Department.Id).Select(x => x.Surname).ToArray();
             SaveStatementInfoButtonCommand = new RelayCommand(SaveStatementInfo);
         }
         public StatementInfoChangeVM()
         {
-
+            //TODO: Repair the adding of statement
             IsStatementNew = true;
             Statement = new Statement();
             StatementStatus = "Open";
-            TeachersList = StructureStore.GetEmployees().Where(x => x.Department.Id == Statement.Teacher.Department.Id).Select(x => x.Surname).ToArray();
+            //TeachersList = StructureStore.GetEmployees().Where(x => x.Department.Id == Statement.Teacher.Department.Id).Select(x => x.Surname).ToArray();
             SaveStatementInfoButtonCommand = new RelayCommand(SaveStatementInfo);
         }
         private void SaveStatementInfo(object obj)
@@ -77,7 +85,8 @@ namespace ADMS.ViewModels
                     _dbContext.Entry(Statement.Faculty).State = EntityState.Unchanged;
                     _dbContext.Entry(Statement.SubjectId).State = EntityState.Unchanged;
                     _dbContext.Entry(Statement.Group).State = EntityState.Unchanged;
-                    _dbContext.Entry(Statement.Teacher).State = EntityState.Unchanged;
+                    _dbContext.Entry(Statement.MainTeacher).State = EntityState.Unchanged;
+                    _dbContext.Entry(Statement.PracticeTeacher).State = EntityState.Unchanged;
                     _dbContext.Statements.Add(Statement);
                 }
                 else
@@ -85,7 +94,8 @@ namespace ADMS.ViewModels
                     _dbContext.Entry(Statement.Faculty).State = EntityState.Unchanged;
                     _dbContext.Entry(Statement.SubjectId).State = EntityState.Unchanged;
                     _dbContext.Entry(Statement.Group).State = EntityState.Unchanged;
-                    _dbContext.Entry(Statement.Teacher).State = EntityState.Unchanged;
+                    _dbContext.Entry(Statement.MainTeacher).State = EntityState.Unchanged;
+                    _dbContext.Entry(Statement.PracticeTeacher).State = EntityState.Unchanged;
                     _dbContext.Statements.Update(Statement);
                 }
                 _dbContext.SaveChanges();

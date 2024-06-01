@@ -23,6 +23,7 @@ namespace ADMS.ViewModels
         public ObservableCollection<Statement> StatementList { get; set; }
         public ObservableCollection<StatementMark> MarksList { get; set; }
         public ICommand ChangeStatementButtonCommand { get; set; }
+        public ICommand InfoAboutSubjectButtonCommand { get; set; }
 
         public StatementInfoVM(Statement statement) 
         {
@@ -33,7 +34,8 @@ namespace ADMS.ViewModels
                     .Where(x => x.Id == Statement.Id)
                     .Include(x => x.Faculty)
                     .Include(x => x.Group)
-                    .Include(x => x.Teacher)
+                    .Include(x => x.MainTeacher)
+                    .Include(x => x.PracticeTeacher)
                     .Include(x => x.SubjectId)
                     .Include(x => x.SubjectId.Department)
                     .Include(x => x.SubjectId.SubjectBankId)
@@ -47,14 +49,18 @@ namespace ADMS.ViewModels
                 MarksList = new ObservableCollection<StatementMark>(marksList) ?? new ObservableCollection<StatementMark>();
             }
             ChangeStatementButtonCommand = new RelayCommand(ChangeStatement);
+            InfoAboutSubjectButtonCommand = new RelayCommand(OpenInfoSubject);
         }
         private void ChangeStatement(object obj)
         {
             StatementInfoChangeView changeView = new (Statement);
             changeView.Show();
-
         }
-
+        private void OpenInfoSubject(object obj)
+        {
+            SubjectInfoView infoView = new(Statement.SubjectId);
+            infoView.Show();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

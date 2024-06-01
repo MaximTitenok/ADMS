@@ -34,7 +34,7 @@ namespace ADMS.ViewModels
                     .Include(x => x.Speciality)
                     .Include(x => x.Group)
                     .FirstOrDefault() ?? new Student();
-                StudentStatements = new ObservableCollection<Statement>(_dbContext.Statements.Include(x => x.Teacher).Where(x => x.Group == Student.Group)) ?? new ObservableCollection<Statement>();
+                StudentStatements = new ObservableCollection<Statement>(_dbContext.Statements.Where(x => x.Group == Student.Group).Include(x => x.MainTeacher)) ?? new ObservableCollection<Statement>();
                 StudentOrders = new ObservableCollection<Order>(_dbContext.Orders.Where(x => x.Students.ToArray().Contains(Student.Id) || x.Groups.ToArray().Contains(Student.Group.Id)).ToList());
                 //StudentOrders = orders.Where(order => order.Students.ToArray().Contains(student.Id) || order.Groups.ToArray().Contains(student.Group.Id)));
             }

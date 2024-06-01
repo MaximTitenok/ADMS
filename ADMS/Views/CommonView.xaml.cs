@@ -31,5 +31,11 @@ namespace ADMS.Views
             DeansOfficeView deansOfficeView = new DeansOfficeView();
             deansOfficeView.Show();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            CafedraView cafedraView = new CafedraView();
+            cafedraView.Show();
+        }
     }
 }

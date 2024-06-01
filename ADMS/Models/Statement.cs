@@ -23,7 +23,8 @@ namespace ADMS.Models
         public DateTime ClosedDate { get; set; }
         public Group? Group { get; set; }
         public Faculty? Faculty { get; set; }
-        public Employee? Teacher { get; set; }
+        public Employee? MainTeacher { get; set; }
+        public Employee? PracticeTeacher { get; set; }
         public DateTime? AddedTime { get; set; }
 
         internal Statement() { }
@@ -39,7 +40,8 @@ namespace ADMS.Models
             ClosedDate = statement.ClosedDate;  
             Group = statement.Group;
             Faculty = statement.Faculty;
-            Teacher = statement.Teacher;
+            MainTeacher = statement.MainTeacher;
+            PracticeTeacher = statement.PracticeTeacher;
             AddedTime = statement.AddedTime;
             
 

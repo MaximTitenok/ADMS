@@ -121,10 +121,23 @@ namespace ADMS.Services
                 {
                     Employees = _dbContext
                         .Employees
-                        .Include(x => x.Department)
-                        .Include(x => x.Position)
                         .Include(x => x.СorrectiveEmployee)
+                        .GroupJoin(
+                            _dbContext.EmployeeRates,
+                            employee => employee.Id,
+                            employeeRate => employeeRate.Employee.Id,
+                            (employee, employeeRate) => new
+                            {
+                                Employee = employee,
+                                EmployeeRates = employeeRate
+                            })
                         .AsNoTracking()
+                        .ToList()
+                        .Select(x =>
+                        {
+                            x.Employee.EmployeeRates = x.EmployeeRates.ToList();
+                            return x.Employee;
+                        })
                         .ToList();
                 }
             }

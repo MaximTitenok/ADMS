@@ -1,0 +1,93 @@
+﻿<Window x:Class="ADMS.Views.EmployeeInfoView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:ADMS.Views.Converters"
+        xmlns:local="clr-namespace:ADMS.Views"
+        mc:Ignorable="d"
+        Title="EmployeeInfo" Height="400" Width="950"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
+        <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
+        <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+        <converters:GetStaffingNameConverter x:Key="GetStaffingNameConverter"/>
+    </Window.Resources> 
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="773*"/>
+            <ColumnDefinition Width="27*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="ID:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Id}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Surname:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Surname}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Name:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Name}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Secondname:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Secondname}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Birthday:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                     Text="{Binding Employee.Birthday, StringFormat=\{0:dd-MM-yyyy\}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Gender:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                     Text="{Binding Employee.Gender,Converter={StaticResource GetGenderNameConverter}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Passport:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.PassportId}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Tin:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Tin}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Phone:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Phone}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Email:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.Email}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Office Email:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Employee.OfficeEmail}" />
+        </StackPanel>
+        <StackPanel  Height="75" Width="300" Margin="15,290,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Note:" VerticalAlignment="Center" />
+            <TextBox Margin="0,10,0,0" Height="50" Width="300" HorizontalContentAlignment="Left" Text="{Binding Employee.Note}" />
+        </StackPanel>
+
+        <DataGrid x:Name="RatesGrid" Height="280" Width="580" Margin="320,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" ItemsSource="{Binding EmployeeRates}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Department" Binding="{Binding Department.Name}" Width="80" />
+                <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="80" />
+                <DataGridTextColumn Header="Staffing" Binding="{Binding StaffingId,Converter={StaticResource GetStaffingNameConverter}}" Width="80" />
+                <DataGridTextColumn Header="Position" Binding="{Binding Position.Name}" Width="80" />
+                <DataGridTextColumn Header="StartWork" Binding="{Binding StartWork}" Width="80" />
+                <DataGridTextColumn Header="PlannedFinishWork" Binding="{Binding PlannedFinishWork}" Width="80" />
+                <DataGridTextColumn Header="FinishedWork" Binding="{Binding FinishedWork}" Width="80" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

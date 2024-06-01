@@ -23,17 +23,8 @@ namespace ADMS.Models
         public string? OfficeEmail { get; set; }
         public int? Tin { get; set; }
         public string? PassportId { get; set; }
-        public Department? Department { get; set; }
-        public Position? Position { get; set; }
-        /// <value>Ставка працівника</value>
-        public float? WorkRate { get; set; }
-        /// <value>Штатність працівника</value>
-        public short? StaffingId { get; set; }
-        public DateTime? StartWork { get; set; }
-        /// <value>Якщо робота по контракту з плановим закінченням роботи</value>
-        public DateTime? PannedFinishWork { get; set; }
-        public DateTime? FinishedWork { get; set; }
         public string? Note { get; set; }
+        public List<EmployeeRate> EmployeeRates { get; set; }
         /// <value>Той, хто корегував дані працівника</value>
         public Employee? СorrectiveEmployee { get; set; }
     }

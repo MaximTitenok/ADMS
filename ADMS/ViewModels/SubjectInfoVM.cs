@@ -18,25 +18,11 @@ namespace ADMS.ViewModels
 {
     internal class SubjectInfoVM : INotifyPropertyChanged
     {
-        //TODO: Add information in orders and statements grids
-        public Student Student { get; set; }
-        public ObservableCollection<Statement> StudentStatements { get; set; }
-        public ObservableCollection<Order> StudentOrders { get; set; }
+        public Subject Subject { get; set; }
 
         public SubjectInfoVM(Subject subject) 
         {
-            /*using (AppDBContext _dbContext = new AppDBContext())
-            {
-                Student = _dbContext.Students
-                    .Where(x => x.Id == student.Id)
-                    .Include(x => x.Faculty)
-                    .Include(x => x.Speciality)
-                    .Include(x => x.Group)
-                    .FirstOrDefault() ?? new Student();
-                StudentStatements = new ObservableCollection<Statement>(_dbContext.Statements.Include(x => x.Teacher).Where(x => x.Group == Student.Group)) ?? new ObservableCollection<Statement>();
-                StudentOrders = new ObservableCollection<Order>(_dbContext.Orders.Where(x => x.Students.ToArray().Contains(Student.Id) || x.Groups.ToArray().Contains(Student.Group.Id)).ToList());
-                //StudentOrders = orders.Where(order => order.Students.ToArray().Contains(student.Id) || order.Groups.ToArray().Contains(student.Group.Id)));
-            }*/
+            Subject = subject;
         }
 
 
