@@ -19,25 +19,23 @@ namespace ADMS.Views
     /// <summary>
     /// Interaction logic for StudentInfo.xaml
     /// </summary>
-    public partial class StudentInfoChangeView : Window
+    public partial class EmployeeRateInfoChangeView : Window
     {
-        internal StudentInfoChangeView(Student student)
+        internal EmployeeRateInfoChangeView(EmployeeRate rate)
         {
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
-            StudentInfoChangeVM studentInfoChangeVM = new(student);
-            studentInfoChangeVM.OnRequestClose += (s, e) => this.Close();
-            DataContext = studentInfoChangeVM;
-
-            //StudentInfoChangeView.ShowDialog();
+            EmployeeRateInfoChangeVM employeeRateInfoChangeVM = new(rate);
+            employeeRateInfoChangeVM.OnRequestClose += (s, e) => this.Close();
+            DataContext = employeeRateInfoChangeVM;
         }
-        internal StudentInfoChangeView()
+        internal EmployeeRateInfoChangeView()
         {
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
-            StudentInfoChangeVM studentInfoChangeVM = new();
-            studentInfoChangeVM.OnRequestClose += (s, e) => this.Close();
-            DataContext = studentInfoChangeVM;
+            EmployeeRateInfoChangeVM employeeRateInfoChangeVM = new();
+            employeeRateInfoChangeVM.OnRequestClose += (s, e) => this.Close();
+            DataContext = employeeRateInfoChangeVM;
         }
 
     }

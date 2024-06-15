@@ -21,11 +21,10 @@ namespace ADMS.Models
         public string? OfficePhone { get; set; }
         public string? Email { get; set; }
         public string? OfficeEmail { get; set; }
-        public int? Tin { get; set; }
+        public uint? Tin { get; set; }
         public string? PassportId { get; set; }
         public string? Note { get; set; }
-        public List<EmployeeRate> EmployeeRates { get; set; }
-        /// <value>Той, хто корегував дані працівника</value>
-        public Employee? СorrectiveEmployee { get; set; }
+        public bool? IsActive { get; set; }
+        public DateTime? AddedTime { get; set; }
     }
 }

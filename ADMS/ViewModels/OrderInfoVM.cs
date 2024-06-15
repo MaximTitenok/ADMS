@@ -21,9 +21,9 @@ namespace ADMS.ViewModels
     {
         //TODO: Add information in orders and statements grids
         public Order Order { get; set; }
-        public ObservableCollection<Group> GroupList { get; set; }
-        public ObservableCollection<Student> StudentList { get; set; }
-        public ObservableCollection<DocFile> DocFileList { get; set; }
+        public ObservableCollection<Group> GroupsList { get; set; }
+        public ObservableCollection<Student> StudentsList { get; set; }
+        public ObservableCollection<DocFile> DocFilesList { get; set; }
         public ICommand ChangeOrderButtonCommand { get; set; }
 
         public OrderInfoVM(Order order) 
@@ -32,20 +32,21 @@ namespace ADMS.ViewModels
             using (AppDBContext _dbContext = new AppDBContext())
             {
                 Order = _dbContext.Orders.Where(x => x.Id == Order.Id).Include(x => x.AddedEmplyoee).FirstOrDefault();
-                GroupList = new ObservableCollection<Group>(
+                GroupsList = new ObservableCollection<Group>(
                     _dbContext.Groups
                     .Where(x => Order.Groups
                     .ToArray()
                     .Contains(x.Id))
                     .Include(x => x.Faculty)
                     .Include(x => x.Department));
-                StudentList = new ObservableCollection<Student>(
+                StudentsList = new ObservableCollection<Student>(
                     _dbContext.Students
                     .Where(x => Order.Students
                     .ToArray()
                     .Contains(x.Id))
                     .Include(x => x.Group));
-                DocFileList = new ObservableCollection<DocFile>(
+
+                DocFilesList = new ObservableCollection<DocFile>(
                     _dbContext.DocFiles
                     .Where(x => Order.File
                     .ToArray()
@@ -56,9 +57,8 @@ namespace ADMS.ViewModels
         }
         private void ChangeOrder(object obj)
         {
-            //TODO: Create changestatementview
-           /* StatementChangeView changeView = new (Statement);
-            changeView.Show();*/
+           OrderChangeView orderView = new (Order);
+            orderView.Show();
 
         }
 

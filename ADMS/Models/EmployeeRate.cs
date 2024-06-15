@@ -25,18 +25,18 @@ namespace ADMS.Models
 
         internal EmployeeRate() { }
 
-        internal EmployeeRate(Employee employee, Department department, float rate, short staffingId, Position position,
-            DateTime startWork, DateTime plannedFinishWork, DateTime finishedWork, DateTime addedTime)
+        internal EmployeeRate(EmployeeRate rate)
         {
-            Employee = employee;
-            Department = department;
-            Rate = rate;
-            StaffingId = staffingId;
-            Position = position;
-            StartWork = startWork;
-            PlannedFinishWork = plannedFinishWork;
-            FinishedWork = finishedWork;
-            AddedTime = addedTime;
+            Id = rate.Id;
+            Employee = rate.Employee;
+            Department = rate.Department;
+            Rate = rate.Rate;
+            StaffingId = rate.StaffingId;
+            Position = rate.Position;
+            StartWork = rate.StartWork;
+            PlannedFinishWork = rate.PlannedFinishWork;
+            FinishedWork = rate.FinishedWork;
+            AddedTime = rate.AddedTime;
         }
     }
 }

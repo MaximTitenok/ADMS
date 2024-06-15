@@ -12,9 +12,7 @@ namespace ADMS.Models
     {
         [Key]
         public ushort Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public byte[]? File { get; set; }
+        public byte[] File { get; set; }
         public Employee? AddedEmployee { get; set; }
         public DateTime? AddedTime { get; set; }
     }

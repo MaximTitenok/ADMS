@@ -21,8 +21,7 @@ namespace ADMS.ViewModels
 {
     internal class StudentInfoChangeVM : INotifyPropertyChanged
     {
-        //TODO: Add information in orders and statements grids
-        //TODO: Add requirements and checks for fields to accept the changes in thw BD
+        
         public Student Student { get; set; }
         public List<Group> Groups { get; set; }
         public List<Speciality> Specialities { get; set; }
@@ -35,8 +34,17 @@ namespace ADMS.ViewModels
         public string StudyForm { get; set; }
         public string StudyLevel { get; set; }
         public string StudentGender { get; set; }
-        public ICommand SaveStudentInfoButtonCommand { get; set; }
         bool IsStudentNew { get; set; }
+        public string Title { get; set; }
+        private bool shouldShowError;
+        public Visibility ErrorVisibility
+        {
+            get { return shouldShowError ? Visibility.Visible : Visibility.Collapsed; }
+        }
+        public ICommand SaveStudentInfoButtonCommand { get; set; }
+        public event EventHandler OnRequestClose;
+
+
 
         public StudentInfoChangeVM(Student student)
         {
@@ -52,12 +60,14 @@ namespace ADMS.ViewModels
             StudyLevel = StructureStore.GetStudyLevelName((int)Student.StudyLevel);
             if (Student.Gender  == false)
             {
-                StudentGender = "Male";
+                StudentGender = "Чоловіча";
             }
             else
             {
-                StudentGender = "Female";
+                StudentGender = "Жіноча";
             }
+            Title = "Зміна інформації про студента";
+            shouldShowError = false;
             SaveStudentInfoButtonCommand = new RelayCommand(SaveStudentInfo);
         }
         public StudentInfoChangeVM()
@@ -65,7 +75,7 @@ namespace ADMS.ViewModels
 
             IsStudentNew = true;
             Student = new Student();
-            Student.Faculty = StructureStore.GetFaculty();
+            Student.Faculty = StructureStore.GetFaculties();
             SpecialitiesArray = StructureStore.GetSpecialities().Where(x => x.Faculty.Id == Student.Faculty.Id).Select(x => x.ShortName).ToArray();
             GroupsArray = StructureStore.GetGroups().Where(x => x.Faculty.Id == Student.Faculty.Id).Select(x => x.Name).ToArray();
             SaveStudentInfoButtonCommand = new RelayCommand(SaveStudentInfo);
@@ -75,10 +85,19 @@ namespace ADMS.ViewModels
                 Specialities = _dbContext.Specialities.Where(x => x.Faculty.Id == Student.Faculty.Id).AsNoTracking().ToList();
 
             }
+            shouldShowError = false;
+            Title = "Додати студента";
+        }
+        private void CloseWindow(Window window)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
         private void SaveStudentInfo(object obj)
         {
-            if(StudentGender == "Male")
+            if(StudentGender == "Чоловіча")
             {
                 Student.Gender = false;
             }
@@ -86,23 +105,36 @@ namespace ADMS.ViewModels
             {
                 Student.Gender = true;
             }
+
             Student.StudyForm = StructureStore.GetStudyFormIndex(StudyForm);
             Student.StudyLevel = StructureStore.GetStudyLevelIndex(StudyLevel);
             Student.Group = Groups.Where(x =>  x.Name == Group).FirstOrDefault();
             Student.Speciality = Specialities.Where(x => x.ShortName == Speciality).FirstOrDefault();
-            using (AppDBContext _dbContext = new AppDBContext())
+            Student.Birthday = DateTime.SpecifyKind((DateTime)Student.Birthday, DateTimeKind.Utc);
+            if (Student.Surname == string.Empty || Student.Name == string.Empty || Student.Tin == null || Student.Birthday == null ||
+                Student.Gender == null || Student.PassportId == string.Empty || Student?.Speciality?.Id == null ||
+                Student.StudyLevel.HasValue != true || Student.StudyForm.HasValue != true)
             {
-                if(IsStudentNew)
+                shouldShowError = true;
+                OnPropertyChanged("ErrorVisibility");
+                return;
+
+            }
+                using (AppDBContext _dbContext = new AppDBContext())
+            {
+                _dbContext.Entry(Student.Faculty).State = EntityState.Unchanged;
+                _dbContext.Entry(Student.Group).State = EntityState.Unchanged;
+                _dbContext.Entry(Student.Speciality).State = EntityState.Unchanged;
+                if (IsStudentNew)
                 {
-                    _dbContext.Entry(Student.Faculty).State = EntityState.Unchanged;
-                    _dbContext.Entry(Student.Group).State = EntityState.Unchanged;
-                    _dbContext.Entry(Student.Speciality).State = EntityState.Unchanged;
+                    
                     _dbContext.Students.Add(Student);
                 }
                 else
                 {
                     _dbContext.Students.Update(Student);
                 }
+                OnRequestClose(this, new EventArgs());
                 _dbContext.SaveChanges();
 
             }

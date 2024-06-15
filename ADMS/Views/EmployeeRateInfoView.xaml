@@ -1,0 +1,79 @@
+﻿<Window x:Class="ADMS.Views.EmployeeRateInfoView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:ADMS.Views.Converters"
+        xmlns:local="clr-namespace:ADMS.Views"
+        mc:Ignorable="d"
+        Title="Інформація про тарифну ставку працівника" Height="330" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
+        <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
+        <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+        <converters:GetStaffingNameConverter x:Key="GetStaffingNameConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="ID:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding EmployeeRate.Id}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Призвіще:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding EmployeeRate.Employee.Surname}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Ім'я:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding EmployeeRate.Employee.Name}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Кафедра:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding EmployeeRate.Department.ShortName}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Ставка:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding EmployeeRate.Rate}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Штатність:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                Text="{Binding EmployeeRate.StaffingId,Converter={StaticResource GetStaffingNameConverter}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Посада:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding EmployeeRate.Position.Name}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Початок роботи:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                Text="{Binding EmployeeRate.StartWork, StringFormat=\{0:dd-MM-yyyy\}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Планове завершення:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                Text="{Binding EmployeeRate.PlannedFinishWork, StringFormat=\{0:dd-MM-yyyy\}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Закінчення роботи:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                Text="{Binding EmployeeRate.FinishedWork, StringFormat=\{0:dd-MM-yyyy\}}" />
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Додано:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
+                Text="{Binding EmployeeRate.AddedTime, StringFormat=\{0:dd-MM-yyyy\}}" />
+        </StackPanel>
+        
+        <Button x:Name="ChangeRateInfoButton" Content="Редагувати"  Height="20" Width="80" Margin="0,15,15,0" HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" Command="{Binding ChangeRateInfoButtonCommand}" />
+
+    </Grid>
+</Window>

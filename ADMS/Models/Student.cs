@@ -19,7 +19,7 @@ namespace ADMS.Models
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public string? OfficeEmail { get; set; }
-        public int? Tin { get; set; }
+        public uint? Tin { get; set; }
         public string? PassportId { get; set; }
         public ushort? StudyLevel { get; set; }
         public ushort? StudyForm { get; set; }
@@ -30,6 +30,8 @@ namespace ADMS.Models
         /// номер студентського квитка
         /// </summary>
         public uint? StudentId { get; set; }
+        public bool? IsActive { get; set; }
+        public DateTime? AddedTime { get; set; }
         internal Student() { }
 
         internal Student(Student student) 

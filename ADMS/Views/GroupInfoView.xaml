@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="GroupInfo" Height="315" Width="670"
+        Title="Інформація про академічну групу" Height="245" Width="670"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -20,49 +20,40 @@
     <Grid>
         <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="ID:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Id}" />
+            <TextBox Margin="110,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Id}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Name:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Name}" />
+            <TextBlock Text="Назва:" VerticalAlignment="Center" />
+            <TextBox Margin="110,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Name}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Faculty:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Faculty.ShortName}" />
+            <TextBlock Text="Факультет:" VerticalAlignment="Center" />
+            <TextBox Margin="110,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Faculty.ShortName}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Department:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Department.ShortName}" />
+            <TextBlock Text="Кафедра:" VerticalAlignment="Center" />
+            <TextBox Margin="110,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Department.ShortName}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock VerticalAlignment="Center" ><Run Text="Start"/><Run Language="en-gb" Text=" "/><Run Text="Educ:"/></TextBlock>
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.StartEducation}" />
+            <TextBlock Text="Спеціальність:" VerticalAlignment="Center" />
+            <TextBox Margin="110,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.Speciality.ShortName}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="AddedTime:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
-                     Text="{Binding Group.AddedTime}" />
+            <TextBlock Text="Початок навчання:" Width="300" />
+            <TextBox Margin="110,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Group.StartEducation}" />
         </StackPanel>
-   
-        <DataGrid x:Name="StudentsGrid" Height="265" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+        <DataGrid x:Name="StudentsGrid" Height="160" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                        AutoGenerateColumns="False" ItemsSource="{Binding StudentsList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="120" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
+                <DataGridTextColumn Header="Призвіще" Binding="{Binding Surname}" Width="120" />
+                <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" Width="120" />
 
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="ChangeGroupInfoButton" Content="Change"  Height="20" Width="80" Margin="112,180,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="ChangeGroupInfoButton" Content="Редагувати"  Height="20" Width="80" Margin="125,171,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding ChangeGroupInfoButtonCommand}" />
-        <DataGrid x:Name="StudentsGrid_Copy" Height="265" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-            AutoGenerateColumns="False" ItemsSource="{Binding StudentsList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="120" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
 
-            </DataGrid.Columns>
-        </DataGrid>
 
     </Grid>
 </Window>

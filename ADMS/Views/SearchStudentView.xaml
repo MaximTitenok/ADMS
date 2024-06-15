@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="SearchStudentView" Height="330" Width="430"
+        Title="Пошук студента" Height="330" Width="430"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -14,37 +14,37 @@
     </Window.Resources>
     <Grid>
         <Grid>
-            <Label Content="Surname" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            <Label Content="Призвіще" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
            HorizontalContentAlignment="Center" />
             <TextBox x:Name="StudentSurnameTextBox" Height="20" Width="80" Margin="10,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              Text="{Binding StudentFindConditionSurname, Mode=TwoWay}"/>
 
-            <Label Content="Name" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            <Label Content="Ім'я" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
            HorizontalContentAlignment="Center" />
             <TextBox x:Name="StudentNameTextBox" Height="20" Width="80" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              Text="{Binding StudentFindConditionName, Mode=TwoWay}"/>
 
 
-            <Label Content="Student ID" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            <Label Content="ID студента" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
            HorizontalContentAlignment="Center" />
             <TextBox x:Name="StudentStudentIdTextBox" Height="20" Width="80" Margin="190,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              Text="{Binding StudentFindConditionStudentId, Mode=TwoWay}"/>
 
-            <Button x:Name="StudentFindButton" Content="Find"  Height="20" Width="130" Margin="280,25,0,0" HorizontalAlignment="Left" 
+            <Button x:Name="StudentFindButton" Content="Пошук"  Height="20" Width="130" Margin="280,25,0,0" HorizontalAlignment="Left" 
             VerticalAlignment="Top" Command="{Binding SearchStudentButtonCommand}" />
-            <Button x:Name="SelectStudentButton" Content="Select"  Height="20" Width="70" Margin="340,259,0,0" HorizontalAlignment="Left" 
+            <Button x:Name="SelectStudentButton" Content="Обрати"  Height="20" Width="70" Margin="340,259,0,0" HorizontalAlignment="Left" 
             VerticalAlignment="Top" Command="{Binding SelectStudentButtonCommand}" Click="SelectButtonClicked" />
 
             <DataGrid x:Name="StudentsGrid" Height="195" Width="400" Margin="10,59,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
               AutoGenerateColumns="False" ItemsSource="{Binding Students}" IsReadOnly="True" MouseDoubleClick="StudentFindRowDoubleClick"
                       SelectedCellsChanged="StudentSelectedClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="80" />
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="80"/>
-                    <DataGridTextColumn Header="Secondname" Binding="{Binding Secondname}" Width="80"/>
-                    <DataGridTextColumn Header="Speciality" Binding="{Binding Speciality.ShortName}" Width="50"/>
-                    <DataGridTextColumn Header="Group" Binding="{Binding Group.Name}" Width="50"/>
-                    <DataGridTextColumn Header="Study Level" Binding="{Binding StudyLevel,Converter={StaticResource GetStudyLevelNameConverter}}" 
+                    <DataGridTextColumn Header="Призвіще" Binding="{Binding Surname}" Width="80" />
+                    <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" Width="80"/>
+                    <DataGridTextColumn Header="По-батькові" Binding="{Binding Secondname}" Width="80"/>
+                    <DataGridTextColumn Header="Спеціальність" Binding="{Binding Speciality.ShortName}" Width="50"/>
+                    <DataGridTextColumn Header="Група" Binding="{Binding Group.Name}" Width="50"/>
+                    <DataGridTextColumn Header="Рівень навчання" Binding="{Binding StudyLevel,Converter={StaticResource GetStudyLevelNameConverter}}" 
                                 Width="50" />
                 </DataGrid.Columns>
             </DataGrid>

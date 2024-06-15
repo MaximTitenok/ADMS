@@ -14,7 +14,7 @@ namespace ADMS.Models
         public int Id { get; set; }
         //первая, вторая, третья ведомость
         public int? StatementNumber { get; set; }
-        public Subject SubjectId { get; set; }
+        public Subject Subject { get; set; }
         public int? Semester {  get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -33,7 +33,7 @@ namespace ADMS.Models
         {
             Id = statement.Id;
             StatementNumber = statement.StatementNumber;
-            SubjectId = statement.SubjectId;
+            Subject = statement.Subject;
             Semester = statement.Semester;
             StartDate = statement.StartDate;
             EndDate = statement.EndDate;

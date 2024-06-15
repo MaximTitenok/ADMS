@@ -11,7 +11,7 @@ namespace ADMS.Models
     {
         [Key]
         public ushort Id { get; set; }
-        public SubjectBank? SubjectBankId { get; set; }
+        public SubjectBank? SubjectBank { get; set; }
         public int? Semester {  get; set; }
         public int? ECTS {  get; set; }
         public int? AllHours { get; set; }
@@ -29,6 +29,8 @@ namespace ADMS.Models
         public bool? ComputationalGraphicWork { get; set; }
         public bool Diploma {  get; set; }
         public Department Department { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
+        public bool? IsActive { get; set; }
+        public DateTime? AddedTime { get; set; }
     }
 }

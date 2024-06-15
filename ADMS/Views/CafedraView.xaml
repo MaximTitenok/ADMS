@@ -6,120 +6,141 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="CafedraView" Height="450" Width="800"
+        Title="Модуль кафедри" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
         <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
         <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+        <converters:GetStaffingNameConverter x:Key="GetStaffingNameConverter"/>
     </Window.Resources>
 
 
     <Grid>
         <TabControl>
-            <TabItem Header="Teachers" Width="100">
+            <TabItem Header="Співробітники" Width="100">
                 <Grid>
-                    <Label Content="Surname" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Призвіще" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" />
                     <TextBox x:Name="EmployeeSurnameTextBox" Height="20" Width="80" Margin="10,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              Text="{Binding EmployeeFindConditionSurname, Mode=TwoWay}"/>
 
-                    <Label Content="Name" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Ім'я" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" />
                     <TextBox x:Name="EmployeeNameTextBox" Height="20" Width="80" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              Text="{Binding EmployeeFindConditionName, Mode=TwoWay}"/>
 
-                    <Label Content="Secondname" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="По-батькові" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" />
                     <TextBox x:Name="EmployeeSecondameTextBox" Height="20" Width="80" Margin="190,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              Text="{Binding EmployeeFindConditionSecondname, Mode=TwoWay}"/>
 
-                    <Label Content="Phone" Height="25" Width="80" Margin="280,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Телефон" Height="25" Width="80" Margin="280,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" />
                     <TextBox x:Name="EmployeePhoneTextBox" Height="20" Width="80" Margin="280,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              Text="{Binding EmployeeFindConditionPhone, Mode=TwoWay}"/>
 
-                    <Label Content="Gender" Height="25" Width="80" Margin="370,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Стать" Height="25" Width="80" Margin="370,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                            HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="EmployeeGenderComboBox" Height="20" Width="80" Margin="370,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                               Text="{Binding EmployeeFindConditionGender, Mode=TwoWay}">
-                        <ComboBoxItem Content="Male"/>
-                        <ComboBoxItem Content="Female"/>
+                        <ComboBoxItem Content="Чоловіча"/>
+                        <ComboBoxItem Content="Жіноча"/>
                     </ComboBox>
 
-                    <Button x:Name="EmployeeFindButton" Content="Find"  Height="20" Width="80" Margin="460,25,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="EmployeeFindButton" Content="Пошук"  Height="20" Width="80" Margin="460,25,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding EmployeeFindButtonCommand}" />
-                    <Button x:Name="EmployeeDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,25,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="EmployeeDataClearButton" Content="Очистити"  Height="20" Width="80" Margin="550,25,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding EmployeeClearButtonCommand}" />
 
                     <DataGrid x:Name="EmployeesGrid" Height="320" Width="770" Margin="0,60,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
                               AutoGenerateColumns="False" ItemsSource="{Binding Employees}" IsReadOnly="True" MouseDoubleClick="EmployeeFindRowDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="80" />
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="80"/>
-                            <DataGridTextColumn Header="Secondname" Binding="{Binding Secondname}" Width="80"/>
-                            <DataGridTextColumn Header="Birthday" Binding="{Binding Birthday, StringFormat=\{0:dd-MM-yyyy\}}" Width="70"/>
-                            <DataGridTextColumn Header="Gender" Binding="{Binding Gender,Converter={StaticResource GetGenderNameConverter}}" Width="20"/>
-                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="71" />
+                            <DataGridTextColumn Header="Призвіще" Binding="{Binding Surname}" Width="80" />
+                            <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" Width="80"/>
+                            <DataGridTextColumn Header="По-батькові" Binding="{Binding Secondname}" Width="80"/>
+                            <DataGridTextColumn Header="Дата народження" Binding="{Binding Birthday, StringFormat=\{0:dd-MM-yyyy\}}" Width="110"/>
+                            <DataGridTextColumn Header="Стать" Binding="{Binding Gender,Converter={StaticResource GetGenderNameConverter}}" Width="40"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="71" />
                         </DataGrid.Columns>
                     </DataGrid>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Rates" Width="100">
+            <TabItem Header="Ставки" Width="100">
                 <Grid>
-                    <Label Content="Name" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                       HorizontalContentAlignment="Center" />
-                    <TextBox x:Name="GroupNameTextBox" Height="20" Width="80" Margin="10,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                         Text="{Binding GroupFindConditionName, Mode=TwoWay}"/>
-                    <Label Content="Department" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Призвіще" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                         HorizontalContentAlignment="Center" />
-                    <ComboBox x:Name="GroupDepartmentComboBox" Height="20" Width="80" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        ItemsSource="{Binding GroupDepartments}" Text="{Binding GroupFindConditionDepartment, Mode=TwoWay}"/>
-                    <Label Content="Start Education" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        HorizontalContentAlignment="Center" />
-                    <DatePicker x:Name="StartEducationPicker" Height="20" Width="80" Margin="190,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        Text="{Binding GroupStartEducation, Mode=TwoWay}"/>
-                    <Label Content="Sudent Surname" Height="25" Width="80" Margin="280,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        HorizontalContentAlignment="Center" />
-                    <TextBox x:Name="GroupStudentSurnameTextBox" Height="20" Width="80" Margin="280,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        Text="{Binding GroupFindConditionStudentSurname, Mode=TwoWay}"/>
+                    <TextBox x:Name="RateSurnameTextBox" Height="20" Width="80" Margin="10,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Text="{Binding RateFindConditionSurname, Mode=TwoWay}"/>
 
-                    <Label Content="Student Name" Height="25" Width="80" Margin="370,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Ім'я" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                         HorizontalContentAlignment="Center" />
-                    <TextBox x:Name="GroupStudentNameTextBox" Height="20" Width="80" Margin="370,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                        Text="{Binding GroupFindConditionStudentName, Mode=TwoWay}"/>
+                    <TextBox x:Name="RateNameTextBox" Height="20" Width="80" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Text="{Binding RateFindConditionName, Mode=TwoWay}"/>
+                    <Label Content="Кафедра" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="RateDepartmentComboBox" Height="20" Width="80" Margin="190,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        ItemsSource="{Binding RateDepartments}" Text="{Binding RateFindConditionDepartment, Mode=TwoWay}"/>
+                    <Label Content="Ставка від" Height="25" Width="80" Margin="280,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" />
+                    <TextBox x:Name="RateRateFromTextBox" Height="20" Width="80" Margin="280,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Text="{Binding RateFindConditionRateFrom, Mode=TwoWay}"/>
+                    <Label Content="Ставка до" Height="25" Width="80" Margin="370,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" />
+                    <TextBox x:Name="RateRateToTextBox" Height="20" Width="80" Margin="370,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Text="{Binding RateFindConditionRateTo, Mode=TwoWay}"/>
+                    <Label Content="Посада" Height="25" Width="80" Margin="10,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="RatePositionComboBox" Height="20" Width="80" Margin="10,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        ItemsSource="{Binding RatePositions}" Text="{Binding RateFindConditionPosition, Mode=TwoWay}"/>
+                    <Label Content="Початок роб" Height="25" Width="80" Margin="100,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" />
+                    <DatePicker x:Name="StartWorkPicker" Height="20" Width="80" Margin="100,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Text="{Binding RateFindConditionStartWork, Mode=TwoWay}"/>
+                    <Label Content="Кінець роб" Height="25" Width="80" Margin="190,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" />
+                    <DatePicker x:Name="FinishedWorkPicker" Height="20" Width="80" Margin="190,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Text="{Binding RateFindConditionFinishedWork, Mode=TwoWay}"/>
 
-                    <Button x:Name="GroupFindButton" Content="Find"  Height="20" Width="80" Margin="460,25,0,0" HorizontalAlignment="Left" 
-                        VerticalAlignment="Top" Command="{Binding GroupFindButtonCommand}" />
-                    <Button x:Name="GroupDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,25,0,0" HorizontalAlignment="Left" 
-                        VerticalAlignment="Top" Command="{Binding GroupClearButtonCommand}" />
-                    <Button x:Name="GroupAddButton" Content="Add group"  Height="40" Width="80" Margin="680,5,0,0" HorizontalAlignment="Left" 
-                        VerticalAlignment="Top" Command="{Binding GroupAddButtonCommand}" />
-                    <DataGrid x:Name="GroupsGrid" Height="320" Width="770" Margin="0,60,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                            AutoGenerateColumns="False" ItemsSource="{Binding Groups}" IsReadOnly="True" MouseDoubleClick="GroupFindRowDoubleClick">
+
+
+
+                    <Button x:Name="RateFindButton" Content="Пошук"  Height="20" Width="80" Margin="460,25,0,0" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Command="{Binding RateFindButtonCommand}" />
+                    <Button x:Name="RateDataClearButton" Content="Очистити"  Height="20" Width="80" Margin="550,25,0,0" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Command="{Binding RateClearButtonCommand}" />
+                    <Button x:Name="RateAddButton" Content="Додати ставку"  Height="40" Width="90" Margin="680,5,0,0" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Command="{Binding RateAddButtonCommand}" />
+                    <DataGrid x:Name="RatesGrid" Height="270" Width="770" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                            AutoGenerateColumns="False" ItemsSource="{Binding EmployeeRates}" IsReadOnly="True" MouseDoubleClick="RateFindRowDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="80" />
-                            <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty.Name}" Width="80"/>
-                            <DataGridTextColumn Header="Department" Binding="{Binding Department.ShortName}" Width="80"/>
-                            <DataGridTextColumn Header="StartEducation" Binding="{Binding StartEducation, StringFormat=\{0:dd-MM-yyyy\}}" Width="70"/>
+                            <DataGridTextColumn Header="Призвіще" Binding="{Binding Employee.Surname}" Width="80" />
+                            <DataGridTextColumn Header="Ім'я" Binding="{Binding Employee.Name}" Width="80" />
+                            <DataGridTextColumn Header="Кафедра" Binding="{Binding Department.Name}" Width="80" />
+                            <DataGridTextColumn Header="Ставка" Binding="{Binding Rate}" Width="80" />
+                            <DataGridTextColumn Header="Штатність" Binding="{Binding StaffingId,Converter={StaticResource GetStaffingNameConverter}}" Width="80" />
+                            <DataGridTextColumn Header="Посада" Binding="{Binding Position.Name}" Width="80" />
+                            <DataGridTextColumn Header="Початок роботи" Binding="{Binding StartWork}" Width="80" />
+                            <DataGridTextColumn Header="План кінець роботи" Binding="{Binding PlannedFinishWork}" Width="110" />
+                            <DataGridTextColumn Header="Кінець роботи" Binding="{Binding FinishedWork}" Width="80" />
                         </DataGrid.Columns>
                     </DataGrid>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Work plans" Width="100">
+            <TabItem Header="Робочі плани" Width="100">
                 <Grid>
-                    <Label Content="Semester" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Семестр" Height="25" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
             HorizontalContentAlignment="Center" />
                     <TextBox x:Name="StatementSemesterTextBox" Height="20" Width="80" Margin="10,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
               Text="{Binding StatementFindConditionSemester, Mode=TwoWay}"/>
-                    <Label Content="Department" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Кафедра" Height="25" Width="80" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementDepartmentComboBox" Height="20" Width="80" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              ItemsSource="{Binding StatementDepartments}" Text="{Binding StatementFindConditionDepartment, Mode=TwoWay}"/>
-                    <Label Content="Subject" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Предмет" Height="25" Width="80" Margin="190,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementSubjectComboBox" Height="20" Width="80" Margin="190,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
             ItemsSource="{Binding StatementSubjects}" Text="{Binding StatementFindConditionSubject, Mode=TwoWay}"/>
@@ -129,35 +150,35 @@
             Text="{Binding StatementFindConditionECTS, Mode=TwoWay}"/>
 
 
-                    <Label Content="Exam" Height="25" Width="80" Margin="10,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Екзамен" Height="25" Width="80" Margin="10,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
             HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementExamComboBox" Height="20" Width="80" Margin="10,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionExam, Mode=TwoWay}">
                         <ComboBoxItem Height="18"></ComboBoxItem>
                         <ComboBoxItem>Yes</ComboBoxItem>
                         <ComboBoxItem>No</ComboBoxItem>
                     </ComboBox>
-                    <Label Content="Credit" Height="25" Width="80" Margin="100,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Залік" Height="25" Width="80" Margin="100,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
              HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementCreditComboBox" Height="20" Width="80" Margin="100,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionCredit, Mode=TwoWay}">
                         <ComboBoxItem Height="18"></ComboBoxItem>
                         <ComboBoxItem>Yes</ComboBoxItem>
                         <ComboBoxItem>No</ComboBoxItem>
                     </ComboBox>
-                    <Label Content="Course Work" Height="25" Width="80" Margin="190,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="КП" Height="25" Width="80" Margin="190,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
             HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementCPComboBox" Height="20" Width="80" Margin="190,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionCP, Mode=TwoWay}">
                         <ComboBoxItem Height="18"></ComboBoxItem>
                         <ComboBoxItem>Yes</ComboBoxItem>
                         <ComboBoxItem>No</ComboBoxItem>
                     </ComboBox>
-                    <Label Content="CGW" Height="25" Width="80" Margin="280,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="РГР" Height="25" Width="80" Margin="280,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
             HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementCGWComboBox" Height="20" Width="80" Margin="280,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionCGW, Mode=TwoWay}">
                         <ComboBoxItem Height="18"></ComboBoxItem>
                         <ComboBoxItem>Yes</ComboBoxItem>
                         <ComboBoxItem>No</ComboBoxItem>
                     </ComboBox>
-                    <Label Content="Diploma" Height="25" Width="80" Margin="370,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <Label Content="Диплом" Height="25" Width="80" Margin="370,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
             HorizontalContentAlignment="Center" />
                     <ComboBox x:Name="StatementDiplomaComboBox" Height="20" Width="80" Margin="370,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementFindConditionSubject, Mode=TwoWay}">
                         <ComboBoxItem Height="18"></ComboBoxItem>
@@ -168,31 +189,31 @@
 
 
 
-                    <Button x:Name="StatementFindButton" Content="Find"  Height="20" Width="80" Margin="460,75,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="StatementFindButton" Content="Пошук"  Height="20" Width="80" Margin="460,75,0,0" HorizontalAlignment="Left" 
             VerticalAlignment="Top" Command="{Binding StatementFindButtonCommand}" />
-                    <Button x:Name="StatementDataClearButton" Content="Clear"  Height="20" Width="40" Margin="550,75,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="StatementDataClearButton" Content="Очистити"  Height="20" Width="80" Margin="550,75,0,0" HorizontalAlignment="Left" 
             VerticalAlignment="Top" Command="{Binding StatementClearButtonCommand}" />
-                    <Button x:Name="StatementAddButton" Content="Add Statement"  Height="40" Width="80" Margin="680,5,0,0" HorizontalAlignment="Left" 
+                    <Button x:Name="StatementAddButton" Content="Додати роб. план"  Height="40" Width="110" Margin="665,55,0,0" HorizontalAlignment="Left" 
              VerticalAlignment="Top" Command="{Binding StatementAddButtonCommand}" />
                     <DataGrid x:Name="StatementGrid" Height="270" Width="770" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" 
                  AutoGenerateColumns="False" ItemsSource="{Binding Statements}" IsReadOnly="True" MouseDoubleClick="StatementFindRowDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Sem" Binding="{Binding Semester}" Width="40" />
-                            <DataGridTextColumn Header="Department" Binding="{Binding SubjectId.Department.ShortName}" Width="80"/>
-                            <DataGridTextColumn Header="Subject" Binding="{Binding SubjectId.SubjectBankId.ShortName}" Width="60"/>
+                            <DataGridTextColumn Header="Семестр" Binding="{Binding Semester}" Width="40" />
+                            <DataGridTextColumn Header="Кфедра" Binding="{Binding SubjectId.Department.ShortName}" Width="80"/>
+                            <DataGridTextColumn Header="Дисципліна" Binding="{Binding Subject.SubjectBank.ShortName}" Width="60"/>
                             <DataGridTextColumn Header="ECTS" Binding="{Binding SubjectId.ECTS}" Width="40"/>
-                            <DataGridTextColumn Header="AllH" Binding="{Binding SubjectId.AllHours}" Width="40"/>
-                            <DataGridTextColumn Header="LecH" Binding="{Binding SubjectId.LectureHours}" Width="40"/>
-                            <DataGridTextColumn Header="PracH" Binding="{Binding SubjectId.PracticeHours}" Width="40"/>
-                            <DataGridTextColumn Header="SemH" Binding="{Binding SubjectId.SeminarHours}" Width="40"/>
-                            <DataGridTextColumn Header="LabH" Binding="{Binding SubjectId.LabourHours}" Width="40"/>
-                            <DataGridTextColumn Header="ConH" Binding="{Binding SubjectId.ConsultationHours}" Width="40"/>
-                            <DataGridTextColumn Header="Exam" Binding="{Binding SubjectId.Exam}" Width="40"/>
-                            <DataGridTextColumn Header="Credit" Binding="{Binding SubjectId.Credit}" Width="40"/>
-                            <DataGridTextColumn Header="CP" Binding="{Binding SubjectId.CourseProject}" Width="40"/>
-                            <DataGridTextColumn Header="CGW" Binding="{Binding SubjectId.ComputationalGraphicWork}" Width="40"/>
-                            <DataGridTextColumn Header="Diploma" Binding="{Binding SubjectId.Diploma}" Width="40"/>
-                            <DataGridTextColumn Header="Note" Binding="{Binding SubjectId.Note}" Width="100"/>
+                            <DataGridTextColumn Header="ВсіЧ" Binding="{Binding SubjectId.AllHours}" Width="40"/>
+                            <DataGridTextColumn Header="ЛекцЧ" Binding="{Binding SubjectId.LectureHours}" Width="45"/>
+                            <DataGridTextColumn Header="ПракЧ" Binding="{Binding SubjectId.PracticeHours}" Width="45"/>
+                            <DataGridTextColumn Header="СемінЧ" Binding="{Binding SubjectId.SeminarHours}" Width="50"/>
+                            <DataGridTextColumn Header="ЛабЧ" Binding="{Binding SubjectId.LabourHours}" Width="40"/>
+                            <DataGridTextColumn Header="КонсЧ" Binding="{Binding SubjectId.ConsultationHours}" Width="45"/>
+                            <DataGridTextColumn Header="Екзамен" Binding="{Binding SubjectId.Exam}" Width="40"/>
+                            <DataGridTextColumn Header="Залік" Binding="{Binding SubjectId.Credit}" Width="40"/>
+                            <DataGridTextColumn Header="КП" Binding="{Binding SubjectId.CourseProject}" Width="40"/>
+                            <DataGridTextColumn Header="РГР" Binding="{Binding SubjectId.ComputationalGraphicWork}" Width="40"/>
+                            <DataGridTextColumn Header="Диплом" Binding="{Binding SubjectId.Diploma}" Width="40"/>
+                            <DataGridTextColumn Header="Примітки" Binding="{Binding SubjectId.Note}" Width="65"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

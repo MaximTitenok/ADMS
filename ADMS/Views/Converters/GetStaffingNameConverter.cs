@@ -1,4 +1,5 @@
 ﻿using ADMS.Models;
+using ADMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,21 +17,7 @@ namespace ADMS.Views.Converters
         {
             if (value is short staffing)
             {
-                switch(staffing)
-                {
-                    case 0:
-                    {
-                        return "штатний";
-                    }
-                    case 1:
-                    {
-                        return "позаштатний";
-                    }
-                    case 2:
-                    {
-                        return "сумісник";
-                    }
-                }
+                return StructureStore.GetStaffing(staffing);
             }
             return string.Empty;
         }

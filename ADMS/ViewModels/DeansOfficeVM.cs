@@ -89,6 +89,18 @@ namespace ADMS.ViewModels
         public ICommand StatementClearButtonCommand { get; set; }
         public ICommand StatementAddButtonCommand { get; set; }
 
+        public string OrderFindConditionNumber { get; set; }
+        public string OrderFindConditionType { get; set; }
+        public string OrderFindConditionStatus { get; set; }
+        public DateTime OrderStartDate { get; set; }
+        public DateTime OrderEndDate { get; set; }
+
+        public List<Order> Orders { get; set; }
+        public string[] OrderTypes { get; set; }
+        public ICommand OrderFindButtonCommand { get; set; }
+        public ICommand OrderClearButtonCommand { get; set; }
+        public ICommand OrderAddButtonCommand { get; set; }
+
 
         public DeansOfficeVM(int facultyId) 
         {
@@ -119,6 +131,14 @@ namespace ADMS.ViewModels
             StatementFindButtonCommand = new RelayCommand(FindStatementsByConditions);
             StatementClearButtonCommand = new RelayCommand(StatementClearConditionFields);
             StatementAddButtonCommand = new RelayCommand(AddNewStatement);
+
+
+            OrderTypes = StructureStore.GetOrderTypes();
+            OrderFindButtonCommand = new RelayCommand(FindOrdersByConditions);
+            OrderClearButtonCommand = new RelayCommand(OrderClearConditionFields);
+            OrderAddButtonCommand = new RelayCommand(AddNewOrder);
+
+
         }
 
         private void FindStudentsByConditions(object obj)
@@ -160,16 +180,16 @@ namespace ADMS.ViewModels
                 }
                 if (!string.IsNullOrEmpty(StudentFindConditionSpeciality))
                 {
-                    query = query.Where(student => student.Speciality.Name.Contains(StudentFindConditionSpeciality));
+                    query = query.Where(student => student.Speciality.ShortName.Contains(StudentFindConditionSpeciality));
                 }
                 if (!string.IsNullOrEmpty(StudentFindConditionGender))
                 {
                     bool gender = false;
-                    if (StudentFindConditionGender == "Male")
+                    if (StudentFindConditionGender == "Чоловіча")
                     {
                         gender = false;
                     }
-                    else if (StudentFindConditionGender == "Female")
+                    else if (StudentFindConditionGender == "Жіноча")
                     {
                         gender = true;
                     }
@@ -186,10 +206,6 @@ namespace ADMS.ViewModels
                     {
                         MessageBox.Show("Student ID contains letter!", "Error");
                     }
-                }
-                if (!string.IsNullOrEmpty(StudentFindConditionSpeciality))
-                {
-                    query = query.Where(student => student.Speciality.Name.Contains(StudentFindConditionSpeciality));
                 }
                 if (!string.IsNullOrEmpty(StudentFindConditionStudyLevel))
                 {
@@ -245,7 +261,7 @@ namespace ADMS.ViewModels
                 && GroupStartEducation == DateTime.MinValue && String.IsNullOrEmpty(GroupFindConditionStudentSurname)
                 && String.IsNullOrEmpty(GroupFindConditionStudentName))
             {
-                MessageBox.Show("All the fields is empty!", "Error");
+                MessageBox.Show("Всі поля пусті!", "Помилка");
                 return;
             }
             using (AppDBContext _dbContext = new AppDBContext())
@@ -257,7 +273,7 @@ namespace ADMS.ViewModels
                     query = query.Where(group => group.Name.Contains(GroupFindConditionName));
                 }
 
-                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))//TODO: Add the space check
+                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))
                 {
                     query = query.Where(group => group.Department.ShortName == GroupFindConditionDepartment);
                 }
@@ -317,7 +333,7 @@ namespace ADMS.ViewModels
                 && String.IsNullOrEmpty(StatementFindConditionCP) && String.IsNullOrEmpty(StatementFindConditionCGW)
                 && String.IsNullOrEmpty(StatementFindConditionDiploma))
             {
-                MessageBox.Show("All the fields is empty!", "Error");
+                MessageBox.Show("Всі поля пусті!", "Помилка");
                 return;
             }
             using (AppDBContext _dbContext = new AppDBContext())
@@ -336,91 +352,91 @@ namespace ADMS.ViewModels
                     }
                 }
 
-                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))//TODO: Add the space check
+                if (!string.IsNullOrEmpty(StatementFindConditionDepartment))//TODO: Add the space check
                 {
-                    query = query.Where(statements => statements.SubjectId.Department.ShortName == StatementFindConditionDepartment);
+                    query = query.Where(statements => statements.Subject.Department.ShortName == StatementFindConditionDepartment);
                 }
 
                 if (!string.IsNullOrEmpty(StatementFindConditionSubject))
                 {
-                    query = query.Where(statements => statements.SubjectId.SubjectBankId.ShortName == StatementFindConditionSubject);
+                    query = query.Where(statements => statements.Subject.SubjectBank.ShortName == StatementFindConditionSubject);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionECTS))
                 { 
                     int.TryParse(StatementFindConditionECTS, out int ECTS);
-                    query = query.Where(statements => statements.SubjectId.ECTS == ECTS);
+                    query = query.Where(statements => statements.Subject.ECTS == ECTS);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionExam))
                 {
                     bool exam = false;
-                    if (StatementFindConditionExam == "Yes")
+                    if (StatementFindConditionExam == "Так")
                     {
                         exam = true;
                     }
-                    else if (StatementFindConditionExam == "No")
+                    else if (StatementFindConditionExam == "Ні")
                     {
                         exam = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.Exam == exam);
+                    query = query.Where(statements => statements.Subject.Exam == exam);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionCredit))
                 {
                     bool credit = false;
-                    if (StatementFindConditionCredit == "Yes")
+                    if (StatementFindConditionCredit == "Так")
                     {
                         credit = true;
                     }
-                    else if (StatementFindConditionCredit == "No")
+                    else if (StatementFindConditionCredit == "Ні")
                     {
                         credit = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.Credit == credit);
+                    query = query.Where(statements => statements.Subject.Credit == credit);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionCP))
                 {
                     bool cp = false;
-                    if (StatementFindConditionCP == "Yes")
+                    if (StatementFindConditionCP == "Так")
                     {
                         cp = true;
                     }
-                    else if (StatementFindConditionCP == "No")
+                    else if (StatementFindConditionCP == "Ні")
                     {
                         cp = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.CourseProject == cp);
+                    query = query.Where(statements => statements.Subject.CourseProject == cp);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionCGW))
                 {
                     bool cgw = false;
-                    if (StatementFindConditionCGW == "Yes")
+                    if (StatementFindConditionCGW == "Так")
                     {
                         cgw = true;
                     }
-                    else if (StatementFindConditionCGW == "No")
+                    else if (StatementFindConditionCGW == "Ні")
                     {
                         cgw = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.ComputationalGraphicWork == cgw);
+                    query = query.Where(statements => statements.Subject.ComputationalGraphicWork == cgw);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionDiploma))
                 {
                     bool diploma = false;
-                    if (StatementFindConditionDiploma == "Yes")
+                    if (StatementFindConditionDiploma == "Так")
                     {
                         diploma = true;
                     }
-                    else if (StatementFindConditionDiploma == "No")
+                    else if (StatementFindConditionDiploma == "Ні")
                     {
                         diploma = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.Diploma == diploma);
+                    query = query.Where(statements => statements.Subject.Diploma == diploma);
                 }
 
                 Statements = query
                     .Include(x => x.Faculty)
-                    .Include(x => x.SubjectId)
-                    .Include(x => x.SubjectId.Department)
-                    .Include(x => x.SubjectId.SubjectBankId)
+                    .Include(x => x.Subject)
+                    .Include(x => x.Subject.Department)
+                    .Include(x => x.Subject.SubjectBank)
                     .ToList();
             }
             OnPropertyChanged("Statements");
@@ -455,11 +471,89 @@ namespace ADMS.ViewModels
         {
             if (StatementFindConditionDepartment == null || StatementFindConditionDepartment == "") return;
             Department department = StructureStore.GetDepartments().Where(x => x.ShortName == StatementFindConditionDepartment).FirstOrDefault();
-            StatementSubjects = StructureStore.GetSubjects().Where(x => x.Department.Id == department.Id).Select(x => x.SubjectBankId.ShortName).ToArray();
+            StatementSubjects = StructureStore.GetSubjects().Where(x => x.Department.Id == department.Id).Select(x => x.SubjectBank.ShortName).ToArray();
             OnPropertyChanged("StatementSubjects");
         }
 
 
+
+        private void FindOrdersByConditions(object obj)
+        {
+            if (String.IsNullOrEmpty(OrderFindConditionNumber) && String.IsNullOrEmpty(OrderFindConditionType)
+                && String.IsNullOrEmpty(OrderFindConditionStatus) && OrderStartDate == DateTime.MinValue
+                && OrderEndDate == DateTime.MinValue)
+            {
+                MessageBox.Show("Всі поля пусті!", "Помилка");
+                return;
+            }
+            using (AppDBContext _dbContext = new AppDBContext())
+            {
+                var query = _dbContext.Orders.AsQueryable();
+
+                if (!string.IsNullOrEmpty(OrderFindConditionNumber))
+                {
+                    if (OrderFindConditionNumber.All(char.IsDigit))
+                    {
+                        query = query.Where(order => order.Number.ToString() == OrderFindConditionNumber);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Semester contains letter!", "Error");
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(OrderFindConditionType))//TODO: Add the space check
+                {
+                    query = query.Where(order => order.Type == Array.IndexOf(StructureStore.GetOrderTypes(),OrderFindConditionType));
+                }
+
+                if (!string.IsNullOrEmpty(OrderFindConditionStatus))
+                {
+                    int status;
+                    if(OrderFindConditionStatus == "Діє")
+                    {
+                        status = 1;
+                    }
+                    else
+                    {
+                        status = 0;
+                    }
+                    query = query.Where(order => order.Status == status);
+                }
+                if (OrderStartDate != DateTime.MinValue)
+                {
+                    query = query.Where(order => order.StartDate == OrderStartDate);
+                }
+                if (OrderEndDate != DateTime.MinValue)
+                {
+                    query = query.Where(order => order.EndDate == OrderEndDate);
+                }
+
+                Orders = query
+                    .ToList();
+            }
+            OnPropertyChanged("Orders");
+        }
+
+        private void OrderClearConditionFields(object obj)
+        {
+            OrderFindConditionNumber = "";
+            OnPropertyChanged("OrderFindConditionNumber");
+            OrderFindConditionType = "";
+            OnPropertyChanged("OrderFindConditionType");
+            OrderFindConditionStatus = "";
+            OnPropertyChanged("OrderFindConditionStatus");
+            OrderStartDate = DateTime.MinValue;
+            OnPropertyChanged("OrderStartDate");
+            OrderEndDate = DateTime.MinValue;
+            OnPropertyChanged("OrderEndDate");
+            
+        }
+        private void AddNewOrder(object obj)
+        {
+           OrderChangeView changeView = new OrderChangeView();
+            changeView.Show();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

@@ -15,7 +15,9 @@ namespace ADMS.Models
         public string? Name { get; set; }
         public Faculty? Faculty { get; set; }
         public Department? Department { get; set; }
+        public Speciality? Speciality { get; set; }
         public DateTime? StartEducation { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime? AddedTime { get; set; }
 
         internal Group() { }
@@ -26,7 +28,9 @@ namespace ADMS.Models
             Name = group.Name;
             Faculty = group.Faculty;
             Department = group.Department;  
+            Speciality = group.Speciality;
             StartEducation = group.StartEducation;
+            IsActive = group.IsActive;
             AddedTime = group.AddedTime;
             
         }

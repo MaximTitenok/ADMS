@@ -23,7 +23,7 @@ namespace ADMS.Views
     /// </summary>
     public partial class CafedraView : Window
     {
-        CafedraVM cafedraVM = new(StructureStore.GetFaculty().Id);
+        CafedraVM cafedraVM = new(StructureStore.GetFaculties().Id);
 
         public CafedraView()
         {
@@ -49,15 +49,15 @@ namespace ADMS.Views
                 }
             }
         }
-        private void GroupFindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        private void RateFindRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                Group selectedItem = GroupsGrid.SelectedItem as Group;
+                EmployeeRate selectedItem = RatesGrid.SelectedItem as EmployeeRate;
                 if (selectedItem != null)
                 {
-                    GroupInfoView groupInfo = new(selectedItem);
-                    groupInfo.Show();
+                    EmployeeRateInfoView rateInfo = new(selectedItem);
+                    rateInfo.Show();
                 }
                 else
                 {

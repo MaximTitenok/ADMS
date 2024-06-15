@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="StatementInfoView" Height="335" Width="670"
+        Title="Інформація про відомість" Height="335" Width="670"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -15,6 +15,8 @@
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
+        <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+        <converters:StringToNullableIntConverter x:Key="StringToNullableIntConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -23,53 +25,53 @@
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.Id}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="StatementNumber:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.StatementNumber}" />
+            <TextBlock Text="Номер:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.StatementNumber,Converter={StaticResource StringToNullableIntConverter}}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Start Date:" VerticalAlignment="Center" />
+            <TextBlock Text="Початок:" VerticalAlignment="Center" />
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.StartDate}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Closed Date:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.EndDate}" />
+            <TextBlock Text="Закриття:" VerticalAlignment="Center" />
+            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.ClosedDate}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="End Date:" VerticalAlignment="Center" />
+            <TextBlock Text="Закінчення:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.EndDate}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Group:" VerticalAlignment="Center" />
+            <TextBlock Text="Група:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
                      Text="{Binding Statement.Group.Name}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Faculty:" VerticalAlignment="Center" />
+            <TextBlock Text="Факультет:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
                      Text="{Binding Statement.Faculty.ShortName}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="MainTeacher:" VerticalAlignment="Center" />
+            <TextBlock Text="Вчитель №1:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.MainTeacher.Surname}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="PracTeacher:" VerticalAlignment="Center" />
+            <TextBlock Text="Вчитель №2:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.PracticeTeacher.Surname}" />
         </StackPanel>
         <DataGrid x:Name="StatementsGrid" Height="265" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
                        AutoGenerateColumns="False" ItemsSource="{Binding MarksList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Student.Surname}" Width="120" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Student.Name}" Width="120" />
-                <DataGridTextColumn Header="Mark" Binding="{Binding Mark}" Width="80" />
+                <DataGridTextColumn Header="Призвіще" Binding="{Binding Student.Surname}" Width="120" />
+                <DataGridTextColumn Header="Ім'я" Binding="{Binding Student.Name}" Width="120" />
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding Mark}" Width="80" />
 
             </DataGrid.Columns>
         </DataGrid>
 
        
-        <Button x:Name="SubjectInfoButton_Copy" Content="About Subject"  Height="20" Width="80" Margin="112,240,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="SubjectInfoButton_Copy" Content="Про предмет"  Height="20" Width="80" Margin="112,240,0,0" HorizontalAlignment="Left" 
             VerticalAlignment="Top" Command="{Binding InfoAboutSubjectButtonCommand}" />
-        <Button x:Name="ChangeStatementInfoButton" Content="Change"  Height="20" Width="80" Margin="112,270,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="ChangeStatementInfoButton" Content="Редагувати"  Height="20" Width="80" Margin="112,270,0,0" HorizontalAlignment="Left" 
                      VerticalAlignment="Top" Command="{Binding ChangeStatementButtonCommand}" />
     </Grid>
 </Window>

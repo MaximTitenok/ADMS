@@ -27,8 +27,15 @@ namespace ADMS.ViewModels
         public ICommand SearchStudentButtonCommand { get; set; }
         public ICommand SelectStudentButtonCommand { get; set; }
         public GroupInfoChangeVM GroupInfoChangeVM { get; set; }
+        public OrderChangeVM OrderChangeVM { get; set; }
 
-        public SearchStudentVM(GroupInfoChangeVM groupInfoChangeVM) 
+        public SearchStudentVM(OrderChangeVM orderChangeVM) 
+        {
+            OrderChangeVM = orderChangeVM;
+            SearchStudentButtonCommand = new RelayCommand(SearchStudentsByConditions);
+            SelectStudentButtonCommand = new RelayCommand(SelectStudentToAdd);
+        }
+        public SearchStudentVM(GroupInfoChangeVM groupInfoChangeVM)
         {
             GroupInfoChangeVM = groupInfoChangeVM;
             SearchStudentButtonCommand = new RelayCommand(SearchStudentsByConditions);
@@ -40,7 +47,7 @@ namespace ADMS.ViewModels
             if (String.IsNullOrEmpty(StudentFindConditionSurname) && String.IsNullOrEmpty(StudentFindConditionName)
                && String.IsNullOrEmpty(StudentFindConditionStudentId))
             {
-                MessageBox.Show("All the fields is empty!", "Error");
+                MessageBox.Show("Всі поля пусті!", "Помилка");
                 return;
             }
             using (AppDBContext _dbContext = new AppDBContext())
@@ -83,8 +90,16 @@ namespace ADMS.ViewModels
                 MessageBox.Show("Select the row!", "Error");
                 return;
             }
-            GroupInfoChangeVM.StudentsList.Add(Student);
-            GroupInfoChangeVM.OnPropertyChanged("StudentsList");
+            if (GroupInfoChangeVM != null)
+            {
+                GroupInfoChangeVM.StudentsList.Add(Student);
+                GroupInfoChangeVM.OnPropertyChanged("StudentsList");
+            }
+            else if(OrderChangeVM != null)
+            {
+                OrderChangeVM.StudentsList.Add(Student);
+                OrderChangeVM.OnPropertyChanged("StudentsList");
+            }
             
         }
 

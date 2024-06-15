@@ -28,6 +28,7 @@ namespace ADMS.Views
             InitializeComponent();
             GroupInfoChangeVM groupInfoChangeVM = new(group);
             GroupInfoChangeVM = groupInfoChangeVM;
+            groupInfoChangeVM.OnRequestClose += (s, e) => this.Close();
             DataContext = groupInfoChangeVM;
         }
         internal GroupInfoChangeView()
@@ -36,6 +37,7 @@ namespace ADMS.Views
             InitializeComponent();
             GroupInfoChangeVM groupInfoChangeVM = new();
             GroupInfoChangeVM = groupInfoChangeVM;
+            groupInfoChangeVM.OnRequestClose += (s, e) => this.Close();
             DataContext = groupInfoChangeVM;
         }
         private void StudentRowDoubleClick(object sender, MouseButtonEventArgs e)

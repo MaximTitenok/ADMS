@@ -27,6 +27,7 @@ namespace ADMS.Views
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
             StatementInfoChangeVM statementInfoChangeVM = new(statement);
+            statementInfoChangeVM.OnRequestClose += (s, e) => this.Close();
             DataContext = statementInfoChangeVM;
         }
         internal StatementInfoChangeView()
@@ -34,6 +35,7 @@ namespace ADMS.Views
             this.ResizeMode = ResizeMode.NoResize;
             InitializeComponent();
             StatementInfoChangeVM statementInfoChangeVM = new();
+            statementInfoChangeVM.OnRequestClose += (s, e) => this.Close();
             DataContext = statementInfoChangeVM;
         }
         private void StudentRowDoubleClick(object sender, MouseButtonEventArgs e)

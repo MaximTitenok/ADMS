@@ -23,16 +23,15 @@ namespace ADMS.ViewModels
 {
     internal class FileInfoVM : INotifyPropertyChanged
     {
-        //TODO: Add information in orders and statements grids
         public DocFile DocFile { get; set; }
         private string _saveFilesPath = Directory.GetCurrentDirectory().ToString() + "\\saves";
         public ICommand ChangeFileInfoButtonCommand { get; set; }
         public ICommand DownloadFileButtonCommand { get; set; }
         public ICommand OpenFolderButtonCommand { get; set; }
-        //private Windows.Storage.StorageFolder _fileAccess = null;
 
         public FileInfoVM(DocFile docFile) 
         {
+
             DocFile = docFile;
             using (AppDBContext _dbContext = new AppDBContext())
             {
@@ -47,7 +46,6 @@ namespace ADMS.ViewModels
         }
         private void ChangeFile(object obj)
         {
-            //TODO: Create changestatementview
            /* StatementChangeView changeView = new (Statement);
             changeView.Show();*/
 
@@ -58,12 +56,12 @@ namespace ADMS.ViewModels
             {
                 Directory.CreateDirectory(_saveFilesPath);
             }
-            if(!File.Exists(_saveFilesPath+"\\"+DocFile.Name))
+            if (!File.Exists(_saveFilesPath + "\\" + DocFile.File.ToString().Remove(10, DocFile.File.ToString().Length-10)))
             {
-                FileStream file = File.Create(_saveFilesPath + "\\" + DocFile.Name);
+                FileStream file = File.Create(_saveFilesPath + "\\" + DocFile.File.ToString().Remove(10, DocFile.File.ToString().Length - 10));
                 file.Close();
             }
-            File.WriteAllBytes(_saveFilesPath + "\\" + DocFile.Name, DocFile.File);
+            File.WriteAllBytes(_saveFilesPath + "\\" + DocFile.File.ToString().Remove(10, DocFile.File.ToString().Length - 10), DocFile.File);
 
         }
         private void OpenFolder(object obj)

@@ -36,12 +36,12 @@ namespace ADMS.ViewModels
                     .Include(x => x.Group)
                     .Include(x => x.MainTeacher)
                     .Include(x => x.PracticeTeacher)
-                    .Include(x => x.SubjectId)
-                    .Include(x => x.SubjectId.Department)
-                    .Include(x => x.SubjectId.SubjectBankId)
+                    .Include(x => x.Subject)
+                    .Include(x => x.Subject.Department)
+                    .Include(x => x.Subject.SubjectBank)
                     .FirstOrDefault() ?? new Statement();
                 var marksList = _dbContext
-                    .StatementMarks.Where(x => x.Student!= null)
+                    .StatementMarks.Where(x => x.Student!= null && x.Statement.Id == Statement.Id)
                     .Include(x => x.Student)
                     .Include(x => x.Statement)
                     .Select(x => new StatementMark { Student = new Student { Id = x.Student.Id, Surname = x.Student.Surname, Name = x.Student.Name }, Mark = x.Mark })
@@ -58,7 +58,7 @@ namespace ADMS.ViewModels
         }
         private void OpenInfoSubject(object obj)
         {
-            SubjectInfoView infoView = new(Statement.SubjectId);
+            SubjectInfoView infoView = new(Statement.Subject);
             infoView.Show();
         }
 

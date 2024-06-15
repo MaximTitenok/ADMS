@@ -23,7 +23,7 @@ namespace ADMS.Views
     /// </summary>
     public partial class DeansOfficeView : Window
     {
-        DeansOfficeVM deansOfficeVM = new(StructureStore.GetFaculty().Id);
+        DeansOfficeVM deansOfficeVM = new(StructureStore.GetFaculties().Id);
 
         public DeansOfficeView()
         {
@@ -81,7 +81,22 @@ namespace ADMS.Views
                 }
             }
         }
+        private void OrderFindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Order selectedItem = OrdersGrid.SelectedItem as Order;
+                if (selectedItem != null)
+                {
+                    OrderView orderInfo = new(selectedItem);
+                    orderInfo.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid row", "Error");
+                }
+            }
+        }
 
-        
     }
 }

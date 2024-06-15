@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="StatementInfoChange" Height="360" Width="718"
+        Title="{Binding Title}" Height="400" Width="730"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -26,66 +26,74 @@
         </StackPanel>
 
         <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="StatementNum:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.StatementNumber}" />
+            <TextBlock Text="Номер:*" VerticalAlignment="Center" />
+            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Statement.StatementNumber, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Subject:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Statement.SubjectId.SubjectBankId.Name}" />
+            <TextBlock Text="Предмет:*" VerticalAlignment="Center" />
+            <ComboBox x:Name="SubjectsComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ItemsSource="{Binding SubjectsList}" SelectedValue="{Binding Subject}"/>
         </StackPanel>
 
         <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Start Date:" VerticalAlignment="Center" />
+            <TextBlock Text="Початок:*" VerticalAlignment="Center" />
             <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
                 SelectedDate="{Binding Statement.StartDate}"/>
         </StackPanel>
 
         <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Closed Date:" VerticalAlignment="Center" />
-            <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False"
+            <TextBlock Text="Закриття:" VerticalAlignment="Center" />
+            <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left"
                 SelectedDate="{Binding Statement.ClosedDate}"/>
         </StackPanel>
 
 
         <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="End Date:" VerticalAlignment="Center" />
+            <TextBlock Text="Закінчення:*" VerticalAlignment="Center" />
             <DatePicker Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
                 SelectedDate="{Binding Statement.EndDate}"/>
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Group:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Statement.Group.Name}" />
+            <TextBlock Text="Група:*" VerticalAlignment="Center" />
+            <ComboBox x:Name="GroupsComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ItemsSource="{Binding GroupsList}" SelectedValue="{Binding Group}" IsEnabled="{Binding GroupIsEnable}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Faculty:" VerticalAlignment="Center" />
+            <TextBlock Text="Факультет:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" IsEnabled="False" Text="{Binding Statement.Faculty.ShortName}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Teacher:" VerticalAlignment="Center" />
-            <ComboBox x:Name="DepartmentsComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                ItemsSource="{Binding TeachersList}" SelectedValue="{Binding Teacher}"/>
+            <TextBlock Text="Вчитель №1:*" VerticalAlignment="Center" />
+            <ComboBox x:Name="TeacherComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                ItemsSource="{Binding TeachersList}" SelectedValue="{Binding MainTeacher}"/>
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Вчитель №2:" VerticalAlignment="Center" />
+            <ComboBox x:Name="Teacher2ComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+        ItemsSource="{Binding TeachersList}" SelectedValue="{Binding PracticeTeacher}"/>
+        </StackPanel>
+        <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Status:" VerticalAlignment="Center" />
             <ComboBox x:Name="StatusComboBox" Height="25" Width="250" Margin="75,-15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding StatementStatus, Mode=TwoWay}">
                 <ComboBoxItem Height="18"></ComboBoxItem>
-                <ComboBoxItem>Open</ComboBoxItem>
-                <ComboBoxItem>Closed</ComboBoxItem>
+                <ComboBoxItem>Відкрита</ComboBoxItem>
+                <ComboBoxItem>Закрита</ComboBoxItem>
             </ComboBox>
 
         </StackPanel>
-        
-        <Button x:Name="SaveGroupInfoButton" Content="Save"  Height="40" Width="305" Margin="15,280,0,0" HorizontalAlignment="Left" 
+
+        <Button x:Name="SaveGroupInfoButton" Content="Save"  Height="40" Width="305" Margin="15,305,0,0" HorizontalAlignment="Left" 
                     VerticalAlignment="Top" Command="{Binding SaveStatementInfoButtonCommand}" />
         <DataGrid x:Name="MarksGrid" Height="320" Width="330" Margin="378,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" 
             AutoGenerateColumns="False" ItemsSource="{Binding MarksList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Student.Surname}" Width="120" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Student.Name}" Width="120" />
-                <DataGridTextColumn Header="Mark" Binding="{Binding Mark}" Width="80" />
+                <DataGridTextColumn Header="Призвіше" Binding="{Binding Student.Surname}" Width="120" />
+                <DataGridTextColumn Header="Ім'я" Binding="{Binding Student.Name}" Width="120" />
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding Mark}" Width="80" />
 
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock Text="Некорректно введені дані!" Foreground="Red" FontWeight="Bold" Visibility="{Binding ErrorVisibility}"  VerticalAlignment="Top" HorizontalAlignment="Left"  Height="25" Margin="86,350,0,0" />
 
 
     </Grid>

@@ -1,4 +1,5 @@
 ﻿using ADMS.Models;
+using ADMS.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,20 +11,13 @@ using System.Windows.Data;
 
 namespace ADMS.Views.Converters
 {
-    internal class GetGenderNameConverter : IValueConverter
+    internal class GetTypeNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool gender)
+            if (value is int type)
             {
-                if(gender == false)
-                {
-                    return "Чоловіча";
-                }
-                else
-                {
-                    return "Жіноча";
-                }
+                return StructureStore.GetOrderTypes()[type];
             }
             return string.Empty;
         }

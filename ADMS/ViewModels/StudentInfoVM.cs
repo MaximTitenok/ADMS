@@ -18,7 +18,6 @@ namespace ADMS.ViewModels
 {
     internal class StudentInfoVM : INotifyPropertyChanged
     {
-        //TODO: Add information in orders and statements grids
         public Student Student { get; set; }
         public ObservableCollection<Statement> StudentStatements { get; set; }
         public ObservableCollection<Order> StudentOrders { get; set; }
@@ -34,7 +33,13 @@ namespace ADMS.ViewModels
                     .Include(x => x.Speciality)
                     .Include(x => x.Group)
                     .FirstOrDefault() ?? new Student();
-                StudentStatements = new ObservableCollection<Statement>(_dbContext.Statements.Where(x => x.Group == Student.Group).Include(x => x.MainTeacher)) ?? new ObservableCollection<Statement>();
+                StudentStatements = new ObservableCollection<Statement>(
+                    _dbContext.Statements
+                    .Where(x => x.Group == Student.Group)
+                    .Include(x => x.MainTeacher)
+                    .Include(x => x.Subject)
+                    .Include(x => x.Subject.SubjectBank))
+                    ?? new ObservableCollection<Statement>();
                 StudentOrders = new ObservableCollection<Order>(_dbContext.Orders.Where(x => x.Students.ToArray().Contains(Student.Id) || x.Groups.ToArray().Contains(Student.Group.Id)).ToList());
                 //StudentOrders = orders.Where(order => order.Students.ToArray().Contains(student.Id) || order.Groups.ToArray().Contains(student.Group.Id)));
             }

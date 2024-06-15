@@ -10,19 +10,19 @@ using System.Windows.Data;
 
 namespace ADMS.Views.Converters
 {
-    internal class GetGenderNameConverter : IValueConverter
+    internal class TranslateBoleanValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool gender)
+            if (value is bool boolean)
             {
-                if(gender == false)
+                if(boolean == true)
                 {
-                    return "Чоловіча";
+                    return "Так";
                 }
                 else
                 {
-                    return "Жіноча";
+                    return "Ні";
                 }
             }
             return string.Empty;

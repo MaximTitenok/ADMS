@@ -15,5 +15,7 @@ namespace ADMS.Models
         public string? ShortName { get; set; }
         public int? NumberOfSpeciality { get; set; }
         public Faculty? Faculty { get; set; }
+        public bool? IsActive { get; set; }
+        public DateTime? AddedTime { get; set; }
     }
 }

@@ -27,5 +27,22 @@ namespace ADMS.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? AddedTime { get; set; }
+        public Order() { }
+        public Order(Order order)
+        {
+            this.Id = order.Id;
+            this.Number = order.Number;
+            this.Name = order.Name;
+            this.Type = order.Type;
+            this.Description = order.Description;
+            this.Status = order.Status;
+            this.Groups = order.Groups;
+            this.Students = order.Students;
+            this.File = order.File;
+            this.AddedEmplyoee = order.AddedEmplyoee;
+            this.StartDate = order.StartDate;
+            this.EndDate = order.EndDate;
+            this.AddedTime = order.AddedTime;
+        }
     }
 }

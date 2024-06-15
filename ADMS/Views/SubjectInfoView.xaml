@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="SubjectInfo" Height="450" Width="500"
+        Title="Інформація про дисципліну" Height="450" Width="500"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -18,74 +18,75 @@
         <converters:GetGenderNameConverter x:Key="GetGenderNameConverter"/>
         <converters:GetStudyFormNameConverter x:Key="GetStudyFormNameConverter"/>
         <converters:GetStudyLevelNameConverter x:Key="GetStudyLevelNameConverter"/>
+        <converters:TranslateBoleanValueConverter x:Key="TranslateBoleanValueConverter"/>
     </Window.Resources>
 
     <Grid>
         <StackPanel  Height="25" Width="300" Margin="15,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="ID:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Id}" />
+            <TextBox Margin="130,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Id}" />
         </StackPanel>
-        <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Name:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.SubjectBankId.Name}" />
+        <StackPanel  Height="25" Width="500" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Ім'я:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-16,0,0" Height="25" Width="350" HorizontalContentAlignment="Left" Text="{Binding Subject.SubjectBank.Name}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Semester:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Semester}" />
+            <TextBlock Text="Семестр:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Semester}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="ECTS:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.ECTS}" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.ECTS}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="AllHours:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.AllHours}" />
+            <TextBlock Text="Всі години:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.AllHours}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="LectureHours:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.LectureHours}" />
+            <TextBlock Text="Години лецій:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.LectureHours}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="PracticeHours:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.PracticeHours}" />
+            <TextBlock Text="Години практики:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.PracticeHours}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="SeminarHours:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.SeminarHours}" />
+            <TextBlock Text="Години семінарів:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.SeminarHours}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="LabourHours:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.LabourHours}" />
+            <TextBlock Text="Години лабораторних:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.LabourHours}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="ConsnHours:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.ConsultationHours}" />
+            <TextBlock Text="Години консультацій:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.ConsultationHours}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Exam:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Exam}" />
+            <TextBlock Text="Екзамен:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Exam,Converter={StaticResource TranslateBoleanValueConverter}}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,290,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Credit:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Credit}" />
+            <TextBlock Text="Залік:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Credit,Converter={StaticResource TranslateBoleanValueConverter}}" />
         </StackPanel>
 
         
         <StackPanel  Height="25" Width="300" Margin="15,315,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="CourseProject:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.CourseProject}" />
+            <TextBlock Text="КП:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.CourseProject,Converter={StaticResource TranslateBoleanValueConverter}}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,340,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="CGW:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.ComputationalGraphicWork}" />
+            <TextBlock Text="РГР:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.ComputationalGraphicWork,Converter={StaticResource TranslateBoleanValueConverter}}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,365,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Department:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Department.ShortName}" />
+            <TextBlock Text="Кафедра:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Subject.Department.ShortName}" />
         </StackPanel>
         <StackPanel  Height="25" Width="450" Margin="15,390,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Note:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="400" HorizontalContentAlignment="Left" 
+            <TextBlock Text="Примітки:" VerticalAlignment="Center" />
+            <TextBox Margin="130,-15,0,0" Height="25" Width="400" HorizontalContentAlignment="Left" 
                      Text="{Binding Subject.Note}" />
         </StackPanel>
       

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,54 +17,68 @@ namespace ADMS.Services
         private static List<Department> Departments { get; set; }
         private static List<Subject> Subjects { get; set; }
         private static List<Employee> Employees { get; set; }
+        private static List<EmployeeRate> EmployeeRates { get; set; }
+        private static List<Position> Positions { get; set; }
         private static Faculty Faculty { get; set; }
+        private static Department Department { get; set; }
 
         private readonly static string[] StudyForms = {
-            "FT OC (Full-time on-campuse)",
-            "FT E (Full-time evening)",
-            "C E (Correspondence education)",
+            "очна",
+            "вечірня",
+            "заочна",
         };
 
         private readonly static string[] StudLevels = {
-            "Bachelor",
-            "Top-up Bachelor",
-            "Master",
-            "PhD"
+            "бакалавр",
+            "спеціаліст",
+            "магістр",
+            "канд. наук"
         };
-        internal static Faculty GetFaculty()
+        private readonly static string[] OrderTypes = {
+            "наказ",
+            "службова записка",
+            "заява на призначення",
+        };
+        internal static Faculty GetFaculties()
         {
-            if (Faculty == null)
+            using (AppDBContext _dbContext = new AppDBContext())
             {
-                using (AppDBContext _dbContext = new AppDBContext())
-                {
-                    Faculty = _dbContext
-                        .Faculties
-                        .Where(x => x.Id == 1)//FIT
-                        .AsNoTracking()
-                        .FirstOrDefault();
+                Faculty = _dbContext
+                    .Faculties
+                    .Where(x => x.Id == 1)//FIT
+                    .AsNoTracking()
+                    .FirstOrDefault();
                         
-                }
             }
             return Faculty ?? new Faculty();
         }
+        internal static Department GetDepartment()
+        {
+            using (AppDBContext _dbContext = new AppDBContext())
+            {
+                Department = _dbContext
+                    .Departments
+                    .Where(x => x.ShortName == "АКНТ")//АКНТ
+                    .AsNoTracking()
+                    .FirstOrDefault();
+
+            }
+            return Department ?? new Department();
+        }
         internal static List<Speciality> GetSpecialities()
         {
-            if (Specialities == null || Specialities.Count == 0)
-            {
-                using (AppDBContext _dbContext = new AppDBContext()) 
-                { 
-                    Specialities = _dbContext
-                        .Specialities
-                        .Include(t => t.Faculty)
-                        .AsNoTracking()
-                        .ToList();
-                }
+            using (AppDBContext _dbContext = new AppDBContext()) 
+            { 
+                Specialities = _dbContext
+                    .Specialities
+                    .Include(t => t.Faculty)
+                    .AsNoTracking()
+                    .ToList();
             }
             return Specialities ?? new List<Speciality>();
         }
         internal static List<Group> GetGroups()
         {
-            List<Group> GroupsList = new List<Group>();
             if (Groups == null || Groups.Count == 0)
             {
                 using (AppDBContext _dbContext = new AppDBContext())
@@ -78,8 +93,7 @@ namespace ADMS.Services
                     .ToList();
                 }
             }
-            GroupsList = Groups ?? new List<Group>();
-            return GroupsList;
+            return Groups ?? new List<Group>();
         }
         internal static List<Department> GetDepartments()
         {
@@ -105,7 +119,8 @@ namespace ADMS.Services
                     Subjects = _dbContext
                         .Subjects
                         .Include(x => x.Department)
-                        .Include(x => x.SubjectBankId)
+                        .Include(x => x.Department.Faculty)
+                        .Include(x => x.SubjectBank)
                         .AsNoTracking()
                         .ToList();
                 }
@@ -121,7 +136,6 @@ namespace ADMS.Services
                 {
                     Employees = _dbContext
                         .Employees
-                        .Include(x => x.СorrectiveEmployee)
                         .GroupJoin(
                             _dbContext.EmployeeRates,
                             employee => employee.Id,
@@ -135,7 +149,6 @@ namespace ADMS.Services
                         .ToList()
                         .Select(x =>
                         {
-                            x.Employee.EmployeeRates = x.EmployeeRates.ToList();
                             return x.Employee;
                         })
                         .ToList();
@@ -143,7 +156,38 @@ namespace ADMS.Services
             }
             return Employees ?? new List<Employee>();
         }
-        
+        internal static List<EmployeeRate> GetEmployeeRates()
+        {
+            if (EmployeeRates == null || EmployeeRates.Count == 0)
+            {
+                using (AppDBContext _dbContext = new AppDBContext())
+                {
+                    EmployeeRates = _dbContext
+                        .EmployeeRates
+                        .Include(x => x.Department)
+                        .Include(x => x.Department.Faculty)
+                        .Include(x => x.Employee)
+                        .AsNoTracking()
+                        .ToList();
+                }
+            }
+            return EmployeeRates ?? new List<EmployeeRate>();
+        }
+        internal static List<Position> GetPositions()
+        {
+            if (Positions == null || Positions.Count == 0)
+            {
+                using (AppDBContext _dbContext = new AppDBContext())
+                {
+                    Positions = _dbContext
+                        .Positions
+                        .AsNoTracking()
+                        .ToList();
+                }
+            }
+            return Positions ?? new List<Position>();
+        }
+
         internal static string GetStudyFormName(int type)
         {
             switch (type)
@@ -170,15 +214,15 @@ namespace ADMS.Services
         {
             switch (nameOfForm)
             {
-                case "FT OC (Full-time on-campuse)":
+                case "очна":
                     {
                         return 0;
                     }
-                case "FT E (Full-time evening)":
+                case "вечірня":
                     {
                         return 1;
                     }
-                case "C E (Correspondence education)":
+                case "заочна":
                     {
                         return 2;
                     }
@@ -188,6 +232,11 @@ namespace ADMS.Services
                     }
             }
         }
+        internal static string[] GetOrderTypes()
+        {
+            return OrderTypes;
+        }
+
         internal static string GetStudyLevelName(int type)
         {
             switch (type)
@@ -221,19 +270,19 @@ namespace ADMS.Services
             switch (nameOfLevel)
             {
 
-                case "Bachelor":
+                case "бакалавр":
                     {
                         return 0;
                     }
-                case "Top-up Bachelor":
+                case "спеціаліст":
                     {
                         return 1;
                     }
-                case "Master":
+                case "магістр":
                     {
                         return 2;
                     }
-                case "PhD":
+                case "канд. наук":
                     {
                         return 3;
                     }
@@ -242,6 +291,49 @@ namespace ADMS.Services
                         return 0;
                     }
             }
+        }
+        internal static string GetStaffing(short? number)
+        {
+            switch (number)
+            {
+                case 0:
+                    {
+                        return "штатний";
+                    }
+                case 1:
+                    {
+                        return "позаштатний";
+                    }
+                case 2:
+                    {
+                        return "сумісник";
+                    }
+            }
+            return string.Empty;
+        }
+        internal static short GetStaffing(string? name)
+        {
+            switch (name)
+            {
+                case "штатний":
+                    {
+                        return 0;
+                    }
+                case "позаштатний":
+                    {
+                        return 1;
+                    }
+                case "сумісник":
+                    {
+                        return 2;
+                    }
+            }
+            return -1;
+        }
+        internal static string[] GetStaffing()
+        {
+            return new string[] { "штатний", "позаштатний", "сумісник" };
+
         }
         internal static string GetSpecialityName(int type)
         {

@@ -16,34 +16,28 @@ using System.Windows.Input;
 
 namespace ADMS.ViewModels
 {
-    internal class GroupInfoVM : INotifyPropertyChanged
+    internal class EmployeeRateInfoVM : INotifyPropertyChanged
     {
         //TODO: Add information in orders and statements grids
-        public Group Group { get; set; }
-        public ObservableCollection<Student> StudentsList { get; set; }
-        public ICommand ChangeGroupInfoButtonCommand { get; set; }
+        public EmployeeRate EmployeeRate { get; set; }
+        public ICommand ChangeRateInfoButtonCommand { get; set; }
 
-        public GroupInfoVM(Group group) 
+        public EmployeeRateInfoVM(EmployeeRate rate) 
         {
-            Group = group;
             using (AppDBContext _dbContext = new AppDBContext())
             {
-                Group = _dbContext.Groups
-                    .Where(x => x.Id == Group.Id)
-                    .Include(x => x.Faculty)
+                EmployeeRate = _dbContext.EmployeeRates
+                    .Where(x => x.Id == rate.Id)
+                    .Include(x => x.Employee)
+                    .Include(x => x.Position)
                     .Include(x => x.Department)
-                    .Include(x => x.Speciality)
-                    .FirstOrDefault() ?? new Group();
-                var studentList = _dbContext.Students
-                    .Where(x => x.Group == Group)
-                    .ToList();
-                StudentsList = new ObservableCollection<Student>(studentList) ?? new ObservableCollection<Student>();
+                    .FirstOrDefault() ?? new EmployeeRate();
             }
-            ChangeGroupInfoButtonCommand = new RelayCommand(ChangeGroup);
+            ChangeRateInfoButtonCommand = new RelayCommand(ChangeRateInfo);
         }
-        private void ChangeGroup(object obj)
+        private void ChangeRateInfo(object obj)
         {
-            GroupInfoChangeView changeView = new(Group);
+            EmployeeRateInfoChangeView changeView = new (EmployeeRate);
             changeView.Show();
 
         }

@@ -37,24 +37,28 @@ namespace ADMS.ViewModels
 
 
         public List<EmployeeRate> EmployeeRates { get; set; }
-        public string[] GroupDepartments { get; set; }
+        public string[] RateDepartments { get; set; }
+        public string[] RatePositions { get; set; }
 
-        public string GroupFindConditionName { get; set; }
-        public string GroupFindConditionDepartment { get; set; }
-        public DateTime GroupStartEducation { get; set; }
-        public string GroupFindConditionStudentSurname { get; set; }
-        public string GroupFindConditionStudentName { get; set; }
+        public string RateFindConditionSurname { get; set; }
+        public string RateFindConditionName { get; set; }
+        public string RateFindConditionDepartment { get; set; }
+        public string RateFindConditionRateFrom { get; set; }
+        public string RateFindConditionRateTo { get; set; }
+        public string RateFindConditionPosition { get; set; }
+        public DateTime RateFindConditionStartWork { get; set; }
+        public DateTime RateFindConditionFinishedWork { get; set; }
 
-        public ICommand GroupFindButtonCommand { get; set; }
-        public ICommand GroupClearButtonCommand { get; set; }
-        public ICommand GroupAddButtonCommand { get; set; }
+        public ICommand RateFindButtonCommand { get; set; }
+        public ICommand RateClearButtonCommand { get; set; }
+        public ICommand RateAddButtonCommand { get; set; }
 
 
 
 
         public List<Statement> Statements { get; set; }
         public List<Subject> Subjects { get; set; }
-        public string[] StatementDepartments { get; set; }
+        public string[] SubjectDepartments { get; set; }
         public string[] StatementSubjects { get; set; }
 
         public string StatementFindConditionSemester { get; set; }
@@ -76,9 +80,9 @@ namespace ADMS.ViewModels
         public string StatementFindConditionCGW { get; set; }
         public string StatementFindConditionDiploma { get; set; }
 
-        public ICommand StatementFindButtonCommand { get; set; }
-        public ICommand StatementClearButtonCommand { get; set; }
-        public ICommand StatementAddButtonCommand { get; set; }
+        public ICommand SubjectFindButtonCommand { get; set; }
+        public ICommand SubjectClearButtonCommand { get; set; }
+        public ICommand SubjectAddButtonCommand { get; set; }
 
 
         public CafedraVM(int facultyId) 
@@ -88,17 +92,22 @@ namespace ADMS.ViewModels
 
             var departments = StructureStore.GetDepartments().Where(x => x.Faculty.Id == facultyId).ToList();
             departments.Insert(0, new Department { ShortName = "" });
-            GroupDepartments = departments.Select(x => x.ShortName).ToArray();
+            RateDepartments = departments.Select(x => x.ShortName).ToArray();
 
-            GroupFindButtonCommand = new RelayCommand(FindGroupsByConditions);
-            GroupClearButtonCommand = new RelayCommand(GroupClearConditionFields);
-            GroupAddButtonCommand = new RelayCommand(AddNewGroup);
+            var positions = StructureStore.GetPositions();
+            positions.Insert(0, new Position { Name = "" });
+            RatePositions = positions.Select(x => x.Name).ToArray();
+            
 
-            StatementDepartments = departments.Select(x => x.ShortName).ToArray();
+            RateFindButtonCommand = new RelayCommand(FindRatesByConditions);
+            RateClearButtonCommand = new RelayCommand(RateClearConditionFields);
+            RateAddButtonCommand = new RelayCommand(AddNewRate);
 
-            StatementFindButtonCommand = new RelayCommand(FindStatementsByConditions);
-            StatementClearButtonCommand = new RelayCommand(StatementClearConditionFields);
-            StatementAddButtonCommand = new RelayCommand(AddNewStatement);
+            SubjectDepartments = departments.Select(x => x.ShortName).ToArray();
+
+            SubjectFindButtonCommand = new RelayCommand(FindSubjectsByConditions);
+            SubjectClearButtonCommand = new RelayCommand(SubjectClearConditionFields);
+            SubjectAddButtonCommand = new RelayCommand(AddNewSubject);
         }
 
         private void FindEmployeesByConditions(object obj)
@@ -135,18 +144,18 @@ namespace ADMS.ViewModels
                 if (!string.IsNullOrEmpty(EmployeeFindConditionGender))
                 {
                     bool gender = false;
-                    if (EmployeeFindConditionGender == "Male")
+                    if (EmployeeFindConditionGender == "Чоловіча")
                     {
                         gender = false;
                     }
-                    else if (EmployeeFindConditionGender == "Female")
+                    else if (EmployeeFindConditionGender == "Жіноча")
                     {
                         gender = true;
                     }
                     query = query.Where(student => student.Gender == gender);
                 }
 
-                Employees = query.ToList();
+                Employees = query.Where(x => _dbContext.EmployeeRates.Where(x => x.Department.Id == StructureStore.GetDepartment().Id).Select(x => x.Employee).Contains(x)).ToList();
             }
             OnPropertyChanged("Employees");
         }
@@ -165,77 +174,95 @@ namespace ADMS.ViewModels
             OnPropertyChanged("EmployeeFindConditionGender");
         }
 
-        private void FindGroupsByConditions(object obj)
+        private void FindRatesByConditions(object obj)
         {
-            if (String.IsNullOrEmpty(GroupFindConditionName) && GroupFindConditionDepartment == null
-                && GroupStartEducation == DateTime.MinValue && String.IsNullOrEmpty(GroupFindConditionStudentSurname)
-                && String.IsNullOrEmpty(GroupFindConditionStudentName))
+            if (String.IsNullOrEmpty(RateFindConditionSurname) && String.IsNullOrEmpty(RateFindConditionName)
+                && RateFindConditionDepartment == null && String.IsNullOrEmpty(RateFindConditionPosition)
+                && String.IsNullOrEmpty(RateFindConditionRateFrom) && String.IsNullOrEmpty(RateFindConditionRateTo)
+                && RateFindConditionStartWork == DateTime.MinValue && RateFindConditionFinishedWork == DateTime.MinValue)
             {
-                MessageBox.Show("All the fields is empty!", "Error");
+                MessageBox.Show("Всі поля пусті!", "Помилка");
                 return;
             }
             using (AppDBContext _dbContext = new AppDBContext())
             {
-                var query = _dbContext.Groups.AsQueryable();
+                var query = _dbContext.EmployeeRates.AsQueryable();
 
-                if (!string.IsNullOrEmpty(GroupFindConditionName))
+                if (!string.IsNullOrEmpty(RateFindConditionSurname))
                 {
-                    query = query.Where(group => group.Name.Contains(GroupFindConditionName));
+                    query = query.Where(rate => rate.Employee.Surname.Contains(RateFindConditionSurname));
                 }
-
-                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))//TODO: Add the space check
+                if (!string.IsNullOrEmpty(RateFindConditionName))
                 {
-                    query = query.Where(group => group.Department.ShortName == GroupFindConditionDepartment);
-                }
-
-                if (GroupStartEducation != DateTime.MinValue)
-                {
-                    query = query.Where(group => group.StartEducation == GroupStartEducation);
-                }
-                if (!string.IsNullOrEmpty(GroupFindConditionStudentSurname))
-                {
-                    query = _dbContext.Students
-                        .Where(x => x.Surname.Contains(GroupFindConditionStudentSurname))
-                        .Select(x => x.Group)
-                        .Intersect(query).AsQueryable();
-                }
-                if (!string.IsNullOrEmpty(GroupFindConditionStudentName))
-                {
-                    query = _dbContext.Students
-                        .Where(x => x.Name.Contains(GroupFindConditionStudentName))
-                        .Select(x => x.Group)
-                        .Intersect(query).AsQueryable();
+                    query = query.Where(rate => rate.Employee.Name.Contains(RateFindConditionName));
                 }
 
-               /* Groups = query
-                    .Include(x => x.Faculty)
+                if (!string.IsNullOrEmpty(RateFindConditionDepartment))//TODO: Add the space check
+                {
+                    query = query.Where(rate => rate.Department.ShortName == RateFindConditionDepartment);
+                }
+                if (!string.IsNullOrEmpty(RateFindConditionPosition))
+                {
+                    query = query.Where(rate => rate.Position.Name == RateFindConditionPosition);
+                }
+                if(!string.IsNullOrEmpty(RateFindConditionRateFrom) && !string.IsNullOrEmpty(RateFindConditionRateTo))
+                {
+                    query = query.Where(rate => rate.Rate >= Convert.ToDouble(RateFindConditionRateFrom)
+                    && Convert.ToDouble(RateFindConditionRateTo) >= rate.Rate);
+                }
+                else if (!string.IsNullOrEmpty(RateFindConditionRateFrom))
+                {
+                    query = query.Where(rate => rate.Rate >= Convert.ToDouble(RateFindConditionRateFrom));
+                }
+                else if (!string.IsNullOrEmpty(RateFindConditionRateTo))
+                {
+                    query = query.Where(rate => rate.Rate >= Convert.ToDouble(RateFindConditionRateTo));
+                }
+
+                if (RateFindConditionStartWork != DateTime.MinValue)
+                {
+                    query = query.Where(rate => rate.StartWork == RateFindConditionStartWork);
+                }
+                if (RateFindConditionStartWork != DateTime.MinValue)
+                {
+                    query = query.Where(rate => rate.FinishedWork == RateFindConditionFinishedWork);
+                }
+                EmployeeRates = query.Where(x => x.Department.Id == StructureStore.GetDepartment().Id)
+                    .Include(x => x.Employee)
                     .Include(x => x.Department)
-                    .ToList();*/
+                    .Include(x => x.Position)
+                    .ToList();
             }
-            OnPropertyChanged("Groups");
+            OnPropertyChanged("EmployeeRates");
         }
 
-        private void GroupClearConditionFields(object obj)
+        private void RateClearConditionFields(object obj)
         {
-            GroupFindConditionName = "";
-            OnPropertyChanged("GroupFindConditionName");
-            GroupFindConditionDepartment = "";
-            OnPropertyChanged("GroupFindConditionDepartments");
-            GroupStartEducation = DateTime.MinValue;
-            OnPropertyChanged("GroupStartEducation");
-            GroupFindConditionStudentSurname = "";
-            OnPropertyChanged("GroupFindConditionStudentSurname");
-            GroupFindConditionStudentName = "";
-            OnPropertyChanged("GroupFindConditionStudentName");
+            RateFindConditionSurname = "";
+            OnPropertyChanged("RateFindConditionSurname");
+            RateFindConditionName = "";
+            OnPropertyChanged("RateFindConditionName");
+            RateFindConditionDepartment = "";
+            OnPropertyChanged("RateFindConditionDepartment");
+            RateFindConditionRateFrom = "";
+            OnPropertyChanged("RateFindConditionRateFrom");
+            RateFindConditionRateTo = "";
+            OnPropertyChanged("RateFindConditionRateTo");
+            RateFindConditionPosition = "";
+            OnPropertyChanged("RateFindConditionPosition");
+            RateFindConditionStartWork = DateTime.MinValue;
+            OnPropertyChanged("RateFindConditionStartWork");
+            RateFindConditionFinishedWork = DateTime.MinValue;
+            OnPropertyChanged("RateFindConditionFinishedWork");
         }
-        private void AddNewGroup(object obj)
+        private void AddNewRate(object obj)
         {
-            GroupInfoChangeView changeView = new();
+            EmployeeRateInfoChangeView changeView = new();
             changeView.Show();
         }
 
 
-        private void FindStatementsByConditions(object obj)
+        private void FindSubjectsByConditions(object obj)
         {
             if (String.IsNullOrEmpty(StatementFindConditionSemester) && StatementFindConditionDepartment == null
                 && String.IsNullOrEmpty(StatementFindConditionSubject) && String.IsNullOrEmpty(StatementFindConditionECTS)
@@ -243,7 +270,7 @@ namespace ADMS.ViewModels
                 && String.IsNullOrEmpty(StatementFindConditionCP) && String.IsNullOrEmpty(StatementFindConditionCGW)
                 && String.IsNullOrEmpty(StatementFindConditionDiploma))
             {
-                MessageBox.Show("All the fields is empty!", "Error");
+                MessageBox.Show("Всі поля пусті!", "Помилка");
                 return;
             }
             using (AppDBContext _dbContext = new AppDBContext())
@@ -262,19 +289,19 @@ namespace ADMS.ViewModels
                     }
                 }
 
-                if (!string.IsNullOrEmpty(GroupFindConditionDepartment))//TODO: Add the space check
+                if (!string.IsNullOrEmpty(StatementFindConditionDepartment))//TODO: Add the space check
                 {
-                    query = query.Where(statements => statements.SubjectId.Department.ShortName == StatementFindConditionDepartment);
+                    query = query.Where(statements => statements.Subject.Department.ShortName == StatementFindConditionDepartment);
                 }
 
                 if (!string.IsNullOrEmpty(StatementFindConditionSubject))
                 {
-                    query = query.Where(statements => statements.SubjectId.SubjectBankId.ShortName == StatementFindConditionSubject);
+                    query = query.Where(statements => statements.Subject.SubjectBank.ShortName == StatementFindConditionSubject);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionECTS))
                 { 
                     int.TryParse(StatementFindConditionECTS, out int ECTS);
-                    query = query.Where(statements => statements.SubjectId.ECTS == ECTS);
+                    query = query.Where(statements => statements.Subject.ECTS == ECTS);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionExam))
                 {
@@ -287,7 +314,7 @@ namespace ADMS.ViewModels
                     {
                         exam = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.Exam == exam);
+                    query = query.Where(statements => statements.Subject.Exam == exam);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionCredit))
                 {
@@ -300,7 +327,7 @@ namespace ADMS.ViewModels
                     {
                         credit = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.Credit == credit);
+                    query = query.Where(statements => statements.Subject.Credit == credit);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionCP))
                 {
@@ -313,7 +340,7 @@ namespace ADMS.ViewModels
                     {
                         cp = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.CourseProject == cp);
+                    query = query.Where(statements => statements.Subject.CourseProject == cp);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionCGW))
                 {
@@ -326,7 +353,7 @@ namespace ADMS.ViewModels
                     {
                         cgw = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.ComputationalGraphicWork == cgw);
+                    query = query.Where(statements => statements.Subject.ComputationalGraphicWork == cgw);
                 }
                 if (!string.IsNullOrEmpty(StatementFindConditionDiploma))
                 {
@@ -339,20 +366,20 @@ namespace ADMS.ViewModels
                     {
                         diploma = false;
                     }
-                    query = query.Where(statements => statements.SubjectId.Diploma == diploma);
+                    query = query.Where(statements => statements.Subject.Diploma == diploma);
                 }
 
                 Statements = query
                     .Include(x => x.Faculty)
-                    .Include(x => x.SubjectId)
-                    .Include(x => x.SubjectId.Department)
-                    .Include(x => x.SubjectId.SubjectBankId)
+                    .Include(x => x.Subject)
+                    .Include(x => x.Subject.Department)
+                    .Include(x => x.Subject.SubjectBank)
                     .ToList();
             }
             OnPropertyChanged("Statements");
         }
 
-        private void StatementClearConditionFields(object obj)
+        private void SubjectClearConditionFields(object obj)
         {
             StatementFindConditionSemester = "";
             OnPropertyChanged("StatementFindConditionSemester");
@@ -371,7 +398,7 @@ namespace ADMS.ViewModels
             StatementFindConditionDiploma = "";
             OnPropertyChanged("StatementFindConditionDiploma");
         }
-        private void AddNewStatement(object obj)
+        private void AddNewSubject(object obj)
         {
             StatementInfoChangeView changeView = new();
             changeView.Show();
@@ -381,7 +408,7 @@ namespace ADMS.ViewModels
         {
             if (StatementFindConditionDepartment == null || StatementFindConditionDepartment == "") return;
             Department department = StructureStore.GetDepartments().Where(x => x.ShortName == StatementFindConditionDepartment).FirstOrDefault();
-            StatementSubjects = StructureStore.GetSubjects().Where(x => x.Department.Id == department.Id).Select(x => x.SubjectBankId.ShortName).ToArray();
+            StatementSubjects = StructureStore.GetSubjects().Where(x => x.Department.Id == department.Id).Select(x => x.SubjectBank.ShortName).ToArray();
             OnPropertyChanged("StatementSubjects");
         }
 

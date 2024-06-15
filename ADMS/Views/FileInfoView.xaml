@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:ADMS.Views.Converters"
         xmlns:local="clr-namespace:ADMS.Views"
         mc:Ignorable="d"
-        Title="FileInfo" Height="300" Width="350"
+        Title="Інформація про файл" Height="300" Width="350"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -24,29 +24,29 @@
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding DocFile.Id}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Name:" VerticalAlignment="Center" />
+            <TextBlock Text="Назва:" VerticalAlignment="Center" />
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding DocFile.Name}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="AddedEmployee:" VerticalAlignment="Center" />
+            <TextBlock Text="Додав:" VerticalAlignment="Center" />
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding DocFile.AddedEmployee.Surname}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="AddedTime:" VerticalAlignment="Center" />
+            <TextBlock Text="Час додання:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding DocFile.AddedTime}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Description:" VerticalAlignment="Center" />
+            <TextBlock Text="Опис:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="100" Width="250" HorizontalContentAlignment="Left" Text="{Binding DocFile.Description}" />
         </StackPanel>
      
 
-        <Button x:Name="ChangeFileInfoButton" Content="Change"  Height="20" Width="80" Margin="20,221,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="ChangeFileInfoButton" Content="Редагувати"  Height="20" Width="80" Margin="20,221,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding ChangeFileInfoButtonCommand}" />
 
-        <Button x:Name="DownloadFileButton" Content="Download"  Height="20" Width="80" Margin="250,221,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="DownloadFileButton" Content="Завантажити"  Height="20" Width="80" Margin="250,221,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding DownloadFileButtonCommand}" />
-        <Button x:Name="OpenFolderButton" Content="Open Folder"  Height="20" Width="80" Margin="135,221,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="OpenFolderButton" Content="Відкрити папку"  Height="20" Width="100" Margin="130,221,0,0" HorizontalAlignment="Left" 
             VerticalAlignment="Top" Command="{Binding OpenFolderButtonCommand}" />
     </Grid>
 </Window>

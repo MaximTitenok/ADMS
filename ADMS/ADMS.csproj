@@ -20,10 +20,19 @@
     <Compile Update="Views\CafedraView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\OrderChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SearchGroupView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\StatementInfoChangeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\GroupInfoChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\EmployeeRateInfoChangeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StudentInfoChangeView.xaml.cs">
@@ -33,6 +42,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\EmployeeInfoView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\EmployeeRateInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SubjectInfoView.xaml.cs">

@@ -28,7 +28,6 @@ namespace ADMS.ViewModels
             {
                 Employee = _dbContext.Employees
                     .Where(x => x.Id == employee.Id)
-                    .Include(x => x.СorrectiveEmployee)
                     .FirstOrDefault() ?? new Employee();
                 EmployeeRates = new ObservableCollection<EmployeeRate>(
                     _dbContext.EmployeeRates

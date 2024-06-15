@@ -23,69 +23,64 @@
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Id}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Number:" VerticalAlignment="Center" />
+            <TextBlock Text="Номер:" VerticalAlignment="Center" />
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Number}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Type:" VerticalAlignment="Center" />
+            <TextBlock Text="Тип:" VerticalAlignment="Center" />
             <TextBox Margin="75,-16,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Type}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Status:" VerticalAlignment="Center" />
+            <TextBlock Text="Статус:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Status}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,115,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Added Emplyoee:" VerticalAlignment="Center" />
+            <TextBlock Text="Додав:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.AddedEmplyoee.Surname}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Start Date:" VerticalAlignment="Center" />
+            <TextBlock Text="Початок дії:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
                      Text="{Binding Order.StartDate}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="End Date:" VerticalAlignment="Center" />
+            <TextBlock Text="Кінець дії:" VerticalAlignment="Center" />
             <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" 
                      Text="{Binding Order.EndDate}" />
         </StackPanel>
         <StackPanel  Height="25" Width="300" Margin="15,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Added Time:" VerticalAlignment="Center" />
-            <TextBox Margin="75,-15,0,0" Height="25" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.AddedTime}" />
-        </StackPanel>
-        <StackPanel  Height="25" Width="300" Margin="15,215,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Description:" VerticalAlignment="Center" />
+            <TextBlock Text="Опис:" VerticalAlignment="Center" TextWrapping="Wrap" />
             <TextBox Margin="75,-15,0,0" Height="68" Width="250" HorizontalContentAlignment="Left" Text="{Binding Order.Description}" />
         </StackPanel>
         <DataGrid x:Name="GroupsGrid" Height="130" Width="330" Margin="320,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                       AutoGenerateColumns="False" ItemsSource="{Binding GroupList}" IsReadOnly="True" MouseDoubleClick="GroupRowDoubleClick">
+                       AutoGenerateColumns="False" ItemsSource="{Binding GroupsList}" IsReadOnly="True" MouseDoubleClick="GroupRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Group" Binding="{Binding Name}" Width="120" />
-                <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty.ShortName}" Width="120" />
-                <DataGridTextColumn Header="Department" Binding="{Binding Department.ShortName}" Width="80" />
+                <DataGridTextColumn Header="Група" Binding="{Binding Name}" Width="120" />
+                <DataGridTextColumn Header="Факультет" Binding="{Binding Faculty.ShortName}" Width="120" />
+                <DataGridTextColumn Header="Департамент" Binding="{Binding Department.ShortName}" Width="80" />
 
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="ChangeStudentInfoButton" Content="Change"  Height="20" Width="80" Margin="125,298,0,0" HorizontalAlignment="Left" 
+        <Button x:Name="ChangeStudentInfoButton" Content="Редагувати"  Height="20" Width="80" Margin="125,298,0,0" HorizontalAlignment="Left" 
                             VerticalAlignment="Top" Command="{Binding ChangeOrderButtonCommand}" />
         <DataGrid x:Name="StudentsGrid" Height="170" Width="330" Margin="320,153,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-            AutoGenerateColumns="False" ItemsSource="{Binding StudentList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
+            AutoGenerateColumns="False" ItemsSource="{Binding StudentsList}" IsReadOnly="True" MouseDoubleClick="StudentRowDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="120" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
-                <DataGridTextColumn Header="Group" Binding="{Binding Group.Name}" Width="80" />
+                <DataGridTextColumn Header="Призвіще" Binding="{Binding Surname}" Width="120" />
+                <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" Width="120" />
+                <DataGridTextColumn Header="Група" Binding="{Binding Group.Name}" Width="80" />
 
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="FilesGrid" Height="146" Width="635" Margin="15,328,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-            AutoGenerateColumns="False" ItemsSource="{Binding DocFileList}" IsReadOnly="True" MouseDoubleClick="FileRowDoubleClick">
+            AutoGenerateColumns="False" ItemsSource="{Binding DocFilesList}" IsReadOnly="True" MouseDoubleClick="FileRowDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="120" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="180" />
-                <DataGridTextColumn Header="AddedEmployee" Binding="{Binding AddedEmployee.Surname}" Width="80" />
-                <DataGridTextColumn Header="Added Time" Binding="{Binding AddedTime}" Width="80" />
-                <DataGridTextColumn Header="File" Binding="{Binding File}" Width="80" />
+                <!--<DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" Width="120" />-->
+                <!--<DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="180" />-->
+                <DataGridTextColumn Header="Додав" Binding="{Binding AddedEmployee.Surname}" Width="80" />
+                <DataGridTextColumn Header="Час створення" Binding="{Binding AddedTime}" Width="80" />
 
             </DataGrid.Columns>
         </DataGrid>

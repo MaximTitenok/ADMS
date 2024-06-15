@@ -10,28 +10,26 @@ using System.Windows.Data;
 
 namespace ADMS.Views.Converters
 {
-    internal class GetGenderNameConverter : IValueConverter
+    internal class StringToNullableIntConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool gender)
-            {
-                if(gender == false)
-                {
-                    return "Чоловіча";
-                }
-                else
-                {
-                    return "Жіноча";
-                }
-            }
-            return string.Empty;
+            if (value == null)
+                return string.Empty;
+
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
-        }
+            if (string.IsNullOrWhiteSpace(value as string))
+                return null;
 
+            if (int.TryParse(value as string, out int result))
+                return result;
+
+            throw new FormatException("The input string was not in a correct format.");
+        }
     }
+
 }

@@ -19,32 +19,25 @@ namespace ADMS.Views
     /// <summary>
     /// Interaction logic for SearchStudentView.xaml
     /// </summary>
-    public partial class SearchStudentView : Window
+    public partial class SearchGroupView : Window
     {
-        internal SearchStudentVM SearchStudentVM { get; set; }
-        internal SearchStudentView(GroupInfoChangeVM groupInfoChangeVM)
+        internal SearchGroupVM SearchGroupVM { get; set; }
+        internal SearchGroupView(OrderChangeVM orderChangeVM)
         {
             InitializeComponent();
-            SearchStudentVM VM = new(groupInfoChangeVM);
-            SearchStudentVM = VM;
+            SearchGroupVM VM = new(orderChangeVM);
+            SearchGroupVM = VM;
             DataContext = VM;
         }
-        internal SearchStudentView(OrderChangeVM orderChangeVM)
-        {
-            InitializeComponent();
-            SearchStudentVM VM = new(orderChangeVM);
-            SearchStudentVM = VM;
-            DataContext = VM;
-        }
-        private void StudentFindRowDoubleClick(object sender, MouseButtonEventArgs e)
+        private void GroupFindRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                Student selectedItem = StudentsGrid.SelectedItem as Student;
+                Group selectedItem = GroupsGrid.SelectedItem as Group;
                 if (selectedItem != null)
                 {
-                    StudentInfoView studentInfo = new(selectedItem);
-                    studentInfo.Show();
+                    GroupInfoView groupInfo = new(selectedItem);
+                    groupInfo.Show();
                 }
                 else
                 {
@@ -52,12 +45,12 @@ namespace ADMS.Views
                 }
             }
         }
-        private void StudentSelectedClick(object sender, SelectedCellsChangedEventArgs e)
+        private void GroupSelectedClick(object sender, SelectedCellsChangedEventArgs e)
         {
-            Student selectedItem = StudentsGrid.SelectedItem as Student;
+            Group selectedItem = GroupsGrid.SelectedItem as Group;
             if (selectedItem != null)
             {
-                SearchStudentVM.Student = selectedItem;
+                SearchGroupVM.Group = selectedItem;
             }
             else
             {
@@ -66,7 +59,7 @@ namespace ADMS.Views
         }
         private void SelectButtonClicked(object sender, RoutedEventArgs e)
         {
-            if(SearchStudentVM.Student.Surname != null)
+            if(SearchGroupVM?.Group?.Name != null)
             {
                 this.Hide();
             }
